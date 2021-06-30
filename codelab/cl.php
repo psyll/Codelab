@@ -282,7 +282,7 @@ foreach (clPackages as $packageName => $packageData):
 	endif;
 endforeach;
 // ################################################
-// ##### Unset all defines
+// ##### Unset all Codelab defines
 // ################################################
 unset($packagesList);
 unset($packageOrder);
