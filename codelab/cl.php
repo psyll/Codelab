@@ -256,7 +256,7 @@ cl::log('cl', 'info', '[clPackages] defined as list of all packages');
 if ($packagesLoadError == true):
 	cl::log('cl', 'error', 'Codelab will not load the data. Packages not valid [' . $packagesInvalid . ']');
 else:
-	cl::log('cl', 'info', 'All packages valid');
+	cl::log('cl', 'success', 'All packages valid');
 	$order = 0;
 	foreach ($packagesLoadOrder as $packageName):
 		$packagesList[$packageName]['order'] = $order;
