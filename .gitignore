@@ -1,4 +1,3 @@
-
-docs/README.progress.md
+**/.secret/
 codelab/packages/**/config.dev.json
 .dccache
