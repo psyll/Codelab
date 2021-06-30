@@ -1,0 +1,10 @@
+{
+    "init": true,
+    "prefix": "someprefix",
+    "name": "DATABASE_NAME",
+    "user": "DATABASE_USER",
+    "pass": "DATABASE_PASSWORD",
+    "host": "DATABASE_HOST",
+    "port": "3306",
+    "characters": "UTF-8"
+}
