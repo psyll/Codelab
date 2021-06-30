@@ -10,4 +10,5 @@
 ![Open issues](https://img.shields.io/github/issues-raw/psyll/Codelab)
 [![CodeFactor](https://www.codefactor.io/repository/github/psyll/codelab/badge?s=ae31d6f3226bdf7bbf736f7337658a3f3d6a7fbd)](https://www.codefactor.io/repository/github/psyll)
 
-## A simple, fast and powerfull tool for building web applications
+## A simple, fast and powerful tool for PHP developers
+
