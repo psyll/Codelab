@@ -17,10 +17,40 @@ DEFINE('clVersion', '1.0.0');
 DEFINE('clCodename', 'alpha');
 // ##### Define codelab path
 DEFINE('clPath', __DIR__);
+
+// ################################################
+// ##### Load config file
+// ################################################
+
+$clConfigPath = clPath . DIRECTORY_SEPARATOR;
+$clConfig = [];
+$clConfigSource = false;
+if (file_exists($clConfigPath . 'config.dev.json') AND is_file($clConfigPath . 'config.dev.json')):
+	$clConfigSource = 'config.dev.json';
+elseif (file_exists($clConfigPath . 'config.json') AND is_file($clConfigPath . 'config.json')):
+	$clConfigSource = 'config.json';
+endif;
+if ($clConfigSource != false):
+
+	// Get "package.json" file and convert to array
+	$clConfigData = json_decode(file_get_contents($clConfigPath . $clConfigSource), true);
+	// Check if "package.json" file content is valid json
+	if (is_array($clConfigData)):
+		$clConfig = $clConfigData;
+		cl::log('cl', 'success', "Codelab config file  loaded [" . $clConfigSource. "]");
+	else:
+		$errorMessage = "Main config file is not valid [" . $clConfigSource. "]";
+		cl::log('cl', 'error', $errorMessage);
+	endif;
+endif;
+
+
+DEFINE('clConfig', $clConfig);
+
 // ################################################
 // ##### Session start
 // ################################################
-if(session_id() == ''):
+if (session_status() === PHP_SESSION_NONE):
     session_start();
 endif;
 // ################################################
@@ -44,6 +74,8 @@ class cl {
 						echo 'background:#24491f;';
 					elseif ($value['type'] == 'error'):
 						echo 'background:#511c1c;';
+					elseif ($value['type'] == 'warning'):
+						echo 'background:orange;';
 					endif;
 				echo 'color:white;display:grid;grid-template-columns:1fr 1fr 3fr;border-bottom:1px solid #1b2942;padding:2px 4px;">';
 					echo '<div class="clLogs_source" style="font-weight:900">' . $value['source'] . '</div>';
@@ -55,6 +87,215 @@ class cl {
 		echo '</div>';
 	}
 }
+// ################################################
+// ##### Database
+// ################################################
+GLOBAL $clDB;
+if (@clConfig['DB']['connect'] == true):
+	$clDB = @mysqli_connect(
+		@clConfig['DB']['host'],
+		@clConfig['DB']['user'],
+		@clConfig['DB']['pass'],
+		@clConfig['DB']['name'],
+		@clConfig['DB']['port']
+	);
+	if (!mysqli_connect_errno()):
+		if (isset(clConfig['DB']['characters'])):
+			$charset = clConfig['DB']['characters'];
+			if ($charset != '' AND $charset != null AND $charset != false):
+				mysqli_query($clDB,"SET names = '" . $charset . "', character_set_results = '" . $charset . "', character_set_client = '" . $charset . "', character_set_connection = '" . $charset . "', character_set_database = '" . $charset . "', character_set_server = '" . $charset . "'");
+				mysqli_set_charset($clDB, 'utf8');
+			endif;
+		endif;
+		cl::log('DB', 'success', 'Database connected [' .  clConfig['DB']['host'] . ']') ;
+	else:
+		cl::log('DB', 'error', 'Database connection error [' .  clConfig['DB']['host'] . ']') ;
+	endif;
+endif;
+
+class clDB {
+	public static function disconnect(){
+	 	global $clDB;
+	   	if (isset($clDB) AND !empty($clDB)):
+			mysqli_close($clDB);
+			cl::log('clDB', 'warning', 'clDB disconnect');
+			unset($clDB);
+		endif;
+	}
+	public static function escape($string)
+	{
+		global $clDB;
+	 	if ($string != null AND !is_numeric($string) AND $string != ''):
+			return mysqli_escape_string($clDB, $string);;
+		endif;
+		return $string;
+	}
+	public static function query($query)
+	{
+		global $clDB;
+		cl::log('clDB', 'info', 'Query [' . $query . ']');
+		return mysqli_query($clDB, $query);
+	}
+	public static function fetch($results)
+	{
+
+		return mysqli_fetch_array($results);
+	}
+	public static function columns($table)
+	{
+	 global $clDB;
+		$result = self::query("SHOW COLUMNS FROM `" . self::escape($table) . "`");
+		$output = array();
+		while($row = self::fetch($result)) :
+			array_push($output,$row['Field']);
+		endwhile;
+		return $output;
+	}
+	public static function get($param, $single = false){
+
+		if (!isset($param['table'])):
+			die('clDB::get table not defined');
+		endif;
+		if (!isset($param['limit'])):
+			$param['limit'] = 100;
+		endif;
+		if (!isset($param['offset'])):
+			$param['offset'] = 0;
+		endif;
+		if (!isset($param['order'])):
+			$param['order'] = 'id ASC';
+		endif;
+		if (!isset($param['columns']) OR $param['columns'] == '*'):
+			$param['columns'] = self::columns($param['table']);
+	 //elseif (is_array($param['columns'])):
+			//$columns = $param['columns'];
+			//die('2');
+		elseif (!is_array($param['columns'])):
+			$param['columns'] = explode(',', $param['columns']);
+		endif;
+		array_push($param['columns'], 'id');
+		$param['columns'] = array_unique($param['columns']);
+		$param['columns'] = array_filter($param['columns']);
+		$columns = '';
+		foreach ($param['columns'] as $column):
+			$columns .= '`' . $column . '`,';
+		endforeach;
+		$columns = rtrim($columns, ',');
+		$where = '';
+		if (isset($param['where'])):
+			$where = 'WHERE ' . $param['where'];
+		endif;
+		$query = "SELECT " . $columns . " FROM `" . $param['table'] . "` " .  $where . " ORDER BY " . $param['order'] . "  LIMIT " . $param['limit'] . ' OFFSET ' .  $param['offset'];
+		//echo $query . '<br />';
+
+		//global $answer;
+		//$answer['glob'] = $query;
+		$logMessage = 'Get [' . $query . ']';
+	 //   clLog::create('DB', 'info', $logMessage);
+		$result = self::query($query, false);
+		$output = array();
+		$i = 0;
+		while($row = self::fetch($result)) :
+			$output[$row['id']]['clOrder'] = $i;
+			foreach ($param['columns'] as $column):
+				if ($single == true):
+					$output[$column] = $row[$column];
+					else:
+					$output[$row['id']][$column] = $row[$column];
+				endif;
+			endforeach;
+			$i++;
+		endwhile;
+		return $output;
+
+  }
+	public static function insert($table, $columns)
+	{
+		$keys    = '';
+		$values  = '';
+		foreach ($columns as $key => $value):
+			$keys .= '`' . $key . '`,';
+			if ($value == null):
+				$values .= "null,";
+			else:
+				$value  = addslashes($value);
+				$values .= "'" . $value . "',";
+			endif;
+		endforeach;
+		$keys    = trim($keys,",");
+		$values  = trim($values,",");
+		$query = "INSERT INTO `" . $table . "` (" . $keys . ") VALUES (" . $values . ")";
+		//echo $query . '<br>';
+		$logMessage = 'Insert [' . $query . ']';
+ //	   clLog::create('DB', 'info', $logMessage);
+		$result = self::query($query, false);
+	}
+	public static function delete($table, $id) // single id or array ex. array(1,35,65)
+	{
+		if (is_array($id) AND !empty($id)):
+			 foreach($id as $key => $value):
+				$query = 'DELETE FROM `' . $table . '` WHERE id = ' . self::escape($value);
+				$logMessage = 'Delete [' . $query . ']';
+	 //		   clLog::create('DB', 'info', $logMessage);
+				self::query($query, false);
+			 endforeach;
+			return true;
+		else:
+			$query = 'DELETE FROM `' . $table . '` WHERE id = ' . self::escape($id);
+			$logMessage = 'Delete [' . $query . ']';
+	 //	   clLog::create('DB', 'info', $logMessage);
+			self::query($query, false);
+			return true;
+		endif;
+  }
+	public static function insertID()
+	{
+		global $DB;
+		return mysqli_insert_id($DB);
+	}
+	public static function ids($table, $where = null) // return team groups array
+	{
+
+		// get pageData
+		$param = array(
+			'table'  => $table,
+			'columns' => ['id'],
+		);
+		if ($where != null):
+			$param['where'] = $where;
+		endif;
+		$results = self::get($param);
+		if (empty($results)):
+			return array();
+		endif;
+	 $output = [];
+	 foreach ($results as $key => $value):
+		array_push($output,  $value['id']);
+	 endforeach;
+		return $output;
+
+	}
+  public static function update($table, $where, $array)
+  {
+	 $output  = '';
+	 foreach ($array as $key => $value):
+		$output .= "`" . $key . '`=';
+		$output .= '"' . self::escape($value) . '",';
+	 endforeach;
+	 $output    = trim($output,",");
+	 $query = "UPDATE `" . $table . "` ";
+	 $query .= "SET " . $output . " ";
+	 $query .= "WHERE " . $where;
+		//echo $query;
+		$logMessage = 'Update [' . $query . ']';
+	 //   clLog::create('DB', 'info', $logMessage);
+	 self::query($query, false);
+  }
+}
+
+
+
+
 function clPackages_sortItem($pointer, &$dependency, &$order, &$pre_processing, &$reportError){
     if(in_array($pointer, $pre_processing)):
 		 return false;
@@ -195,21 +436,28 @@ foreach ($packagesDirs as $packageDir):
 		cl::log($packageDirname, 'info', 'class.php file loaded');
 		$packagesList[$packageDirname]['class'] =  $packageFile_CLASS;
 	endif;
-	$packageFile_CONFIG = $packageDir  . DIRECTORY_SEPARATOR .  "config.json";
-	$packageFile_CONFIG_TEST = $packageDir  . DIRECTORY_SEPARATOR .  "config.test.json";
 
-		if (file_exists($packageFile_CONFIG) AND is_file($packageFile_CONFIG)):
+
+
+	$packageConfigSource = false;
+	if (file_exists($packageDir . DIRECTORY_SEPARATOR. 'config.dev.json') AND is_file($packageDir .  DIRECTORY_SEPARATOR. 'config.dev.json')):
+		$packageConfigSource = 'config.dev.json';
+	elseif (file_exists($packageDir . DIRECTORY_SEPARATOR. 'config.json') AND is_file($packageDir . DIRECTORY_SEPARATOR. 'config.json')):
+		$packageConfigSource = 'config.json';
+	endif;
+
+	if ($packageConfigSource != false):
 			// Get "package.json" file and convert to array
-			$packageConfig = json_decode(file_get_contents($packageFile_CONFIG), true);
+			$packageConfig = json_decode(file_get_contents($packageDir . DIRECTORY_SEPARATOR. $packageConfigSource), true);
 			// Check if "package.json" file content is valid json
 			if (is_array($packageConfig)):
-				cl::log($packageDirname, 'info', 'config.json file loaded');
+				cl::log($packageDirname, 'info', $packageConfigSource. ' file loaded');
 				$packagesList[$packageDirname]['config'] = $packageConfig;
 			else:
-				cl::log($packageDirname, 'error', 'config.json file invalid');
-				$packagesList[$packageDirname]['errors'][] = "config.json  file is not valid json";
+				cl::log($packageDirname, 'error', $packageConfigSource. ' file invalid');
+				$packagesList[$packageDirname]['errors'][] = $packageConfigSource. " file is not valid json";
 			endif;
-		endif;
+	endif;
 endforeach;
 unset($packagesDirs);
 // Chekc if all dependiendiences exists
@@ -320,4 +568,5 @@ $time = explode(' ', clLoad_end);
 $finish = $time[1] + $time[0];
 $total_time = round(($finish - $start), 4);
 cl::log('cl', 'info', 'System loaded in ' . $total_time . 's');
+
 

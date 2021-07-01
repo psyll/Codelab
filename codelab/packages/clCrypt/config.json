@@ -1,5 +1,0 @@
-{
-    "key": "ENCYRPTION_KEY",
-    "iv": "INITIALIZATION_VECTOR",
-    "method": "AES-256-CBC"
-}

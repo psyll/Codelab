@@ -1,16 +1,11 @@
 {
-    "name": "clCrypt",
+    "name": "Session",
     "version": "1.0",
-    "description": "1.0",
     "author": {
-        "jarek": {
+            "name": "Jarek Szulc",
             "email": "jarek@psyll.com",
             "url": "https://psyll.com/profile/jarek"
-        },
-        "psyll": {
-            "email": "dev@psyll.com",
-            "url": "https://psyll.com"
-        }
+
     },
     "copyright": "© 2021 Psyll.com All Rights Reserved"
 }

@@ -7,15 +7,15 @@
 		This file is part of the Codelab package.
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
-	class clRegistry {
+	namespace cl;
+	class registry {
 		// In ##################################################################
 		public static function read($name, $default = null)
 		{
-			$return = @clRegistry[$name];
-			if ($return == ''){
-				return $default;
+			if (isset(clRegistry[$name])){
+				return clRegistry[$name];
 			} else {
-				return $return;
+				return $default;
 			}
 		}
 	}

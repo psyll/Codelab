@@ -1,14 +1,12 @@
 <?php
-/*
 	$param = array(
-		'table' => 'cl-registry',
+		'table' => 'registry',
 		'columns' => ['name', 'value'],
 	 );
-	$results = DB::get($param);
+	$results = clDB::get($param);
 	$clRegistryQuery = array();
 	foreach ($results as $key => $value):
 		$clRegistryQuery[$value['name']] = $value['value'];
 	endforeach;
 	DEFINE('clRegistry', $clRegistryQuery);
 	unset($clRegistryQuery);
-	*/

@@ -3,3 +3,4 @@
 **/.test/
 codelab/packages/*/config.dev.json
 .dccache
+codelab/config.dev.json
