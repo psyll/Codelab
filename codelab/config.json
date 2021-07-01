@@ -1,6 +1,6 @@
 {
     "DB": {
-        "connect": true,
+        "connect": false,
         "name": "DATABASE_NAME",
         "user": "USERNAME",
         "pass": "PASSWORD",
