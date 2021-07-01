@@ -11,7 +11,11 @@ namespace cl;
 class fileLOG {
   public static function create(string $source, string $message)
   {
-      $logsPath = clPath . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR .  date('Y-m-d') . '['. $source . '].log';
+      $logsDirPath = clPath . DIRECTORY_SEPARATOR . 'logs';
+      if (!file_exists($logsDirPath)) {
+        mkdir($logsDirPath, 0777, true);
+      }
+      $logsPath = $logsDirPath . DIRECTORY_SEPARATOR .  date('Y-m-d') . '-'. $source . '.log';
       $fp = fopen($logsPath, 'a');//opens file in append mode
       fwrite($fp, date('Y-m-d H:i:s') . '|' . $message . PHP_EOL);
       fclose($fp);
