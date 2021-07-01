@@ -107,6 +107,7 @@ if (@clConfig['DB']['connect'] == true):
 				mysqli_set_charset($clDB, 'utf8');
 			endif;
 		endif;
+
 		cl::log('DB', 'success', 'Database connected [' .  clConfig['DB']['host'] . ']') ;
 	else:
 		cl::log('DB', 'error', 'Database connection error [' .  clConfig['DB']['host'] . ']') ;
@@ -114,6 +115,17 @@ if (@clConfig['DB']['connect'] == true):
 endif;
 
 class clDB {
+
+
+	public static function connected(){
+		global $clDB;
+		if (isset($clDB) AND !empty($clDB)):
+		   return true;
+	   	endif;
+	   	return false;
+   }
+
+
 	public static function disconnect(){
 	 	global $clDB;
 	   	if (isset($clDB) AND !empty($clDB)):
@@ -125,6 +137,7 @@ class clDB {
 	public static function escape($string)
 	{
 		global $clDB;
+		if (!self::connected()): die('Database no connected'); endif;
 	 	if ($string != null AND !is_numeric($string) AND $string != ''):
 			return mysqli_escape_string($clDB, $string);;
 		endif;
@@ -133,26 +146,31 @@ class clDB {
 	public static function query($query)
 	{
 		global $clDB;
-		cl::log('clDB', 'info', 'Query [' . $query . ']');
-		return mysqli_query($clDB, $query);
+		if (self::connected()):
+			cl::log('clDB', 'info', 'Query [' . $query . ']');
+			return mysqli_query($clDB, $query);
+		endif;
 	}
 	public static function fetch($results)
 	{
-
+		if (self::connected()):
 		return mysqli_fetch_array($results);
+		endif;
 	}
 	public static function columns($table)
 	{
-	 global $clDB;
-		$result = self::query("SHOW COLUMNS FROM `" . self::escape($table) . "`");
-		$output = array();
-		while($row = self::fetch($result)) :
-			array_push($output,$row['Field']);
-		endwhile;
-		return $output;
+
+		if (self::connected()):
+			$result = self::query("SHOW COLUMNS FROM `" . self::escape($table) . "`");
+			$output = array();
+			while($row = self::fetch($result)) :
+				array_push($output,$row['Field']);
+			endwhile;
+			return $output;
+		endif;
 	}
 	public static function get($param, $single = false){
-
+		if (self::connected()):
 		if (!isset($param['table'])):
 			die('clDB::get table not defined');
 		endif;
@@ -207,10 +225,11 @@ class clDB {
 			$i++;
 		endwhile;
 		return $output;
-
+	endif;
   }
 	public static function insert($table, $columns)
 	{
+		if (self::connected()):
 		$keys    = '';
 		$values  = '';
 		foreach ($columns as $key => $value):
@@ -229,9 +248,11 @@ class clDB {
 		$logMessage = 'Insert [' . $query . ']';
  //	   clLog::create('DB', 'info', $logMessage);
 		$result = self::query($query, false);
+	endif;
 	}
 	public static function delete($table, $id) // single id or array ex. array(1,35,65)
 	{
+		if (self::connected()):
 		if (is_array($id) AND !empty($id)):
 			 foreach($id as $key => $value):
 				$query = 'DELETE FROM `' . $table . '` WHERE id = ' . self::escape($value);
@@ -247,15 +268,18 @@ class clDB {
 			self::query($query, false);
 			return true;
 		endif;
+	endif;
   }
 	public static function insertID()
 	{
+		if (self::connected()):
 		global $DB;
 		return mysqli_insert_id($DB);
+		endif;
 	}
 	public static function ids($table, $where = null) // return team groups array
 	{
-
+		if (self::connected()):
 		// get pageData
 		$param = array(
 			'table'  => $table,
@@ -273,10 +297,11 @@ class clDB {
 		array_push($output,  $value['id']);
 	 endforeach;
 		return $output;
-
+	endif;
 	}
   public static function update($table, $where, $array)
   {
+	if (self::connected()):
 	 $output  = '';
 	 foreach ($array as $key => $value):
 		$output .= "`" . $key . '`=';
@@ -290,6 +315,7 @@ class clDB {
 		$logMessage = 'Update [' . $query . ']';
 	 //   clLog::create('DB', 'info', $logMessage);
 	 self::query($query, false);
+	endif;
   }
 }
 
@@ -521,6 +547,9 @@ else:
 
 endif;
 DEFINE('clPackages', $packagesList);
+
+
+if ($packagesLoadError == false):
 foreach (clPackages as $packageName => $packageData):
 	if (isset($packageData['init'])):
 		include($packageData['init']);
@@ -529,6 +558,7 @@ foreach (clPackages as $packageName => $packageData):
 		include($packageData['class']);
 	endif;
 endforeach;
+endif;
 // ################################################
 // ##### Unset all Codelab defines
 // ################################################
