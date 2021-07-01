@@ -1,3 +1,4 @@
+**/.vscode/
 **/.secret/
-codelab/packages/**/config.dev.json
+codelab/packages/*/config.dev.json
 .dccache
