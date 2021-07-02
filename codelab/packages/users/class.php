@@ -58,8 +58,8 @@ private static function _loginLogInsert($status, $message = null, $teamID = null
         if (self::logged()):
             return (self::_loginResponse(false, 'already logged', self::id(), false));
         endif;
-        $securityTime = registry::read('users.login.security.time', 15);
-        $securityLimit =  registry::read('users.login.security.limit', 15);
+        $securityTime = clPackages['crypt']['config']['login_time'];
+        $securityLimit =  clPackages['crypt']['config']['login_attempts'];
         $spyIP = spy::ip();
         $paramLogs = array(
             'table' => 'users_log_auth',

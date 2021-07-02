@@ -17,7 +17,13 @@ DEFINE('clVersion', '1.0.0');
 DEFINE('clCodename', 'alpha');
 // ##### Define codelab path
 DEFINE('clPath', __DIR__);
-
+DEFINE('clDomain', $_SERVER['HTTP_HOST']);
+// ##### clProtocol [GLOBAL DEFINE]
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') :
+	DEFINE('clProtocol', 'https');
+else:
+	DEFINE('clProtocol', 'http');
+endif;
 // ################################################
 // ##### Load config file
 // ################################################

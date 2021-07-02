@@ -1,5 +1,5 @@
 {
-    "name": "team",
+    "name": "sections",
     "version": "1.0",
     "author": {
             "name": "Jarek Szulc",
@@ -8,10 +8,7 @@
 
     },
     "require": {
-        "crypt": "1.0",
-        "spy": "1.0",
-        "valid": "1.0",
-        "session": "1.0"
+        "pages": "1.0"
     },
     "copyright": "© 2021 Psyll.com All Rights Reserved"
 }
