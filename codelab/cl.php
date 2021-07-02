@@ -114,9 +114,9 @@ if (@clConfig['DB']['connect'] == true):
 			endif;
 		endif;
 
-		cl::log('DB', 'success', 'Database connected [' .  clConfig['DB']['host'] . ']') ;
+		cl::log('clDB', 'success', 'Database connected [' .  clConfig['DB']['host'] . ']') ;
 	else:
-		cl::log('DB', 'error', 'Database connection error [' .  clConfig['DB']['host'] . ']') ;
+		cl::log('clDB', 'error', 'Database connection error [' .  clConfig['DB']['host'] . ']') ;
 	endif;
 endif;
 
@@ -459,34 +459,34 @@ foreach ($packagesDirs as $packageDir):
 	$packagesList[$packageDirname]['dir'] = $packageDirname;
 	$packagesList[$packageDirname]['path'] = $packageDir;
 	$packageFile_INIT = $packageDir  . DIRECTORY_SEPARATOR .  "init.php";
+	$filesReady = '';
 	if (file_exists($packageFile_INIT) AND is_file($packageFile_INIT)):
-		cl::log($packageDirname, 'info', 'init.php file loaded');
+		$filesReady .= '[init.php]';
 		$packagesList[$packageDirname]['init'] =  $packageFile_INIT;
 	endif;
 	$packageFile_CLASS = $packageDir  . DIRECTORY_SEPARATOR .  "class.php";
 	if (file_exists($packageFile_CLASS) AND is_file($packageFile_CLASS)):
-		cl::log($packageDirname, 'info', 'class.php file loaded');
+		$filesReady .= '[class.php]';
 		$packagesList[$packageDirname]['class'] =  $packageFile_CLASS;
 	endif;
-
-
-
 	$packageConfigSource = false;
 	if (file_exists($packageDir . DIRECTORY_SEPARATOR. 'config.dev.json') AND is_file($packageDir .  DIRECTORY_SEPARATOR. 'config.dev.json')):
 		$packageConfigSource = 'config.dev.json';
+		$filesReady .= '[config.dev.json]';
 	elseif (file_exists($packageDir . DIRECTORY_SEPARATOR. 'config.json') AND is_file($packageDir . DIRECTORY_SEPARATOR. 'config.json')):
 		$packageConfigSource = 'config.json';
+		$filesReady .= '[config.json]';
 	endif;
-
+	cl::log($packageDirname, 'info', 'Package files ready ' . $filesReady);
 	if ($packageConfigSource != false):
 			// Get "package.json" file and convert to array
 			$packageConfig = json_decode(file_get_contents($packageDir . DIRECTORY_SEPARATOR. $packageConfigSource), true);
 			// Check if "package.json" file content is valid json
 			if (is_array($packageConfig)):
-				cl::log($packageDirname, 'info', $packageConfigSource. ' file loaded');
+				//cl::log($packageDirname, 'info', '[' . $packageConfigSource. '] file loaded');
 				$packagesList[$packageDirname]['config'] = $packageConfig;
 			else:
-				cl::log($packageDirname, 'error', $packageConfigSource. ' file invalid');
+				cl::log($packageDirname, 'error', '[' . $packageConfigSource. '] file invalid');
 				$packagesList[$packageDirname]['errors'][] = $packageConfigSource. " file is not valid json";
 			endif;
 	endif;
