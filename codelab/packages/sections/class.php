@@ -11,8 +11,23 @@
 namespace cl;
 use cl;
 class sections {
+	public static function control(){
 
-	public static function get($data){
+			foreach (sections as $key_sections => $value_sections):
+				if (isset($value_sections['control'])):
+				// Section found
+					$sectionControl = clPath . DIRECTORY_SEPARATOR . trim(clPackages['sections']['config']['path'], '/') . DIRECTORY_SEPARATOR . $value_sections['view'] . DIRECTORY_SEPARATOR . 'control.php';
+					//echo $sectionView  . '<hr>';
+					if (file_exists($sectionControl) AND is_file($sectionControl)):
+						$thisURL = wa_url . '/' .  trim(clPackages['sections']['config']['url'], '/') . '/' . $value_sections['control'];
+						include($sectionControl);
+						cl::log('sections', 'success', 'Section control loaded [' . $sectionControl  . ']');
+					endif;
+				endif;
+		   endforeach;
+
+	}
+	public static function view($data){
 		if (is_array($data)):
 			foreach ($data as $key => $sectionRequire):
 			   foreach (sections as $key_sections => $value_sections):

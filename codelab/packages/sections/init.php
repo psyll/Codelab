@@ -18,16 +18,20 @@ if (!empty($results)):
         $view = trim($valueSecions['view'], DIRECTORY_SEPARATOR);
         if ($view != ''):
             $sectionFileView = $sectionPath . DIRECTORY_SEPARATOR . $view . DIRECTORY_SEPARATOR . 'view.php';
-
             $pagesInclude = json_decode($valueSecions['pagesInclude'],true);
             $pagesExclude = json_decode($valueSecions['pagesExclude'],true);
             if (($valueSecions['pagesInclude'] == '*' OR (is_array($pagesInclude) AND in_array(page['id'],$pagesInclude))) AND (!is_array($pagesExclude) OR !in_array(page['id'],$pagesExclude))):
 
                 if (file_exists($sectionFileView) AND is_file($sectionFileView)):
-
+                    $sectionFileControl = $sectionPath . DIRECTORY_SEPARATOR . $view . DIRECTORY_SEPARATOR . 'control.php';
+                    $control = false;
+                    if (file_exists($sectionFileControl) AND is_file($sectionFileControl)):
+                        $control = true;
+                    endif;
                     $pageSections[] = array(
                         'id' => $valueSecions['id'],
                         'view' => $view,
+                        'control' => $control,
                         'name' => $valueSecions['name'],
                         'alias' => $valueSecions['alias'],
                         'path' => $sectionPath . DIRECTORY_SEPARATOR .trim($valueSecions['view'], DIRECTORY_SEPARATOR),
@@ -38,6 +42,7 @@ if (!empty($results)):
                         ),
                         'position' => $valueSecions['position'],
                         'ordering' => $valueSecions['ordering'],
+
                     );
 
                 else:

@@ -48,7 +48,7 @@ namespace cl;
 		// In ##################################################################
 		public static function url($url)
 		{
-			$validation = filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED);
+			$validation = filter_var($url, FILTER_VALIDATE_URL);
 
 			if ( $validation ) $output = true;
 			else $output = false;

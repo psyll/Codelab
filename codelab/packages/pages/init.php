@@ -1,5 +1,12 @@
 <?php
-DEFINE('pageQuery', array_filter(explode('/', ltrim(strtok($_SERVER['REQUEST_URI'], '?'), dirname($_SERVER["SCRIPT_NAME"])))));
+$pageQuery = strtok($_SERVER['REQUEST_URI'], '?');
+$pageQuery = substr($pageQuery, strlen(dirname($_SERVER["SCRIPT_NAME"])));
+$pageQuery = explode('/', $pageQuery);
+$pageQuery = array_filter($pageQuery);
+$pageQuery = array_values($pageQuery);
+ksort($pageQuery);
+DEFINE('pageQuery', $pageQuery);
+
 
 if (empty(pageQuery)):
 

@@ -64,6 +64,23 @@ endif;
 // ################################################
 $_SESSION['clLog'] = [];
 class cl {
+	public static function headers($headerName = null){
+		$headers = [];
+		if ($headerName == null):
+			foreach (headers_list() as $header):
+				$headerArray = explode(':', $header);
+				$headers[$headerArray[0]] = substr($header, strlen($headerArray[0]) + 2);
+			endforeach;
+			return $headers;
+		else:
+			foreach (headers_list() as $header):
+				$headerArray = explode(':', $header);
+				if (strtolower($headerArray[0]) == strtolower($headerName)):
+					return substr($header, strlen($headerArray[0]) + 2);
+				endif;
+			endforeach;
+		endif;
+	}
 	public static function log(string $source, string $type, string $message){
 		$_SESSION['clLog'][microtime()] = ['source' => $source, 'type' => $type, 'message' => $message];
 	}

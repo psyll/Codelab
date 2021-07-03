@@ -7,6 +7,7 @@
 		This file is part of the Codelab package.
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
+
 // $assetsStorage
 namespace cl;
 use cl;
@@ -44,8 +45,7 @@ use cl;
 			return $b["priority"] - $a["priority"];
 	   }
 
-
-		public static function get()
+		public static function get($type = null)
 		{
 			$assetsStorage = [];
 			$filesValidation = false;
@@ -76,19 +76,22 @@ use cl;
 				endif;
             endforeach;
 		   	usort($assetsStorage, "self::assetsListOrder");
-
-			foreach ($assetsStorage as $key => $data):
-			   if ($data['type'] == 'style'):
-					echo '<link rel="stylesheet" href="' . $data['url'] . '">' . PHP_EOL;
-					cl::log('assets', 'log', 'assets style loaded [' . $data['url']  . '] with priority ['.$data['priority'] .']');
-			   endif;
-			endforeach;
-			foreach ($assetsStorage as $key => $data):
-				if ($data['type'] == 'script'):
-					 echo '<script src="' . $data['url'] . '"></script>' . PHP_EOL;
-					 cl::log('assets', 'log', 'assets script loaded [' . $data['url']  . '] with priority ['.$data['priority'] .']');
+			if ($type == null OR $type = 'style'):
+				foreach ($assetsStorage as $key => $data):
+				if ($data['type'] == 'style'):
+						echo '<link rel="stylesheet" href="' . $data['url'] . '">' . PHP_EOL;
+						cl::log('assets', 'log', 'assets style loaded [' . $data['url']  . '] with priority ['.$data['priority'] .']');
 				endif;
-			 endforeach;
+				endforeach;
+			endif;
+			if ($type == null OR $type = 'script'):
+				foreach ($assetsStorage as $key => $data):
+					if ($data['type'] == 'script'):
+						echo '<script src="' . $data['url'] . '"></script>' . PHP_EOL;
+						cl::log('assets', 'log', 'assets script loaded [' . $data['url']  . '] with priority ['.$data['priority'] .']');
+					endif;
+				endforeach;
+			endif;
 		}
 	}
 

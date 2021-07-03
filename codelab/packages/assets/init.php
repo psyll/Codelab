@@ -1,2 +1,1 @@
-<?php
-cl\session::set('assetsStorage', []);
+<?php cl\session::set('assetsStorage', []);

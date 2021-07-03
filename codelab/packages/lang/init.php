@@ -1,14 +1,19 @@
 <?php
 
+
 $packageConfig = clPackages['lang']['config'];
+
 if ($packageConfig['enabled'] == true):
-    // No languages set - redirect to default
-    if (empty(pageQuery) AND isset($packageConfig['default'])):
-        header('Location: ' . wa_url . '/' . $packageConfig['default']);
-    endif;
+    cl::log('lang', 'success', 'LOAD');
+
     // Check if language code valid
-    if (!in_array(pageQuery[0], $packageConfig['languages'])):
-        header('Location: ' . wa_url . '/' . $packageConfig['default']);
+
+    if (empty(pageQuery) OR !isset(pageQuery[0]) OR !in_array(pageQuery[0], $packageConfig['languages'])):
+        if (isset($packageConfig['errorRedirect']) AND $packageConfig['errorRedirect'] != ''):
+            header('Location: ' . $packageConfig['errorRedirect']);
+        else:
+             cl::log('lang', 'error', 'Language load error');
+        endif;
     endif;
     DEFINE('lang', strtolower(pageQuery[0]));
 endif;

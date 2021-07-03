@@ -1,7 +1,7 @@
 {
     "name": "crypt",
-    "version": "1.0",
-    "description": "1.0",
+    "version": "2.0",
+    "description": "Encryption and decryption of strings ",
     "author": {
         "jarek": {
             "email": "jarek@psyll.com",

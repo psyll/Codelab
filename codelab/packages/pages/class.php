@@ -11,6 +11,7 @@
 namespace cl;
 use cl;
 class page {
+
 	public static function themeView(){
 		$pageView = clPath . DIRECTORY_SEPARATOR . trim(clPackages['pages']['config']['path'], '/') . DIRECTORY_SEPARATOR . page['themeView'] . DIRECTORY_SEPARATOR . 'view.php';
 		if (file_exists($pageView) AND is_file($pageView)):

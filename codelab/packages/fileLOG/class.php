@@ -11,7 +11,7 @@ namespace cl;
 class fileLOG {
   public static function create(string $source, string $message)
   {
-      $logsDirPath = clPath . DIRECTORY_SEPARATOR . 'logs';
+      $logsDirPath = clPath . DIRECTORY_SEPARATOR . trim(clPackages['filelog']['config']['path'], '/');
       if (!file_exists($logsDirPath)) {
         mkdir($logsDirPath, 0777, true);
       }
@@ -20,6 +20,5 @@ class fileLOG {
       fwrite($fp, date('Y-m-d H:i:s') . '|' . $message . PHP_EOL);
       fclose($fp);
 
-    //  clSession::add('clLogs', ['source' => $source, 'type' => $type, 'message' => $message]);
   }
 }
