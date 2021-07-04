@@ -64,6 +64,69 @@ endif;
 // ################################################
 $_SESSION['clLog'] = [];
 class cl {
+
+
+
+
+		// In ##################################################################
+		/*
+			echo '<pre>';
+			print_r(cl::packageConfigRead('lang')['languages']);
+			echo '</pre>';
+		*/
+		public static function packageConfigRead(string $packageDir)
+		{
+			// Create packages path
+			$packagePath = clPath . DIRECTORY_SEPARATOR . 'packages' . DIRECTORY_SEPARATOR . $packageDir;
+			$packageConfigSource = false;
+			if (file_exists($packagePath . DIRECTORY_SEPARATOR. 'config.dev.json') AND is_file($packagePath .  DIRECTORY_SEPARATOR. 'config.dev.json')):
+				$packageConfigSource = 'config.dev.json';
+			elseif (file_exists($packagePath . DIRECTORY_SEPARATOR. 'config.json') AND is_file($packagePath . DIRECTORY_SEPARATOR. 'config.json')):
+				$packageConfigSource = 'config.json';
+			endif;
+			if ($packageConfigSource != false):
+				// Get "package.json" file and convert to array
+				$packageConfig = json_decode(file_get_contents($packagePath . DIRECTORY_SEPARATOR. $packageConfigSource), true);
+				// Check if "package.json" file content is valid json
+				if (is_array($packageConfig)):
+					return $packageConfig;
+				else:
+					cl::log($packageDir, 'error', '[' . $packageConfigSource. '] file invalid');
+					return false;
+				endif;
+			endif;
+
+		}
+
+		// In ##################################################################
+		public static function requireAjax()
+		{
+         if(empty($_SERVER['HTTP_X_REQUESTED_WITH']) OR strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest'):
+            die('Codelab Error: Ajax required');
+         endif;
+		}
+		// In ##################################################################
+		public static function isAjax()
+		{
+         if(empty($_SERVER['HTTP_X_REQUESTED_WITH']) OR strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest'):
+            die('Codelab Error: Ajax required');
+         endif;
+		}
+				// In ##################################################################
+				public static function requirePost()
+				{
+				 if ($_SERVER['REQUEST_METHOD'] == 'POST'):
+					die('Codelab Error: POST required');
+				 endif;
+				}
+		// In ##################################################################
+		public static function isPost()
+		{
+         if ($_SERVER['REQUEST_METHOD'] == 'POST'):
+            return true;
+         endif;
+         return false;
+		}
 	public static function headers($headerName = null){
 		$headers = [];
 		if ($headerName == null):
@@ -394,6 +457,9 @@ function clPackages_sort($data, $dependency, &$reportError = null){
 // ################################################
 // ##### Initial logs
 // ################################################
+
+
+
 cl::log('cl', 'info', 'Codelab init');
 cl::log('cl', 'info', '[clLoad_start] defined: ' . clLoad_start);
 cl::log('cl', 'info', '[clVersion] defined: ' . clVersion);
@@ -402,6 +468,24 @@ cl::log('cl', 'info', '[clPath] defined: ' . clPath);
 // ################################################
 // ##### Packages
 // ################################################
+
+if (defined('clLoad')):
+	if (!is_array(clLoad)):
+		cl::log('cl', 'info', '[clLoad] is not valid array [' . clPath . ']');
+	else:
+		$loadPackages = '';
+		foreach (clLoad as $packageName):
+			$loadPackages .= '[' . $packageName . ']';
+		 endforeach;
+		 cl::log('cl', 'info', '[clLoad] defined. Load only packages: ' . $loadPackages );
+	endif;
+
+endif;
+
+
+
+
+
 // Create packages path
 $packagesPath = clPath . DIRECTORY_SEPARATOR . 'packages';
 
@@ -449,6 +533,15 @@ foreach ($packagesDirs as $packageDir):
 				cl::log($packageDirname, 'error', $packageErrorMessage);
 				$packageErrors[] = $packageErrorMessage;
 			endif;
+
+			if (defined('clLoad') AND !in_array(strtolower($package_JSON['name']), clLoad)):
+
+				unset($packagesList[$packageDirname]);
+				continue;
+			endif;
+
+
+
 		endif;
 	else:
 		$packageErrorMessage = "The packages.json file is missing";
@@ -457,8 +550,15 @@ foreach ($packagesDirs as $packageDir):
 	endif;
 	// Insert package into packages list
 	$packagesList[$packageDirname] = $package_JSON;
+	// Check if on "clLoad" list
+
+
+
+	$filesReady = '';
 	// Package has no errors
 	if (empty($packageErrors)):
+
+
 		// Package.json file valid = enable
 		// Set load order if package dont have "reqire"
 		if (!isset($package_JSON['require']) OR empty($package_JSON['require'])):
@@ -473,19 +573,7 @@ foreach ($packagesDirs as $packageDir):
 	else:
 		$packagesList[$packageDirname]['errors'] = $packageErrors;
 	endif;
-	$packagesList[$packageDirname]['dir'] = $packageDirname;
-	$packagesList[$packageDirname]['path'] = $packageDir;
-	$packageFile_INIT = $packageDir  . DIRECTORY_SEPARATOR .  "init.php";
-	$filesReady = '';
-	if (file_exists($packageFile_INIT) AND is_file($packageFile_INIT)):
-		$filesReady .= '[init.php]';
-		$packagesList[$packageDirname]['init'] =  $packageFile_INIT;
-	endif;
-	$packageFile_CLASS = $packageDir  . DIRECTORY_SEPARATOR .  "class.php";
-	if (file_exists($packageFile_CLASS) AND is_file($packageFile_CLASS)):
-		$filesReady .= '[class.php]';
-		$packagesList[$packageDirname]['class'] =  $packageFile_CLASS;
-	endif;
+
 	$packageConfigSource = false;
 	if (file_exists($packageDir . DIRECTORY_SEPARATOR. 'config.dev.json') AND is_file($packageDir .  DIRECTORY_SEPARATOR. 'config.dev.json')):
 		$packageConfigSource = 'config.dev.json';
@@ -494,7 +582,7 @@ foreach ($packagesDirs as $packageDir):
 		$packageConfigSource = 'config.json';
 		$filesReady .= '[config.json]';
 	endif;
-	cl::log($packageDirname, 'info', 'Package files ready ' . $filesReady);
+
 	if ($packageConfigSource != false):
 			// Get "package.json" file and convert to array
 			$packageConfig = json_decode(file_get_contents($packageDir . DIRECTORY_SEPARATOR. $packageConfigSource), true);
@@ -507,10 +595,32 @@ foreach ($packagesDirs as $packageDir):
 				$packagesList[$packageDirname]['errors'][] = $packageConfigSource. " file is not valid json";
 			endif;
 	endif;
+
+
+		$packagesList[$packageDirname]['dir'] = $packageDirname;
+		$packagesList[$packageDirname]['path'] = $packageDir;
+		$packageFile_INIT = $packageDir  . DIRECTORY_SEPARATOR .  "init.php";
+		$filesReady = '';
+		if (file_exists($packageFile_INIT) AND is_file($packageFile_INIT)):
+			$filesReady .= '[init.php]';
+			$packagesList[$packageDirname]['init'] =  $packageFile_INIT;
+		endif;
+		$packageFile_CLASS = $packageDir  . DIRECTORY_SEPARATOR .  "class.php";
+		if (file_exists($packageFile_CLASS) AND is_file($packageFile_CLASS)):
+			$filesReady .= '[class.php]';
+			$packagesList[$packageDirname]['class'] =  $packageFile_CLASS;
+		endif;
+		cl::log($packageDirname, 'info', 'Package files ready ' . $filesReady);
+
+
+
 endforeach;
 unset($packagesDirs);
 // Chekc if all dependiendiences exists
 foreach ($packagesList as $packageName => $packageData):
+
+
+
 	if (isset($packageData['require'])):
 		foreach ($packageData['require'] as $dependiencyName => $dependiencyVersion):
 			// Dependency name not exists
@@ -569,6 +679,22 @@ else:
 	endforeach;
 
 endif;
+
+
+if (defined('clLoadConfig')):
+	foreach (clLoadConfig as $packageName => $packageData):
+		if (isset($packagesList[strtolower($packageName)])):
+			foreach ($packageData as $packageData_key => $packageData_value):
+				$packagesList[strtolower($packageName)]['config'][$packageData_key] = $packageData_value;
+				cl::log('cl', 'info', 'Codelab [clLoadConfig] overwriten [' . $packageName. '][config]['.$packageData_key.'][' . $packageData_value .']');
+			endforeach;
+		else:			// error - package dont exists
+			cl::log('cl', 'error', 'Codelab [clLoadConfig] package not exists [' . $packageName. ']');
+		endif;
+	endforeach;
+endif;
+
+
 DEFINE('clPackages', $packagesList);
 
 
@@ -620,6 +746,6 @@ $start = $time[1] + $time[0];
 $time = explode(' ', clLoad_end);
 $finish = $time[1] + $time[0];
 $total_time = round(($finish - $start), 4);
-cl::log('cl', 'info', 'System loaded in ' . $total_time . 's');
+cl::log('cl', 'info', 'Codelab load time [' . $total_time . 's]');
 
 

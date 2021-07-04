@@ -16,4 +16,5 @@ if ($packageConfig['enabled'] == true):
         endif;
     endif;
     DEFINE('lang', strtolower(pageQuery[0]));
+
 endif;

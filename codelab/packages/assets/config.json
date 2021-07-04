@@ -1,3 +1,5 @@
 {
-    "filesValidation": false
+    "filesValidation": false,
+    "stylesMinimize": false,
+    "scriptsMinimize": false
 }

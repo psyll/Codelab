@@ -1,4 +1,6 @@
 {
     "login_time": 15,
-    "login_attempts": 15
+    "login_attempts": 15,
+    "password_length_min": 8,
+    "password_length_max": 160
 }

@@ -1,3 +1,5 @@
 {
-    "path": "../theme/view"
+    "init": true,
+    "themeName": "rocket",
+    "themePath": "../themes/"
 }

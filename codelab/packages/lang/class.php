@@ -11,6 +11,38 @@
 namespace cl;
 
 class lang {
+    public static function pageURL($id_or_alias)
+    {
+            if ($id_or_alias == 'index'):
+                return '/' . lang;
+            endif;
+
+
+            if (is_numeric($id_or_alias)):
+                $catches = json_decode(pages[$id_or_alias]['catch']);
+                foreach ($catches as $catch):
+                    $catch = trim($catch, '/');
+                    $catchArray = explode('/', $catch);
+                    if ($catchArray[0] == lang):
+                        return '/' . $catch;
+                    endif;
+                endforeach;
+            elseif (is_string($id_or_alias)):
+                foreach (pages as $pageID => $pageData):
+                   if ($pageData['alias'] == $id_or_alias):
+                    $catches = json_decode(pages[$pageID]['catch']);
+                    foreach ($catches as $catch):
+                        $catch = trim($catch, '/');
+                        $catchArray = explode('/', $catch);
+                        if ($catchArray[0] == lang):
+                            return '/' . $catch;
+                        endif;
+                    endforeach;
+                   endif;
+                 endforeach;
+            endif;
+            return '/' .lang;
+    }
     public static function display($translations)
     {
         $translations = array_change_key_case($translations);
@@ -19,7 +51,7 @@ class lang {
         if (isset($translations[$code])):
             return $translations[$code];
         else:
-            echo 'clLang::display error';
+            return 'lang::display error';
         endif;
     }
 }
