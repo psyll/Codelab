@@ -76,7 +76,7 @@ use cl;
 				endif;
             endforeach;
 		   	usort($assetsStorage, "self::assetsListOrder");
-			if ($type == null OR $type = 'style'):
+			if ($type == null OR $type == 'style'):
 				foreach ($assetsStorage as $key => $data):
 				if ($data['type'] == 'style'):
 						echo '<link rel="stylesheet" href="' . $data['url'] . '">' . PHP_EOL;
@@ -84,7 +84,7 @@ use cl;
 				endif;
 				endforeach;
 			endif;
-			if ($type == null OR $type = 'script'):
+			if ($type == null OR $type == 'script'):
 				foreach ($assetsStorage as $key => $data):
 					if ($data['type'] == 'script'):
 						echo '<script src="' . $data['url'] . '"></script>' . PHP_EOL;
