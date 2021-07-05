@@ -65,6 +65,8 @@ class cl {
 			print_r(cl::packageConfigRead('lang')['languages']);
 			echo '</pre>';
 		*/
+
+
 		public static function packageConfigRead(string $packageDir)
 		{
 			// Create packages path
