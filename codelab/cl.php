@@ -92,7 +92,7 @@ class cl {
 		// In ##################################################################
 		public static function requireAjax()
 		{
-         if(empty($_SERVER['HTTP_X_REQUESTED_WITH']) OR strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest'):
+         if(!self::isAjax()):
             die('Codelab Error: Ajax required');
          endif;
 		}
@@ -100,13 +100,14 @@ class cl {
 		public static function isAjax()
 		{
          if(empty($_SERVER['HTTP_X_REQUESTED_WITH']) OR strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest'):
-            die('Codelab Error: Ajax required');
+            return false;
          endif;
+		 return true;
 		}
 				// In ##################################################################
 				public static function requirePost()
 				{
-				 if ($_SERVER['REQUEST_METHOD'] == 'POST'):
+				 if (!self::isPost()):
 					die('Codelab Error: POST required');
 				 endif;
 				}
