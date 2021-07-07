@@ -3,6 +3,7 @@
 **/.secret/
 **/.test/
 codelab/logs/*
-codelab/packages/*/config.dev.json
-
 codelab/config.dev.json
+codelab/packages/*/config.dev.json
+codelab/packages/cron/logs/*
+
