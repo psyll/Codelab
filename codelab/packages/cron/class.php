@@ -35,7 +35,7 @@
 				}
 				$logsPath = $logsDirPath . DIRECTORY_SEPARATOR . date("Y-m-d") . '-cron.log';
 				$fp = fopen($logsPath, 'a');//opens file in append mode
-				fwrite($fp, date('Y-m-d H:i:s') . '|' . $message . PHP_EOL);
+				fwrite($fp, date('Y-m-d H:i:s') . '|' . self::logIP() . "|" . $message . PHP_EOL);
 				fclose($fp);
 			endif;
 		}
@@ -102,7 +102,7 @@
 		}
 		public static function work()
 		{
-			self::log('#### Cron work started by ' . self::logIP() . ' ####');
+			self::log('######### CRON INIT #########');
 			$filestamp= date("Y-m-d");
 			$cronJOBS = self::jobs();
 
@@ -111,7 +111,7 @@
 					$cronJobFile = clPath . DIRECTORY_SEPARATOR .  trim($jobData['file'], '/');
 					include($cronJobFile);
 					$cronJOBS[$key]['_done'] = cl\datetime::now();
-					self::log('job included [' . $key . ']');
+					self::log('[' . $key . '] included [' . trim($jobData['file'], '/') .']');
 				endif;
 				unset($cronJOBS[$key]['do']);
 			endforeach;
