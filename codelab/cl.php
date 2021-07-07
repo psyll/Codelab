@@ -12,7 +12,7 @@
 // ##### Load start
 DEFINE('clLoad_start', microtime());
 // ##### Set version
-DEFINE('clVersion', '1.0.0');
+DEFINE('clVersion', '1.0');
 // ##### Set codename
 DEFINE('clCodename', 'alpha');
 // ##### Define codelab path
