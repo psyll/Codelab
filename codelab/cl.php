@@ -147,13 +147,13 @@ class cl {
 		echo '<div class="clLogs" style="background:#1f2f49;border:1px solid black;padding:4px;color:white;font-family:Courier New,monospace;font-size:14px;line-height:16px;margin:0">';
 		echo '<div class="clLogs_header" style="color:white;background:#101826;padding:4px 8px;font-size:22px;line-height:22px;">Codelab output</div>';
 			foreach ($logs as $key => $value):
-				echo '<div class="clLogs_log" style="';
+				echo '<div class="clLogs_log clLogs_log_' . $value['type'] . '" style="';
 					if ($value['type'] == 'success'):
 						echo 'background:#24491f;';
 					elseif ($value['type'] == 'error'):
 						echo 'background:#511c1c;';
 					elseif ($value['type'] == 'warning'):
-						echo 'background:orange;';
+						echo 'background:#77390c;';
 					endif;
 				echo 'color:white;display:grid;grid-template-columns:1fr 1fr 3fr;border-bottom:1px solid #1b2942;padding:2px 4px;">';
 					echo '<div class="clLogs_source" style="font-weight:900">' . $value['source'] . '</div>';
@@ -452,7 +452,7 @@ if (defined('clLoad')):
 		foreach (clLoad as $packageName):
 			$loadPackages .= '[' . $packageName . ']';
 		 endforeach;
-		 cl::log('cl', 'info', '[clLoad] defined. Load only packages: ' . $loadPackages );
+		 cl::log('cl', 'info', '[clLoad] defined. Load packages: ' . $loadPackages );
 	endif;
 endif;
 // Create packages path

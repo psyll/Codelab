@@ -51,7 +51,7 @@ if (clPackages['pages']['config']['init'] == true):
                     if (strpos($catch, '["') !== false AND strpos($catch, '"]') !== false):
                         $catch = json_decode($catch, true);
                     endif;
-                    if ($catch == 'index' OR $catch == 'error'):
+                    if ($catch == 'index' OR $catch == 'error' OR $catch == 'offline'):
                         unset($pages[$key]);
                     elseif (!is_array($catch)):
                         cl::log('pages', 'error', ' [' .$pagesData['id'] . '] catch invalid  [' . $pagesData['catch'] . ']') ;

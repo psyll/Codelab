@@ -1,0 +1,8 @@
+{
+    "init": true,
+    "file": "/packages/cron/jobs.json",
+    "logs": {
+        "enabled": true,
+        "folder": "/packages/cron/logs"
+    }
+}
