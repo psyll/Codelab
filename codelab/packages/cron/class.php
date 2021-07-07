@@ -101,7 +101,7 @@
 		}
 		public static function work()
 		{
-			self::log('######### CRON INIT #########');
+			self::log('INIT');
 			$filestamp= date("Y-m-d");
 			$cronJOBS = self::jobs();
 
