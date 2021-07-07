@@ -33,7 +33,7 @@
 				if (!file_exists($logsDirPath)) {
 				mkdir($logsDirPath, 0777, true);
 				}
-				$logsPath = $logsDirPath . DIRECTORY_SEPARATOR . date("Y-m-d") . '-cron.log';
+				$logsPath = $logsDirPath . DIRECTORY_SEPARATOR . clPackages['cron']['config']['logs']['filenamePrefix']  . date("Y-m-d") . clPackages['cron']['config']['logs']['filenameSuffix'] . '.log';
 				$fp = fopen($logsPath, 'a');//opens file in append mode
 				fwrite($fp, date('Y-m-d H:i:s') . '|' . self::logIP() . "|" . $message . PHP_EOL);
 				fclose($fp);
