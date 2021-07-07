@@ -63,7 +63,6 @@
 						unset($cronJOBS[$key]);
 						cl::log('cron', 'warning', 'job disabled ['.$key.']');
 						continue;
-
 				endif;
 				// Check if have every
 				if (@$value['every'] == ''):
@@ -109,9 +108,10 @@
 			foreach ($cronJOBS  as $key => $jobData):
 				if ($jobData['do'] == true):
 					$cronJobFile = clPath . DIRECTORY_SEPARATOR .  trim($jobData['file'], '/');
+					$wa_cronStatus = 'unknown';
 					include($cronJobFile);
 					$cronJOBS[$key]['_done'] = cl\datetime::now();
-					self::log('[' . $key . '] included [' . trim($jobData['file'], '/') .']');
+					self::log('' . $key . '|' . trim($jobData['file'], '/') .'|' . $wa_cronStatus);
 				endif;
 				unset($cronJOBS[$key]['do']);
 			endforeach;

@@ -29,6 +29,7 @@
  -  `cl::isAjax()`
  -  `cl::requirePost()`
  -  `cl::isPost()`
+ -  `cl::headerStatus(int $statusCode)`;
  -  `cl::headers(string $headerName = null)`
  -  `cl::log(string $source, string $type, string $message)`
  -  `cl::logs()`

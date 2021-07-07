@@ -119,6 +119,72 @@ class cl {
          endif;
          return false;
 		}
+		public static function headerStatus(int $statusCode) {
+			static $status_codes = null;
+
+			if ($status_codes === null) {
+				$status_codes = array (
+					100 => 'Continue',
+					101 => 'Switching Protocols',
+					102 => 'Processing',
+					200 => 'OK',
+					201 => 'Created',
+					202 => 'Accepted',
+					203 => 'Non-Authoritative Information',
+					204 => 'No Content',
+					205 => 'Reset Content',
+					206 => 'Partial Content',
+					207 => 'Multi-Status',
+					300 => 'Multiple Choices',
+					301 => 'Moved Permanently',
+					302 => 'Found',
+					303 => 'See Other',
+					304 => 'Not Modified',
+					305 => 'Use Proxy',
+					307 => 'Temporary Redirect',
+					400 => 'Bad Request',
+					401 => 'Unauthorized',
+					402 => 'Payment Required',
+					403 => 'Forbidden',
+					404 => 'Not Found',
+					405 => 'Method Not Allowed',
+					406 => 'Not Acceptable',
+					407 => 'Proxy Authentication Required',
+					408 => 'Request Timeout',
+					409 => 'Conflict',
+					410 => 'Gone',
+					411 => 'Length Required',
+					412 => 'Precondition Failed',
+					413 => 'Request Entity Too Large',
+					414 => 'Request-URI Too Long',
+					415 => 'Unsupported Media Type',
+					416 => 'Requested Range Not Satisfiable',
+					417 => 'Expectation Failed',
+					422 => 'Unprocessable Entity',
+					423 => 'Locked',
+					424 => 'Failed Dependency',
+					426 => 'Upgrade Required',
+					500 => 'Internal Server Error',
+					501 => 'Not Implemented',
+					502 => 'Bad Gateway',
+					503 => 'Service Unavailable',
+					504 => 'Gateway Timeout',
+					505 => 'HTTP Version Not Supported',
+					506 => 'Variant Also Negotiates',
+					507 => 'Insufficient Storage',
+					509 => 'Bandwidth Limit Exceeded',
+					510 => 'Not Extended'
+				);
+			}
+
+			if ($status_codes[$statusCode] !== null):
+				$status_string = $statusCode . ' ' . $status_codes[$statusCode];
+				header($_SERVER['SERVER_PROTOCOL'] . ' ' . $status_string, true, $statusCode);
+				cl::log('cl', 'success', 'header status set as [' .  $status_string . ']') ;
+			else:
+				cl::log('cl', 'error', 'header status not allowed [' .  $statusCode . ']') ;
+			endif;
+		}
 	public static function headers(string $headerName = null){
 		$headers = [];
 		if ($headerName == null):
@@ -445,7 +511,9 @@ cl::log('cl', 'info', '[clPath] defined: ' . clPath);
 // ##### Packages
 // ################################################
 if (defined('clLoad')):
-	if (!is_array(clLoad)):
+	if (clLoad == false):
+		cl::log('cl', 'info', '[clLoad] defined [false]');
+	elseif (!is_array(clLoad)):
 		cl::log('cl', 'info', '[clLoad] is not valid array [' . clPath . ']');
 	else:
 		$loadPackages = '';
@@ -498,7 +566,7 @@ foreach ($packagesDirs as $packageDir):
 				cl::log($packageDirname, 'error', $packageErrorMessage);
 				$packageErrors[] = $packageErrorMessage;
 			endif;
-			if (defined('clLoad') AND !in_array(strtolower($package_JSON['name']), clLoad)):
+			if (defined('clLoad') AND (is_array(clLoad) AND !in_array(strtolower($package_JSON['name']), clLoad) OR clLoad == false)):
 				unset($packagesList[$packageDirname]);
 				continue;
 			endif;
