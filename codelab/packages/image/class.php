@@ -7,24 +7,15 @@
 		This file is part of the Codelab package.
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
+namespace cl;
+class image {
+public static function checkGD(bool $throwException = true): bool
+    {
+        // Require GD library
+        if(extension_loaded('gd')){
+            return true;
+        }
 
-	namespace cl;
-	class datetime {
-
-
-
-		public static function now()
-		{
-			return  date('Y-m-d H:i:s');
-		}
-		public static function date()
-		{
-			return  date('Y-m-d');
-		}
-		public static function time()
-		{
-			return  date('H:i:s');
-		}
-	}
-
-
+        return false;
+    }
+}

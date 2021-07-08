@@ -9,17 +9,6 @@
 	*/
 namespace cl;
 	class valid {
-
-
-
-		// In ##################################################################
-		public static function date($date)
-		{
-			$time = strtotime((string)$date);
-			return $time > 0;
-		}
-
-
 		// In ##################################################################
 		public static function email($string)
 		{
@@ -109,7 +98,31 @@ namespace cl;
 
 
 
+// * Is the current value even?
+public static function even(int $number): bool
+{
+	return ($number % 2 === 0);
+}
+
+/**
+* Is the current value negative; less than zero.
+*/
+public static function negative(float $number): bool
+{
+return ($number < 0);
+}
+
+
+/**
+* Is the current value odd?
+*/
+public static function odd(int $number): bool
+{
+return !self::even($number);
+}
+
+
+
 
 
 	}
-

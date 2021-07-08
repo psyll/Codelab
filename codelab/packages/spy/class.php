@@ -15,12 +15,15 @@ class spy {
     public static function ip()
     {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            return $_SERVER['HTTP_CLIENT_IP'];
+            return  $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_REAL_IP'])) {
+            return $_SERVER['HTTP_X_REAL_IP'];
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             return $_SERVER['HTTP_X_FORWARDED_FOR'];
         } else {
             return $_SERVER['REMOTE_ADDR'];
         }
+        return false;
     }
     public static function netMask(string $ipAddress = null)
     {
