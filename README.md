@@ -1,4 +1,4 @@
-# Codelab v1.0
+# Codelab
 
 
 ![Codelab Logo](https://raw.githubusercontent.com/psyll/Codelab/main/docs/assets/logo.png)
