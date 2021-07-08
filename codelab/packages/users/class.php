@@ -9,7 +9,7 @@
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
 namespace cl;
-
+use cl;
 use clDB;
 class users {
 
@@ -64,6 +64,11 @@ private static function _loginResponse($status, $message = null, $teamID = null,
     endif;
     return (json_encode(array('status' => $status, 'message' => $message)));
 }
+
+
+
+
+
 public static function login($email, $password){
     if (self::logged()):
         return (self::_loginResponse(false, 'already logged', self::id(), false));
@@ -108,7 +113,7 @@ public static function login($email, $password){
     // Check if user exists
         $param = array(
           'table' => 'users',
-          'columns' => ['id', 'active', 'email', 'username', 'password', 'preferences'],
+          'columns' => ['id', 'active', 'email', 'password'],
           'where' => 'email="' . clDB::escape($email) . '"',
           'limit' => 1,
         );
@@ -127,13 +132,10 @@ public static function login($email, $password){
                 endif;
                 // Logged
                 $token = self::_loginTokenCreate($userID);
-                $preferences = json_decode($results['preferences'], true);
+
                 session::set('user', array(
                     'id' => $results['id'],
-                    'email' => $results['email'],
-                    'username' => $results['username'],
                     'token' => $token,
-                    'preferences' => $preferences,
                 ));
                 $update = array(
                     'token' => $token
@@ -171,7 +173,7 @@ public static function logged(){
     // Check if user exists
     $param = array(
           'table' => 'users',
-          'columns' => array('id', 'token',  'email', 'active', 'preferences', 'isDev'),
+          'columns' => ["id", "token", "active"],
           'where' => 'id="' . clDB::escape(@$tokenDecode['id']) . '"',
           'limit' => 1,
     );
@@ -182,24 +184,55 @@ public static function logged(){
     if ($token == '' OR $results['token'] == '' OR $token != $results['token'] OR $results['active'] != '1'):
         return false;
     endif;
-    return $results;
+    return true;
 }
+public static function data($userID = null){
+    if ($userID == null):
+        $userID = self::id();
+    endif;
+    $param = array(
+        'table' => 'users',
+        'columns' => "*",
+        'where' => 'id="' . clDB::escape(@$userID) . '"',
+        'limit' => 1,
+  );
+  $results = clDB::get($param, true);
+  $prefereces = json_decode($results['preferences'], true);
+  if (!is_array($prefereces)):
+    $prefereces = [];
+  endif;
+  arsort($prefereces);
+  $results['preferences'] = $prefereces;
+  $accessPrivate = json_decode($results['accessPrivate'], true);;
+  if (!is_array($accessPrivate)):
+    $accessPrivate = [];
+  endif;
+  asort($accessPrivate);
+$results['access']['private'] = $accessPrivate;
 
+unset($results['accessPrivate']);
+$paramGroup = array(
+   'table' => 'users_groups',
+   'columns' => ['id', 'access'], // OR active,email // OR * = blank
+   'where' => 'id="' . $results['group'] . '"',
+   'limit' => 1,
+);
+$resultsGroup = clDB::get($paramGroup, true);
+$groupAccess = json_decode($resultsGroup['access'], true);
+if (!is_array($groupAccess)):
+    $groupAccess = [];
+  endif;
+asort($groupAccess);
+$results['access']['group'] = $groupAccess;
+$accessTotal = array_merge($accessPrivate, $groupAccess);
+if (!is_array($accessTotal)):
+    $accessTotal = [];
+  endif;
+$results['access']['total'] = $accessTotal;
 
-public static function email(){
-    if (isset(session::get('user')['email'])){
-         return session::get('user')['email'];
-    } else{
-        return false;
-    }
- }
- public static function username(){
-    if (isset(session::get('user')['username'])){
-         return session::get('user')['username'];
-    } else{
-        return session::get('user')['email'];
-    }
- }
+asort($results['access']['total']);
+  return $results;
+}
 
 public static function id(){
     if (isset(session::get('user')['id'])){
@@ -209,10 +242,18 @@ public static function id(){
     }
  }
 
- public static function preference($preferenceName){
-    $user = session::get('user');
-    if (isset($user['preferences'][$preferenceName])){
-         return $user['preferences'][$preferenceName];
+ public static function preference($preferenceName, $userID = null){
+    if ($userID == null):
+        $userPreferences = cl\users::data()['preferences'];
+    else:
+        $userPreferences = cl\users::data($userID)['preferences'];
+    endif;
+
+
+
+
+    if (isset($userPreferences[$preferenceName])){
+         return $userPreferences[$preferenceName];
     } else{
         return false;
     }

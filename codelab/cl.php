@@ -48,12 +48,20 @@ if ($clConfigSource != false):
 	endif;
 endif;
 DEFINE('clConfig', $clConfig);
+
+
 // ################################################
 // ##### Session start
 // ################################################
 if (session_status() === PHP_SESSION_NONE):
     session_start();
 endif;
+
+
+
+
+
+
 // ################################################
 // ##### Function
 // ################################################
