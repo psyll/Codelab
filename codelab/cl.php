@@ -1,4 +1,5 @@
 <?php
+// declare(strict_types=1); ########## DONT STOP ON FIRS ERROR
 /*
 	CODELAB
 	© Jaroslaw Szulc <jarek@psyll.com>

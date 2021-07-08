@@ -9,6 +9,17 @@
 	*/
 namespace cl;
 	class valid {
+
+
+
+		// In ##################################################################
+		public static function date($date)
+		{
+			$time = strtotime((string)$date);
+			return $time > 0;
+		}
+
+
 		// In ##################################################################
 		public static function email($string)
 		{

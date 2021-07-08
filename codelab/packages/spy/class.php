@@ -22,6 +22,28 @@ class spy {
             return $_SERVER['REMOTE_ADDR'];
         }
     }
+    public static function netMask(string $ipAddress = null)
+    {
+        if ($ipAddress == null):
+            $ipAddress = self::ip();
+        endif;
+        $ipAddressLong = ip2long($ipAddress);
+
+        $maskLevel1 = 0x80000000;
+        $maskLevel2 = 0xC0000000;
+        $maskLevel3 = 0xE0000000;
+
+        $resultMask = 0xFFFFFFFF;
+        if (($ipAddressLong & $maskLevel1) === 0) {
+            $resultMask = 0xFF000000;
+        } elseif (($ipAddressLong & $maskLevel2) === $maskLevel1) {
+            $resultMask = 0xFFFF0000;
+        } elseif (($ipAddressLong & $maskLevel3) === $maskLevel2) {
+            $resultMask = 0xFFFFFF00;
+        }
+
+        return long2ip($resultMask) ?: null;
+    }
     public static function browser(){
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
         $browsers = array(
