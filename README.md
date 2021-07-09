@@ -19,53 +19,30 @@
 | Function | | Require| Description |
 |-------------|-------------|-------------|-------------|
 | assets |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|Managing scripts and styles asset of the application |
-| cron |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|datetime|scripts and styles asset of the application |
-| assets |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|Managing scripts and styles asset of the application |
-| cron |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|datetime, sescions, session|scripts and styles asset of the application |
+| cron |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/cron)||description|
+| crypt |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/crypt)||description|
+| csv |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/csv)||description|
+| datetime |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/datetime)||description|
+| fileLOG |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/fileLOG)||description|
+| filesys |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/filesys)||description|
+| format |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/format)||description|
+| image |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/image)||description|
+| ip-allow |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/ip-allow)||description|
+| lang |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/lang)|pages|description|
+| markdown |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/markdown)||description|
+| math |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/math)||description|
+| pages |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/pages)||description|
+| psyll_api |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/psyll_api)||description|
+| redirect |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/redirect)||description|
+| registry |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/registry)||description|
+| sections |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/sections)|pages|description|
+| session |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)||description|
+| spy |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/spy)||description|
+| str |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/str)||description|
+| upload |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/upload)||description|
+| users |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/users)|crypt,spy,session|description|
+| valid |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/valid)||description|
 
-| assets |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|Managing scripts and styles asset of the application |
-| cron |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|datetime|scripts and styles asset of the application |
-
-
-### `assets`
-
-<small>[https://github.com/psyll/Codelab/blob/main/codelab/packages/assets](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)</small>
-
-
-Require: [session](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)
-
-Server session support.
-
----
-
-### [cron](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)
-
-Require: [session](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)
-
-
- -  [cron](https://github.com/psyll/Codelab/blob/main/codelab/packages/cron)
- -  [crypt](https://github.com/psyll/Codelab/blob/main/codelab/packages/crypt)
- -  [csv](https://github.com/psyll/Codelab/blob/main/codelab/packages/csv)
- -  [datetime](https://github.com/psyll/Codelab/blob/main/codelab/packages/datetime)
- -  [fileLOG](https://github.com/psyll/Codelab/blob/main/codelab/packages/fileLOG)
- -  [filesys](https://github.com/psyll/Codelab/blob/main/codelab/packages/filesys)
- -  [format](https://github.com/psyll/Codelab/blob/main/codelab/packages/format)
- -  [image](https://github.com/psyll/Codelab/blob/main/codelab/packages/image)
- -  [ip-allow](https://github.com/psyll/Codelab/blob/main/codelab/packages/ip-allow)
- -  [lang](https://github.com/psyll/Codelab/blob/main/codelab/packages/lang)
- -  [markdown](https://github.com/psyll/Codelab/blob/main/codelab/packages/markdown)
- -  [math](https://github.com/psyll/Codelab/blob/main/codelab/packages/math)
- -  [pages](https://github.com/psyll/Codelab/blob/main/codelab/packages/pages)
- -  [psyll_api](https://github.com/psyll/Codelab/blob/main/codelab/packages/psyll_api)
- -  [redirect](https://github.com/psyll/Codelab/blob/main/codelab/packages/redirect)
- -  [registry](https://github.com/psyll/Codelab/blob/main/codelab/packages/registry)
- -  [sections](https://github.com/psyll/Codelab/blob/main/codelab/packages/sections)
- -  [session](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)
- -  [spy](https://github.com/psyll/Codelab/blob/main/codelab/packages/spy)
- -  [str](https://github.com/psyll/Codelab/blob/main/codelab/packages/str)
- -  [upload](https://github.com/psyll/Codelab/blob/main/codelab/packages/upload)
- -  [users](https://github.com/psyll/Codelab/blob/main/codelab/packages/users)
- -  [valid](https://github.com/psyll/Codelab/blob/main/codelab/packages/valid)
 
 ## Main Codelab defines
 

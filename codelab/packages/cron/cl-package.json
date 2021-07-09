@@ -6,8 +6,5 @@
         "email": "jarek@psyll.com",
         "url": "https://psyll.com/profile/jarek"
     },
-    "require": {
-        "datetime": "1.0"
-    },
     "copyright": "© 2021 Psyll.com All Rights Reserved"
 }
