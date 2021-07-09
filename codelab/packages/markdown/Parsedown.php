@@ -1503,14 +1503,14 @@ class Parsedown
             );
         }
 
-        return;
+        return false;
     }
 
     protected function inlineStrikethrough($Excerpt)
     {
         if ( ! isset($Excerpt['text'][1]))
         {
-            return;
+            return false;
         }
 
         if ($Excerpt['text'][1] === '~' and preg_match('/^~~(?=\S)(.+?)(?<=\S)~~/', $Excerpt['text'], $matches))
