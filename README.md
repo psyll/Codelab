@@ -55,7 +55,7 @@
 - `clPackages` - Codelab packages list
 - `clLoad_end` - Load end in microtime
 
-# Classes and functions
+# All classes and functions list
 
 ## `cl` class
 
