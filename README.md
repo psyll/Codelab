@@ -21,8 +21,8 @@
 | `assets`|1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|Manage scripts and styles assets. Compres, minimize nad cache application resources|
 | `cron`|1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/cron)||Scheduling and automation of tasks|
 | `crypt` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/crypt)||Two-way data encryption using various cipher method, key and initialization verctors|
-| `csv` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/csv)||operations on csv files|
-| `datetime` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/datetime)||time and date management|
+| `csv` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/csv)||Operations on csv files|
+| `datetime` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/datetime)||Time and date management|
 | `fileLOG` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/fileLOG)||Collecting logs in files on the server|
 | `filesys` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/filesys)||Basic file and folder operations |
 | `format` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/format)||Formatting texts and numbers to various formats|
