@@ -512,8 +512,8 @@ class Parsedown
 
             unset($Block['interrupted']);
         }
-
-        if (($len = strspn($Line['text'], $Block['char'])) >= $Block['openerLength']
+        $len = strspn($Line['text'], $Block['char']);
+        if (($len) >= $Block['openerLength']
             and chop(substr($Line['text'], $len), ' ') === ''
         ) {
             $Block['element']['element']['text'] = substr($Block['element']['element']['text'], 1);
