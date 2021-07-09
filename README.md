@@ -18,7 +18,7 @@
 
 | Function | | Require| Description |
 |-------------|-------------|-------------|-------------|
-| **assets** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|managing, compression and minimization of scripts and styles asset of the application|
+| **assets** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|Manage scripts and styles assets. Compres, minimize nad cache application resources|
 | **cron** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/cron)||scheduling and automation of tasks|
 | **crypt** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/crypt)||string encryption using various cipher method, key and initialization verctor|
 | **csv** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/csv)||operations on csv files |
