@@ -16,11 +16,16 @@
 
 ## Packages
 
-| Name        | Require           | Description  | Functions |
-| ------------- |-------------|-----|-----|
-| [assets](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)| [session](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)|Server session management||
-| [cron](https://github.com/psyll/Codelab/blob/main/codelab/packages/cron)| [datetime](https://github.com/psyll/Codelab/blob/main/codelab/packages/datetime)|Server session management||
-###
+| Function | | Require| Description |
+|-------------|-------------|-------------|-------------|
+| assets |[open](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|Managing scripts and styles asset of the application |
+| assets |[open](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|Managing scripts and styles asset of the application |
+
+
+### `assets`
+
+<small>[https://github.com/psyll/Codelab/blob/main/codelab/packages/assets](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)</small>
+
 
 Require: [session](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)
 
