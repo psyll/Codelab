@@ -16,10 +16,10 @@
 
 # Packages list
 
-| Function | Version | | Require| Description |
-|-------------|-------------|-------------|-------------|
-| `assets` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|Manage scripts and styles assets. Compres, minimize nad cache application resources|
-| `cron` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/cron)||Scheduling and automation of tasks|
+| Function | Version || Require| Description |
+|-------------|-------------|-------------|-------------|-------------|
+| `assets`|1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|Manage scripts and styles assets. Compres, minimize nad cache application resources|
+| `cron`|1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/cron)||Scheduling and automation of tasks|
 | `crypt` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/crypt)||Two-way data encryption using various cipher method, key and initialization verctors|
 | `csv` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/csv)||operations on csv files|
 | `datetime` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/datetime)||time and date management|
