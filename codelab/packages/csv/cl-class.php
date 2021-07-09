@@ -24,8 +24,8 @@ class csv
 
         $headerKeys = [];
         $rowCounter = 0;
-
-        if (($handle = fopen($csvFile, 'rb')) !== false) {
+        $handle = fopen($csvFile, 'rb');
+        if (($handle) !== false) {
             while (($row = fgetcsv($handle, self::LENGTH_LIMIT, $delimiter, $enclosure)) !== false) {
                 $row = (array)$row;
                 if ($rowCounter === 0 && $hasHeader) {
