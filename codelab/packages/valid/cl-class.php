@@ -10,7 +10,7 @@
 namespace cl;
 	class valid {
 		// In ##################################################################
-		public static function email($string)
+		public static function email(string $string)
 		{
 			if (filter_var($string, FILTER_VALIDATE_EMAIL))
 			{
@@ -22,7 +22,7 @@ namespace cl;
 		}
 
 		// In ##################################################################
-		public static function md5hash($md5)
+		public static function md5hash(string $md5)
 		{
 			if (preg_match('/^[a-f0-9]{32}$/', $md5) == true)
 			{
@@ -34,7 +34,7 @@ namespace cl;
 		}
 
 		// In ##################################################################
-		public static function ip($ip)
+		public static function ip(string $ip)
 		{
 			if (filter_var($ip, FILTER_VALIDATE_IP))
 			{
@@ -46,7 +46,7 @@ namespace cl;
 		}
 
 		// In ##################################################################
-		public static function url($url)
+		public static function url(string $url)
 		{
 			$validation = filter_var($url, FILTER_VALIDATE_URL);
 
@@ -57,7 +57,7 @@ namespace cl;
 		}
 
 		// In ##################################################################
-		public static function domain($url)
+		public static function domain(string $url)
 		{
 			if(filter_var(gethostbyname($url), FILTER_VALIDATE_IP))
 			{
@@ -69,7 +69,7 @@ namespace cl;
 
 
 		// In ##################################################################
-		public static function pesel($pesel)
+		public static function pesel(string $pesel)
 		{
 			$a = substr($pesel, 0, 1);
 			$b = substr($pesel, 1, 1);
@@ -104,14 +104,6 @@ public static function even(int $number): bool
 	return ($number % 2 === 0);
 }
 
-/**
-* Is the current value negative; less than zero.
-*/
-public static function negative(float $number): bool
-{
-return ($number < 0);
-}
-
 
 /**
 * Is the current value odd?
@@ -122,7 +114,55 @@ return !self::even($number);
 }
 
 
+    public static function prime(int $number): bool
+    {
+        //-n, 0, 1 not allowed
+        if ($number < 2)
+            return false;
 
+        //check for single digit primes
+        if (in_array($number, array(2, 3, 5, 7)))
+            return true;
+
+        //prime numbers end in 1, 3, 7 or 9 no matter how long they are
+        if (!in_array(substr($number, -1), array(1, 3, 7, 9)))
+            return false;
+
+        //if the number is divisible by 3 or 7 (very common) then it's not prime
+        if ($number%3 == 0 || $number%7 == 0)
+            return false;
+
+        /*
+         * Now find all the numbers up to the square root of potential prime
+         * number and test if they divide into it
+         */
+
+        //the primes array holds prime numbers to test if they divide into num
+        $primes = array(2, 3, 5, 7);
+
+        for ($i = 11, $limit = sqrt($number); $i <= $limit; $i++) {
+
+            //if the number is divisible by a prime number then it's not prime
+            $isPrime = true;
+            foreach ($primes AS $prime) {
+                if ($i%$prime == 0) {
+                    $isPrime = false;
+                    break;
+                }
+            }
+
+            //check if the increment goes into our number
+            if ($isPrime) {
+                if ($number%$i == 0)
+                    return false;
+                $primes[] = $i;
+            }
+
+        }
+
+        //$num is prime - divisible by itself and 1 only
+        return true;
+    }
 
 
 	}

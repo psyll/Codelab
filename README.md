@@ -228,3 +228,6 @@
  - `cl\valid::url(string $url)`
  - `cl\valid::domain(string $url)`
  - `cl\valid::pesel(string $pesel)`
+ - `cl\valid::even(int $number)`
+ - `cl\valid::odd(int $number)`
+ - `cl\valid::prime(int $number)`
