@@ -13,6 +13,50 @@
 
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/psyll/Codelab)
 
+
+## Packages
+
+| Name        | Require           | Description  | Functions |
+| ------------- |-------------|-----|-----|
+| [assets](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)| [session](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)|Server session management||
+| [cron](https://github.com/psyll/Codelab/blob/main/codelab/packages/cron)| [datetime](https://github.com/psyll/Codelab/blob/main/codelab/packages/datetime)|Server session management||
+###
+
+Require: [session](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)
+
+Server session support.
+
+---
+
+### [cron](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)
+
+Require: [session](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)
+
+
+ -  [cron](https://github.com/psyll/Codelab/blob/main/codelab/packages/cron)
+ -  [crypt](https://github.com/psyll/Codelab/blob/main/codelab/packages/crypt)
+ -  [csv](https://github.com/psyll/Codelab/blob/main/codelab/packages/csv)
+ -  [datetime](https://github.com/psyll/Codelab/blob/main/codelab/packages/datetime)
+ -  [fileLOG](https://github.com/psyll/Codelab/blob/main/codelab/packages/fileLOG)
+ -  [filesys](https://github.com/psyll/Codelab/blob/main/codelab/packages/filesys)
+ -  [format](https://github.com/psyll/Codelab/blob/main/codelab/packages/format)
+ -  [image](https://github.com/psyll/Codelab/blob/main/codelab/packages/image)
+ -  [ip-allow](https://github.com/psyll/Codelab/blob/main/codelab/packages/ip-allow)
+ -  [lang](https://github.com/psyll/Codelab/blob/main/codelab/packages/lang)
+ -  [markdown](https://github.com/psyll/Codelab/blob/main/codelab/packages/markdown)
+ -  [math](https://github.com/psyll/Codelab/blob/main/codelab/packages/math)
+ -  [pages](https://github.com/psyll/Codelab/blob/main/codelab/packages/pages)
+ -  [psyll_api](https://github.com/psyll/Codelab/blob/main/codelab/packages/psyll_api)
+ -  [redirect](https://github.com/psyll/Codelab/blob/main/codelab/packages/redirect)
+ -  [registry](https://github.com/psyll/Codelab/blob/main/codelab/packages/registry)
+ -  [sections](https://github.com/psyll/Codelab/blob/main/codelab/packages/sections)
+ -  [session](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)
+ -  [spy](https://github.com/psyll/Codelab/blob/main/codelab/packages/spy)
+ -  [str](https://github.com/psyll/Codelab/blob/main/codelab/packages/str)
+ -  [upload](https://github.com/psyll/Codelab/blob/main/codelab/packages/upload)
+ -  [users](https://github.com/psyll/Codelab/blob/main/codelab/packages/users)
+ -  [valid](https://github.com/psyll/Codelab/blob/main/codelab/packages/valid)
+
 ## Main Codelab defines
 
 - `clLoad_start` - Load start in microtime
@@ -53,30 +97,3 @@
  - `clDB::delete(string $table, $id)`
  - `clDB::insertID()`
  - `clDB::update(string $table, string $where, array $fields)`
-
-## Packages
-
- -  [assets](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)
- -  [cron](https://github.com/psyll/Codelab/blob/main/codelab/packages/cron)
- -  [crypt](https://github.com/psyll/Codelab/blob/main/codelab/packages/crypt)
- -  [csv](https://github.com/psyll/Codelab/blob/main/codelab/packages/csv)
- -  [datetime](https://github.com/psyll/Codelab/blob/main/codelab/packages/datetime)
- -  [fileLOG](https://github.com/psyll/Codelab/blob/main/codelab/packages/fileLOG)
- -  [filesys](https://github.com/psyll/Codelab/blob/main/codelab/packages/filesys)
- -  [format](https://github.com/psyll/Codelab/blob/main/codelab/packages/format)
- -  [image](https://github.com/psyll/Codelab/blob/main/codelab/packages/image)
- -  [ip-allow](https://github.com/psyll/Codelab/blob/main/codelab/packages/ip-allow)
- -  [lang](https://github.com/psyll/Codelab/blob/main/codelab/packages/lang)
- -  [markdown](https://github.com/psyll/Codelab/blob/main/codelab/packages/markdown)
- -  [math](https://github.com/psyll/Codelab/blob/main/codelab/packages/math)
- -  [pages](https://github.com/psyll/Codelab/blob/main/codelab/packages/pages)
- -  [psyll_api](https://github.com/psyll/Codelab/blob/main/codelab/packages/psyll_api)
- -  [redirect](https://github.com/psyll/Codelab/blob/main/codelab/packages/redirect)
- -  [registry](https://github.com/psyll/Codelab/blob/main/codelab/packages/registry)
- -  [sections](https://github.com/psyll/Codelab/blob/main/codelab/packages/sections)
- -  [session](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)
- -  [spy](https://github.com/psyll/Codelab/blob/main/codelab/packages/spy)
- -  [str](https://github.com/psyll/Codelab/blob/main/codelab/packages/str)
- -  [upload](https://github.com/psyll/Codelab/blob/main/codelab/packages/upload)
- -  [users](https://github.com/psyll/Codelab/blob/main/codelab/packages/users)
- -  [valid](https://github.com/psyll/Codelab/blob/main/codelab/packages/valid)
