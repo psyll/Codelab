@@ -19,29 +19,29 @@
 | Function | | Require| Description |
 |-------------|-------------|-------------|-------------|
 | **assets** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|Manage scripts and styles assets. Compres, minimize nad cache application resources|
-| **cron** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/cron)||scheduling and automation of tasks|
-| **crypt** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/crypt)||string encryption using various cipher method, key and initialization verctor|
-| **csv** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/csv)||operations on csv files |
-| **datetime** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/datetime)||time and date management |
-| **fileLOG** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/fileLOG)||collecting various logs in files on the server |
-| **filesys** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/filesys)||file and folder operations |
-| **format** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/format)||formatting texts and numbers |
-| **image** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/image)||description|
-| **ip-allow** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/ip-allow)||description|
-| **lang** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/lang)|pages|description|
-| **markdown** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/markdown)||description|
-| **math** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/math)||description|
-| **pages** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/pages)||description|
-| **psyll_api** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/psyll_api)||description|
-| **redirect** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/redirect)||description|
-| **registry** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/registry)||description|
-| **sections** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/sections)|pages|description|
-| **session** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)||description|
-| **spy** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/spy)||description|
-| **str** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/str)||description|
-| **upload** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/upload)||description|
-| **users** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/users)|crypt,spy,session|description|
-| **valid** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/valid)||description|
+| **cron** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/cron)||Scheduling and automation of tasks|
+| **crypt** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/crypt)||Two-way data encryption using various cipher method, key and initialization verctors|
+| **csv** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/csv)||operations on csv files|
+| **datetime** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/datetime)||time and date management|
+| **fileLOG** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/fileLOG)||Collecting logs in files on the server|
+| **filesys** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/filesys)||Basic file and folder operations |
+| **format** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/format)||Formatting texts and numbers to various formats|
+| **image** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/image)||Converting, compressing, editing graphic files |
+| **ip-allow** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/ip-allow)||Manage the IP list with access to the website. |
+| **lang** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/lang)|pages|Multilingual application and translation system |
+| **markdown** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/markdown)||Markdown parser|
+| **math** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/math)||Mathematical functions and operations such as percentages, comparisons and calculations|
+| **pages** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/pages)||Managing pages, structure and url addresses of the application|
+| **psyll_api** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/psyll_api)||Simple Psyll API connection|
+| **redirect** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/redirect)||Address redirection|
+| **registry** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/registry)||A registry containing system settings|
+| **sections** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/sections)|pages|Create the appearance of the application with the help of ready-made sections|
+| **session** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)||User session management |
+| **spy** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/spy)||Spying on user data such as ip, browser, operating system. |
+| **str** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/str)||String manipulation |
+| **upload** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/upload)||Upload files to the server |
+| **users** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/users)|Crypt,spy,session|A user and users group system that allows to log in and manage user accounts|
+| **valid** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/valid)||Cata and form validation |
 
 
 ## Main Codelab defines
