@@ -18,8 +18,13 @@
 
 | Function | | Require| Description |
 |-------------|-------------|-------------|-------------|
-| assets |[open](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|Managing scripts and styles asset of the application |
-| assets |[open](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|Managing scripts and styles asset of the application |
+| assets |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|Managing scripts and styles asset of the application |
+| cron |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|datetime|scripts and styles asset of the application |
+| assets |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|Managing scripts and styles asset of the application |
+| cron |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|datetime, sescions, session|scripts and styles asset of the application |
+
+| assets |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|session|Managing scripts and styles asset of the application |
+| cron |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)|datetime|scripts and styles asset of the application |
 
 
 ### `assets`
