@@ -56,7 +56,7 @@ private static function _loginLogInsert($status, $message = null, $teamID = null
     elseif ($status == true):
         $insert['status'] = '1';
     endif;
-    clDB::insert('users_login', $insert);
+    clDB::insert('users_auth', $insert);
 }
 private static function _loginResponse($status, $message = null, $teamID = null, $insertDB = true){
     if ($insertDB == true):
@@ -77,7 +77,7 @@ public static function login($email, $password){
     $securityLimit =  clPackages['users']['config']['login_attempts'];
     $spyIP = spy::ip();
     $paramLogs = array(
-        'table' => 'users_login',
+        'table' => 'users_auth',
         'columns' => ['id', 'status', 'ip', 'datetime'],
         'where' => "status = '0' AND ip = '" . $spyIP ."'",
         'limit' => $securityLimit,

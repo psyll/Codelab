@@ -10,7 +10,7 @@
 
 	namespace cl;
 	use Parsedown;
-	class md {
+	class markdown {
 		public static function parse(string $content){
 			$Parsedown = new Parsedown();
 			return $Parsedown->text($content); # prints: <p>Hello <em>Parsedown</em>!</p>

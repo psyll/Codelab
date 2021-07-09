@@ -1,9 +1,10 @@
 <?php
-/*
-	CODELAB
-	© Jaroslaw Szulc <jarek@psyll.com>
-	© Psyll.com <info@psyll.com>
-	This file is part of the Codelab package.
+/*@docc
+	@name: CODELAB
+	@author: © Jaroslaw Szulc <jarek@psyll.com>
+	@copyrights: © Psyll.com <info@psyll.com>
+	@packages: Codelab
+	@description:
 	Distributed under the PPCL license (http://psyll.com/license/ppcl)
 */
 // ################################################
@@ -30,10 +31,10 @@ endif;
 $clConfigPath = clPath . DIRECTORY_SEPARATOR;
 $clConfig = [];
 $clConfigSource = false;
-if (file_exists($clConfigPath . 'config.dev.json') AND is_file($clConfigPath . 'config.dev.json')):
-	$clConfigSource = 'config.dev.json';
-elseif (file_exists($clConfigPath . 'config.json') AND is_file($clConfigPath . 'config.json')):
-	$clConfigSource = 'config.json';
+if (file_exists($clConfigPath . 'cl-config.dev.json') AND is_file($clConfigPath . 'cl-config.dev.json')):
+	$clConfigSource = 'cl-config.dev.json';
+elseif (file_exists($clConfigPath . 'cl-config.json') AND is_file($clConfigPath . 'cl-config.json')):
+	$clConfigSource = 'cl-config.json';
 endif;
 if ($clConfigSource != false):
 	// Get "package.json" file and convert to array
@@ -549,7 +550,7 @@ foreach ($packagesDirs as $packageDir):
 	// Get package folder name
 	$packageDirname = basename($packageDir);
 	// Get "package.json" file path
-	$packageFile_JSON = $packageDir . DIRECTORY_SEPARATOR . "package.json";
+	$packageFile_JSON = $packageDir . DIRECTORY_SEPARATOR . "cl-package.json";
 	// Check if "package.json" exist
 	// "package.json" file exists
 	if (file_exists($packageFile_JSON) AND is_file($packageFile_JSON)):
@@ -557,7 +558,7 @@ foreach ($packagesDirs as $packageDir):
 		$package_JSON = json_decode(file_get_contents($packageFile_JSON), true);
 		// Check if "package.json" file content is valid json
 		if (!is_array($package_JSON)):
-			$packageErrorMessage = "packages.json file is not valid json";
+			$packageErrorMessage = "cl-package.json file is not valid json";
 			cl::log($packageDirname, 'error', $packageErrorMessage);
 			$packageErrors[] = $packageErrorMessage;
 		// is valid json
@@ -605,12 +606,12 @@ foreach ($packagesDirs as $packageDir):
 		$packagesList[$packageDirname]['errors'] = $packageErrors;
 	endif;
 	$packageConfigSource = false;
-	if (file_exists($packageDir . DIRECTORY_SEPARATOR. 'config.dev.json') AND is_file($packageDir .  DIRECTORY_SEPARATOR. 'config.dev.json')):
-		$packageConfigSource = 'config.dev.json';
-		$filesReady .= '[config.dev.json]';
-	elseif (file_exists($packageDir . DIRECTORY_SEPARATOR. 'config.json') AND is_file($packageDir . DIRECTORY_SEPARATOR. 'config.json')):
-		$packageConfigSource = 'config.json';
-		$filesReady .= '[config.json]';
+	if (file_exists($packageDir . DIRECTORY_SEPARATOR. 'cl-config.dev.json') AND is_file($packageDir .  DIRECTORY_SEPARATOR. 'cl-config.dev.json')):
+		$packageConfigSource = 'cl-config.dev.json';
+		$filesReady .= '[cl-config.dev.json]';
+	elseif (file_exists($packageDir . DIRECTORY_SEPARATOR. 'cl-config.json') AND is_file($packageDir . DIRECTORY_SEPARATOR. 'cl-config.json')):
+		$packageConfigSource = 'cl-config.json';
+		$filesReady .= '[cl-config.json]';
 	endif;
 	if ($packageConfigSource != false):
 			// Get "package.json" file and convert to array
@@ -626,15 +627,15 @@ foreach ($packagesDirs as $packageDir):
 	endif;
 		$packagesList[$packageDirname]['dir'] = $packageDirname;
 		$packagesList[$packageDirname]['path'] = $packageDir;
-		$packageFile_INIT = $packageDir  . DIRECTORY_SEPARATOR .  "init.php";
+		$packageFile_INIT = $packageDir  . DIRECTORY_SEPARATOR .  "cl-init.php";
 		$filesReady = '';
 		if (file_exists($packageFile_INIT) AND is_file($packageFile_INIT)):
-			$filesReady .= '[init.php]';
+			$filesReady .= '[cl-init.php]';
 			$packagesList[$packageDirname]['init'] =  $packageFile_INIT;
 		endif;
-		$packageFile_CLASS = $packageDir  . DIRECTORY_SEPARATOR .  "class.php";
+		$packageFile_CLASS = $packageDir  . DIRECTORY_SEPARATOR .  "cl-class.php";
 		if (file_exists($packageFile_CLASS) AND is_file($packageFile_CLASS)):
-			$filesReady .= '[class.php]';
+			$filesReady .= '[cl-class.php]';
 			$packagesList[$packageDirname]['class'] =  $packageFile_CLASS;
 		endif;
 		cl::log($packageDirname, 'info', 'Package files ready ' . $filesReady);
