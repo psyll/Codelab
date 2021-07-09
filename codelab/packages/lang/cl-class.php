@@ -43,7 +43,7 @@ class lang {
             endif;
             return '/' .lang;
     }
-    public static function display($translations)
+    public static function display(array $translations)
     {
         $translations = array_change_key_case($translations);
 

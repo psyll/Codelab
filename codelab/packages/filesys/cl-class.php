@@ -8,7 +8,7 @@ use FilesystemIterator;
 
 	class file {
 		// In ##################################################################
-		public static function exists($path)
+		public static function exists(string $path)
 		{
 			if (file_exists($path) AND is_file($path)):
 				return true;
@@ -16,13 +16,13 @@ use FilesystemIterator;
 			return false;
 		}
 		// In ##################################################################
-		public static function size($path)
+		public static function size(string $path)
 		{
 			if(!file_exists($path)) return false;
 			if(is_file($path)) return filesize($path);
 			return 0;
 		}
-		public static function delete($path)
+		public static function delete(string $path)
 		{
 			$fileToRemove = $path;
 			if (file_exists($fileToRemove)) {
@@ -36,11 +36,25 @@ use FilesystemIterator;
 				return false;
 			}
 		}
+
+		// In ##################################################################
+		public static function count(string $path, $type = null)
+		{
+			$total = 0;
+			$path = realpath($path);
+			if($path!==false && $path!='' && file_exists($path)){
+				foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS)) as $object){
+					$total++;
+				}
+			}
+			return $total;
+		}
+
 	}
 
 	class dir {
 		// In ##################################################################
-		public static function list($path, $type = null, $ordering = 0)
+		public static function list(string $path, $type = null, $ordering = 0)
 		{
 			$return = scandir($path,$ordering);
 				foreach ($return as $key => $value):
@@ -61,7 +75,7 @@ use FilesystemIterator;
 			return $return;
 		}
 		// In ##################################################################
-		function tree($path)
+		public static function tree(string $path)
 		{
 			$rdi = new \RecursiveDirectoryIterator($path);
 
@@ -91,7 +105,7 @@ use FilesystemIterator;
 
 
 		// In ##################################################################
-		public static function clear($path)
+		public static function clear(string $path)
 		{
 			$files = glob(rtrim($path, '/') . '/*'); // get all file names
 			foreach($files as $file){ // iterate files
@@ -101,7 +115,7 @@ use FilesystemIterator;
 			return true;
 		}
 		// In ##################################################################
-		public static function size($path)
+		public static function size(string $path)
 		{
 			$bytestotal = 0;
 			$path = realpath($path);
@@ -112,32 +126,21 @@ use FilesystemIterator;
 			}
 			return $bytestotal;
 		}
-		// In ##################################################################
-		public static function count($path, $type = null)
-		{
-			$total = 0;
-			$path = realpath($path);
-			if($path!==false && $path!='' && file_exists($path)){
-				foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS)) as $object){
-					$total++;
-				}
-			}
-			return $total;
-		}
-		public static function del($path)
+
+		public static function delete(string $path)
 		{
 			if (!file_exists($path)) return true;
 			if (!is_dir($path) || is_link($path)) return unlink($path);
 				foreach (scandir($path) as $item) {
 					if ($item == '.' || $item == '..') continue;
-					if (!self::del($path . "/" . $item)) {
+					if (!self::delete($path . "/" . $item)) {
 						chmod($path . "/" . $item, 0777);
-						if (!self::del($path . "/" . $item)) return false;
+						if (!self::delete($path . "/" . $item)) return false;
 					};
 				}
 				return rmdir($path);
 		}
-		public static function create($path, $mode = 0755)
+		public static function create(string $path, int $mode = 0755)
 		{
 			if (!file_exists($path)) {
 				mkdir($path, $mode, true);

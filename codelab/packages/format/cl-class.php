@@ -10,7 +10,7 @@
 	namespace cl;
 	class format {
 		// In ##################################################################
-		public static function money($number)
+		public static function money(int $number)
 		{
 		   return number_format((float)$number, 2, '.', ' ');
 		}
@@ -30,11 +30,11 @@
 			}
 			return $size;
 		}
-		public static function path($path)
+		public static function path(string $path)
 		{
 			return  str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
 		}
-		public static function url($path)
+		public static function url(string $path)
 		{
 			return  str_replace(array('\\'), '/', $path);
 		}

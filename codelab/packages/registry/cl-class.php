@@ -10,7 +10,7 @@
 	namespace cl;
 	class registry {
 		// In ##################################################################
-		public static function read($name, $default = null)
+		public static function read(string $name, string $default = null)
 		{
 			if (isset(clRegistry[$name])){
 				return clRegistry[$name];

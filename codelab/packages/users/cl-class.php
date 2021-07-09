@@ -14,9 +14,6 @@ use clDB;
 class users {
 
 
-    public static function list(){
-
-   }
    public static function passwordHash($password){
     return crypt::in(password_hash($password, PASSWORD_DEFAULT));
 }
@@ -69,7 +66,7 @@ private static function _loginResponse($status, $message = null, $teamID = null,
 
 
 
-public static function login($email, $password){
+public static function login(string $email, string $password){
     if (self::logged()):
         return (self::_loginResponse(false, 'already logged', self::id(), false));
     endif;
@@ -241,31 +238,28 @@ public static function id(){
         return false;
     }
  }
-
- public static function preference($preferenceName, $userID = null){
+ public static function preference(string $name, string $value, $userID = null){
     if ($userID == null):
-        $userPreferences = cl\users::data()['preferences'];
-    else:
-        $userPreferences = cl\users::data($userID)['preferences'];
+        $userID = self::id();
+    endif;
+    $preferences = self::data($userID)['preferences'];
+    if (isset($preferences[$name])):
+        echo $preferences[$name];
+    endif;
+    return false;
+ }
+ public static function preferenceSet(string $name, string $value, $userID = null){
+    if ($userID == null):
+        $userID = self::id();
     endif;
 
-
-
-
-    if (isset($userPreferences[$preferenceName])){
-         return $userPreferences[$preferenceName];
-    } else{
-        return false;
-    }
- }
- public static function preferenceSet($preferenceName, $preferenceValue){
-    $preferences = session::get('user')['preferences'];
-    $preferences[$preferenceName] = $preferenceValue;
+    $preferences = self::data($userID)['preferences'];
+    $preferences[$name] = $value;
     $preferencesEncode = json_encode($preferences);
     $update = [
         'preferences' => $preferencesEncode
     ];
-    clDB::update('users', 'id = "' . self::id() . '"', $update);
+    clDB::update('users', 'id = "' . $userID . '"', $update);
     $user =  session::get('user');
     $user['preferences'] = $preferences;
     session::set('user', $user);
@@ -288,7 +282,7 @@ class usersGroups {
 			return $groups;
 		}
 		// ROW ##################################################################
-		public static function groupsIDs() // return team groups array
+		public static function ids() // return team groups array
 		{
 			// get pageData
 			$param = array(

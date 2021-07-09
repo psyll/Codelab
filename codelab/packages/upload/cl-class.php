@@ -4,15 +4,15 @@
 
 namespace cl;
 use cl;
-	class clUpload {
-		public static function process($file, $folder, $options) {
-			$target_dir = trim($folder, '/');
+	class upload {
+		public static function file(string $source, string $destination, array $options) {
+			$target_dir = trim($destination, '/');
 			if (@$options['clearFolder'] == true):
-				cl\filesys\dir::clear($folder);
+				cl\filesys\dir::clear($destination);
 			endif;
-			cl\filesys\dir::create($folder);
+			cl\filesys\dir::create($destination);
 			$error = false;
-			$pi = pathinfo($target_dir. '/' . basename($file["name"]));
+			$pi = pathinfo($target_dir. '/' . basename($source["name"]));
 			$fileName = $pi['filename'];
 			$fileName = cl\str::alias($fileName);
 			if (isset($options['filename'])):
@@ -26,7 +26,7 @@ use cl;
 			endif;
 			// Check if image file is a actual image or fake image
 			if ($error == false):
-				if (@move_uploaded_file($file["tmp_name"], $fileTarget)):
+				if (@move_uploaded_file($source["tmp_name"], $fileTarget)):
 					return [
 						'status' => 'success',
 						'message' => 'File uploaded',

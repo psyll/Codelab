@@ -14,12 +14,7 @@ class csv
      * @param bool   $hasHeader
      * @return array
      */
-    public static function parse(
-        string $csvFile,
-        string $delimiter = ';',
-        string $enclosure = '"',
-        bool $hasHeader = true
-    ): array {
+    public static function parse(string $csvFile,string $delimiter = ';',string $enclosure = '"',bool $hasHeader = true): array {
         $result = [];
 
         $headerKeys = [];

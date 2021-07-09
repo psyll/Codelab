@@ -1,6 +1,5 @@
 <?php
 
-
 	$ip_allowMYIP = false;
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         $ip_allowMYIP = $_SERVER['HTTP_CLIENT_IP'];

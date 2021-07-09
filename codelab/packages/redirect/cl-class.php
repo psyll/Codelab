@@ -2,7 +2,7 @@
 namespace cl;
 	class redirect {
 		// In ##################################################################
-		public static function url($url)
+		public static function url(string $url)
 		{
 			header('Location: ' . $url); // temp
 		   if (headers_sent()){

@@ -41,7 +41,7 @@ use cl;
             endforeach;
 		}
 
-		public static function  assetsListOrder($a, $b) {
+		private static function  assetsListOrder($a, $b) {
 			return $b["priority"] - $a["priority"];
 	   }
 

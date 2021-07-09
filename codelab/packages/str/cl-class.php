@@ -1,33 +1,18 @@
 <?php
 namespace cl;
 	class str {
-		public static function  minimize($string) {
-			$string = preg_replace('/\s+/S', " ", $string);
-		    return $string;
-		}
 		public static function  pluralDisplay($number, $plural = 's', $singular = '') {
 		    if ( $number === 1 ) {
 		        return $singular;
 		    }
 		    return $plural;
 		}
-		public static function  plural($number) {
-		    if ( $number === 1 ) {
-		        return false;
-		    }
-		    return true;
-		}
 		// In ##################################################################
-		public static function countWords($string)
+		public static function countWords(string $string)
 		{
 		   return str_word_count($string);
 		}
 		// In ##################################################################
-		public static function a_z()
-		{
-			 $letter_array = range('A','Z');
-			 return $letter_array;
-		}
 		function compare($string, $words) {
 			$output = array();
 			//while(list($id, $str) = each($words)){
@@ -68,7 +53,7 @@ namespace cl;
 			// */
 		}
 		// In ##################################################################
-		public static function cleanForeign($string)
+		public static function cleanForeign(string $string)
 		{
 			$replace = array(
 				'&lt;' => '', '&gt;' => '', '&#039;' => '', '&amp;' => '',
@@ -121,13 +106,13 @@ namespace cl;
 			return htmlspecialchars_decode(htmlspecialchars(utf8_decode($string)));
 		}
 		// In ##################################################################
-		public static function cleanSpecial($string)
+		public static function cleanSpecial(string $string)
 		{
 			$string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens
 			return preg_replace('#[^A-Za-z0-9-./]#', '', $string); // Removes special chars
 		}
 		// In ##################################################################
-		public static function alias($string)
+		public static function alias(string $string)
 		{
 			$string =  strtolower($string);
 			$string = strip_tags($string);

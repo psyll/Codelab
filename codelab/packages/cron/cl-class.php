@@ -86,7 +86,7 @@
 				else:
 					$done = $value['_done'];
 					$cronJOBS[$key]['_next'] = date('Y-m-d H:i:s', strtotime($done. ' + ' . $value['every']));
-					if (strtotime($cronJOBS[$key]['_next']) < strtotime(date('Y-m-d H:i:s'))):
+					if (strtotime($cronJOBS[$key]['_next']) < strtotime(cl\datetime::now())):
 						$do = true;
 					endif;
 
@@ -110,7 +110,7 @@
 					$cronJobFile = clPath . DIRECTORY_SEPARATOR .  trim($jobData['file'], '/');
 					$wa_cronStatus = 'unknown';
 					include($cronJobFile);
-					$cronJOBS[$key]['_done'] = date('Y-m-d H:i:s');
+					$cronJOBS[$key]['_done'] = cl\datetime::now();
 					self::log('' . $key . '|' . trim($jobData['file'], '/') .'|' . $wa_cronStatus);
 				endif;
 				unset($cronJOBS[$key]['do']);
