@@ -13,7 +13,7 @@
 
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/psyll/Codelab)
 
-## Defines
+## Main Codelab defines
 
 - `clLoad_start` - Load start in microtime
 - `clVersion` - Version number
@@ -25,31 +25,58 @@
 - `clPackages` - Codelab packages list
 - `clLoad_end` - Load end in microtime
 
-## `cl` class
+## Main Codelab functions
 
- -  `cl::packageConfigRead(string $packageDir)`
- -  `cl::requireAjax()`
- -  `cl::isAjax()`
- -  `cl::requirePost()`
- -  `cl::isPost()`
- -  `cl::headerStatus(int $statusCode)`;
- -  `cl::headers(string $headerName = null)`
- -  `cl::log(string $source, string $type, string $message)`
- -  `cl::logs()`
- -  `cl::output()`
- -
-## `clDB` class
+### `cl` class
 
- -  `clDB::connected()`
- -  `clDB::disconnect()`
- -  `clDB::escape(string $string)`
- -  `clDB::query(string $query)`
- -  `clDB::fetch($results)`
- -  `clDB::columns($table)`
- -  `clDB::get(array $param, $single = false)`
- -  `clDB::insert(string $table, array $columns)`
- -  `clDB::delete(string $table, $id)`
- -  `clDB::insertID()`
- -  `clDB::update(string $table, string $where, array $fields)`
+ - `cl::packageConfigRead(string $packageDir)`
+ - `cl::requireAjax()`
+ - `cl::isAjax()`
+ - `cl::requirePost()`
+ - `cl::isPost()`
+ - `cl::headerStatus(int $statusCode)`;
+ - `cl::headers(string $headerName = null)`
+ - `cl::log(string $source, string $type, string $message)`
+ - `cl::logs()`
+ - `cl::output()`
 
+### `clDB` class
 
+ - `clDB::connected()`
+ - `clDB::disconnect()`
+ - `clDB::escape(string $string)`
+ - `clDB::query(string $query)`
+ - `clDB::fetch($results)`
+ - `clDB::columns($table)`
+ - `clDB::get(array $param, $single = false)`
+ - `clDB::insert(string $table, array $columns)`
+ - `clDB::delete(string $table, $id)`
+ - `clDB::insertID()`
+ - `clDB::update(string $table, string $where, array $fields)`
+
+## Packages
+
+ -  [assets](https://github.com/psyll/Codelab/blob/main/codelab/packages/assets)
+ -  [cron](https://github.com/psyll/Codelab/blob/main/codelab/packages/cron)
+ -  [crypt](https://github.com/psyll/Codelab/blob/main/codelab/packages/crypt)
+ -  [csv](https://github.com/psyll/Codelab/blob/main/codelab/packages/csv)
+ -  [datetime](https://github.com/psyll/Codelab/blob/main/codelab/packages/datetime)
+ -  [fileLOG](https://github.com/psyll/Codelab/blob/main/codelab/packages/fileLOG)
+ -  [filesys](https://github.com/psyll/Codelab/blob/main/codelab/packages/filesys)
+ -  [format](https://github.com/psyll/Codelab/blob/main/codelab/packages/format)
+ -  [image](https://github.com/psyll/Codelab/blob/main/codelab/packages/image)
+ -  [ip-allow](https://github.com/psyll/Codelab/blob/main/codelab/packages/ip-allow)
+ -  [lang](https://github.com/psyll/Codelab/blob/main/codelab/packages/lang)
+ -  [markdown](https://github.com/psyll/Codelab/blob/main/codelab/packages/markdown)
+ -  [math](https://github.com/psyll/Codelab/blob/main/codelab/packages/math)
+ -  [pages](https://github.com/psyll/Codelab/blob/main/codelab/packages/pages)
+ -  [psyll_api](https://github.com/psyll/Codelab/blob/main/codelab/packages/psyll_api)
+ -  [redirect](https://github.com/psyll/Codelab/blob/main/codelab/packages/redirect)
+ -  [registry](https://github.com/psyll/Codelab/blob/main/codelab/packages/registry)
+ -  [sections](https://github.com/psyll/Codelab/blob/main/codelab/packages/sections)
+ -  [session](https://github.com/psyll/Codelab/blob/main/codelab/packages/session)
+ -  [spy](https://github.com/psyll/Codelab/blob/main/codelab/packages/spy)
+ -  [str](https://github.com/psyll/Codelab/blob/main/codelab/packages/str)
+ -  [upload](https://github.com/psyll/Codelab/blob/main/codelab/packages/upload)
+ -  [users](https://github.com/psyll/Codelab/blob/main/codelab/packages/users)
+ -  [valid](https://github.com/psyll/Codelab/blob/main/codelab/packages/valid)
