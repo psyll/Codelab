@@ -40,7 +40,7 @@
 | **spy** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/spy)||Spying on user data such as ip, browser, operating system. |
 | **str** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/str)||String manipulation |
 | **upload** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/upload)||Upload files to the server |
-| **users** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/users)|Crypt,spy,session|A user and users group system that allows to log in and manage user accounts|
+| **users** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/users)|crypt, spy, session|A user and users group system that allows to log in and manage user accounts|
 | **valid** |[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/valid)||Cata and form validation |
 
 
