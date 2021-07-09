@@ -1,4 +1,4 @@
-# Welcome to `Codelab`
+# Welcome to **Codelab**
 
 
 ![Codelab Logo](https://raw.githubusercontent.com/psyll/Codelab/main/docs/assets/logo.png)
