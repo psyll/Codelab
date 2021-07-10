@@ -88,7 +88,7 @@
 
 ## cl\\`assets`
 
- - `cl\assets::add(array $resources, $priority = 1)`
+ - `cl\assets::add(array $resources, int $priority = 1)`
  - `cl\assets::get($type = null)`
 
 ## cl\\`cron`

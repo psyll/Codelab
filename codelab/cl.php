@@ -269,13 +269,13 @@ class clDB {
 	public static function connected(){
 		global $clDB;
 		if (isset($clDB) AND !empty($clDB)):
-		   return true;
-	   	endif;
-	   	return false;
-   }
+			return true;
+		endif;
+		return false;
+	}
 	public static function disconnect(){
-	 	global $clDB;
-	   	if (isset($clDB) AND !empty($clDB)):
+		global $clDB;
+		if (isset($clDB) AND !empty($clDB)):
 			mysqli_close($clDB);
 			cl::log('clDB', 'warning', 'clDB disconnect');
 			unset($clDB);
@@ -285,7 +285,7 @@ class clDB {
 	{
 		global $clDB;
 		if (!self::connected()): die('Database no connected'); endif;
-	 	if ($string != null AND !is_numeric($string) AND $string != ''):
+		if ($string != null AND !is_numeric($string) AND $string != ''):
 			return mysqli_escape_string($clDB, $string);;
 		endif;
 		return $string;
@@ -528,8 +528,8 @@ if (defined('clLoad')):
 		$loadPackages = '';
 		foreach (clLoad as $packageName):
 			$loadPackages .= '[' . $packageName . ']';
-		 endforeach;
-		 cl::log('cl', 'info', '[clLoad] defined. Load packages: ' . $loadPackages );
+		endforeach;
+		cl::log('cl', 'info', '[clLoad] defined. Load packages: ' . $loadPackages );
 	endif;
 endif;
 // Create packages path

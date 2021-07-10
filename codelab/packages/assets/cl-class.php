@@ -2,17 +2,16 @@
 	/*
 		CODELAB
 		Homepage: https://psyll.com/products/codelab
-		© Jaroslaw Szulc <jarek@psyll.com>
-		© Psyll.com <info@psyll.com>
+		© Jarek Szulc <jarek@psyll.com>
+		© Psyll.com Dev Team <dev@psyll.com>
 		This file is part of the Codelab package.
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
-
 // $assetsStorage
 namespace cl;
 use cl;
 	class assets {
-		public static function add(array $resources, $priority = 1)
+		public static function add(array $resources, int $priority = 1)
 		{
             foreach ($resources as $key => $value):
 				if (is_numeric($key)):
@@ -36,15 +35,12 @@ use cl;
 						'extension' => $extension,
 						'type' => $type,
 					]);
-
 				endif;
             endforeach;
 		}
-
 		private static function  assetsListOrder($a, $b) {
 			return $b["priority"] - $a["priority"];
-	   }
-
+		}
 		public static function get($type = null)
 		{
 			$assetsStorage = [];
@@ -57,7 +53,6 @@ use cl;
             foreach (session::get('assetsStorage') as $key => $value):
 				$assetsStorage[$value['url']] = $value;
             endforeach;
-
             foreach ($assetsStorage as $url => $data):
 				// If "filesValidation" config enabled = true
 				if ($filesValidation == true):
@@ -72,10 +67,9 @@ use cl;
 						unset($assetsStorage[$url]);
 						continue;
 					endif;
-
 				endif;
             endforeach;
-		   	usort($assetsStorage, "self::assetsListOrder");
+			usort($assetsStorage, "self::assetsListOrder");
 			if ($type == null OR $type == 'style'):
 				foreach ($assetsStorage as $key => $data):
 				if ($data['type'] == 'style'):
@@ -94,6 +88,3 @@ use cl;
 			endif;
 		}
 	}
-
-
-

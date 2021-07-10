@@ -1,0 +1,20 @@
+{
+    "waAdmin_users_logins": {
+        "enabled": true,
+        "priority": 3,
+        "description": "Archive user login logs older than X minutes.",
+        "file": "../cron/jobs/waAdmin/users_logins.php",
+        "every": "10 seconds",
+        "_done": "2021-07-07 16:05:02",
+        "_next": "2021-07-07 16:05:12"
+    },
+    "someStupidCrone": {
+        "enabled": true,
+        "priority": 1,
+        "description": "Test cron",
+        "file": "../cron/jobs/test.php",
+        "every": "5 seconds",
+        "_done": "2021-07-07 16:05:02",
+        "_next": "2021-07-07 16:05:07"
+    }
+}

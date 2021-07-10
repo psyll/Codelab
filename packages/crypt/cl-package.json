@@ -1,0 +1,16 @@
+{
+    "name": "crypt",
+    "version": "2.0",
+    "description": "Encryption and decryption of strings ",
+    "author": {
+        "jarek": {
+            "email": "jarek@psyll.com",
+            "url": "https://psyll.com/profile/jarek"
+        },
+        "psyll": {
+            "email": "dev@psyll.com",
+            "url": "https://psyll.com"
+        }
+    },
+    "copyright": "© 2021 Psyll.com All Rights Reserved"
+}
