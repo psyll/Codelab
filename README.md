@@ -45,7 +45,7 @@
 
 # Main Codelab defines
 
-- `clLoad_start` - Load start in microtime
+- `clStart` - Load start in microtime
 - `clVersion` - Version number
 - `clCodename` - Version codename
 - `clPath` - Codelab main folder path
@@ -53,7 +53,7 @@
 - `clProtocol` - Protocol `http` or `https`
 - `clConfig` - Codelab main config
 - `clPackages` - Codelab packages list
-- `clLoad_end` - Load end in microtime
+- `clEnd` - Load end in microtime
 
 # All classes and functions list
 
