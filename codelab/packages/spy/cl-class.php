@@ -1,16 +1,9 @@
 <?php
 
-	/*
-		CODELAB
-		Homepage: https://psyll.com/products/codelab
-		© Jaroslaw Szulc <jarek@psyll.com>
-		© Psyll.com <info@psyll.com>
-		This file is part of the Codelab package.
-		Distributed under the PPCL license (http://psyll.com/license/ppcl)
-	*/
 namespace Codelab;
 
-class spy {
+class Spy
+{
     // IP ##################################################################
     public static function ip()
     {
@@ -27,7 +20,7 @@ class spy {
     }
     public static function netMask(string $ipAddress = null)
     {
-        if ($ipAddress == null):
+        if ($ipAddress == null) :
             $ipAddress = self::ip();
         endif;
         $ipAddressLong = ip2long($ipAddress);
@@ -47,7 +40,8 @@ class spy {
 
         return long2ip($resultMask) ?: null;
     }
-    public static function browser(){
+    public static function browser()
+	{
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
         $browsers = array(
                             'Chrome' => array('Google Chrome','Chrome/(.*)\s'),
@@ -58,8 +52,8 @@ class spy {
                             );
         $browser_details = array();
         $browser_details['agent'] = $user_agent;
-        foreach ($browsers as $browser => $browser_info){
-            if (preg_match('@'.$browser.'@i', $user_agent)){
+        foreach ($browsers as $browser => $browser_info) {
+            if (preg_match('@'.$browser.'@i', $user_agent)) {
                 $browser_details['name'] = $browser_info[0];
                     preg_match('@'.$browser_info[1].'@i', $user_agent, $version);
                 $browser_details['version'] = $version[1];
@@ -75,7 +69,7 @@ class spy {
     {
         $os = null;
         $os_array = array(
-                            '/windows nt 10/i'     	=>  'Windows 10',
+                            '/windows nt 10/i'      =>  'Windows 10',
                             '/windows nt 6.3/i'     =>  'Windows 8.1',
                             '/windows nt 6.2/i'     =>  'Windows 8',
                             '/windows nt 6.1/i'     =>  'Windows 7',
@@ -98,7 +92,7 @@ class spy {
                             '/android/i'            =>  'Android',
                             '/blackberry/i'         =>  'BlackBerry',
                             '/webos/i'              =>  'Mobile'
-    );
+		);
         foreach ($os_array as $regex => $value) {
             if (preg_match($regex, $_SERVER['HTTP_USER_AGENT'])) {
                 $os = $value;

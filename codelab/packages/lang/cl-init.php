@@ -8,13 +8,13 @@ if ($packageConfig['init'] == true):
 
     // Check if language code valid
 
-    if (empty(pageQuery) OR !isset(pageQuery[0]) OR !in_array(pageQuery[0], $packageConfig['languages'])):
+    if (empty(PAGE_QUERY) OR !isset(PAGE_QUERY[0]) OR !in_array(PAGE_QUERY[0], $packageConfig['languages'])):
         if (isset($packageConfig['errorRedirect']) AND $packageConfig['errorRedirect'] != ''):
             header('Location: ' . $packageConfig['errorRedirect']);
         else:
             Codelab::log('lang', 'error', 'Language load error');
         endif;
     endif;
-    DEFINE('lang', strtolower(pageQuery[0]));
+    DEFINE('LANG', strtolower(PAGE_QUERY[0]));
 
 endif;

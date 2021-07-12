@@ -800,18 +800,18 @@ endforeach;
 // ################################################
 // ##### clLoad
 // ################################################
-$clLoad = false;
+$cl_load = false;
 $clLoadPackages = false;
-if (defined("clLoad")) :
+if (defined("CL_LOAD")) :
     Codelab::log("cl", "info", "[clLoad] initiated");
-    if (!is_array(clLoad)) :
+    if (!is_array(CL_LOAD)) :
         Codelab::log("cl", "error", "[clLoad] is not valid array");
     else :
-        $clLoad = true;
+        $cl_load = true;
     endif;
-    if ($clLoad == true and isset(clLoad["packages"])) :
+    if ($cl_load == true and isset(CL_LOAD["packages"])) :
         // disable all packages
-        if (clLoad["packages"] == false) :
+        if (CL_LOAD["packages"] == false) :
             Codelab::log(
                 "cl",
                 "warning",
@@ -819,11 +819,11 @@ if (defined("clLoad")) :
             );
             $clLoadPackages = []; // error - package dont exists
         // Search for clLoad>package require
-        elseif (!is_array(clLoad["packages"])) :
+        elseif (!is_array(CL_LOAD["packages"])) :
             Codelab::log("cl", "error", "[clLoad][packages] is not valid array");
         else :
             $clLoadPackages = [];
-            foreach (clLoad["packages"] as $packageName) :
+            foreach (CL_LOAD["packages"] as $packageName) :
                 if (!isset($packagesList[strtolower($packageName)])) :
                     Codelab::log(
                         "cl",
@@ -834,14 +834,14 @@ if (defined("clLoad")) :
                     );
                 else :
                     $clLoadPackages[] = strtolower($packageName);
-                    if (isset(clLoad["require"]) and clLoad["require"] == true and isset($packagesList[strtolower($packageName)]["require"])) :
+                    if (isset(CL_LOAD["require"]) and CL_LOAD["require"] == true and isset($packagesList[strtolower($packageName)]["require"])) :
                         foreach ($packagesList[strtolower($packageName)]["require"] as $requireName => $requireVersion) :
                             $clLoadPackages[] = $requireName;
                         endforeach;
                     endif;
                 endif;
             endforeach;
-            if (isset(clLoad["require"]) and clLoad["require"] == true) :
+            if (isset(CL_LOAD["require"]) and CL_LOAD["require"] == true) :
                 Codelab::log(
                     "cl",
                     "info",
@@ -860,8 +860,8 @@ if (defined("clLoad")) :
             );
         endif;
     endif;
-    if ($clLoad == true and isset(clLoad["config"])) :
-        foreach (clLoad["config"] as $packageName => $packageData) :
+    if ($cl_load == true and isset(CL_LOAD["config"])) :
+        foreach (CL_LOAD["config"] as $packageName => $packageData) :
             if (isset($packagesList[strtolower($packageName)])) :
                 foreach ($packageData as $packageData_key => $packageData_value) :
                     $packagesList[strtolower($packageName)]["config"][$packageData_key] = $packageData_value;
@@ -877,7 +877,7 @@ if (defined("clLoad")) :
         endforeach;
     endif;
 endif;
-if ($clLoad == true and $clLoadPackages != false) :
+if ($cl_load == true and $clLoadPackages != false) :
     foreach ($packagesList as $packageName => $packageData) :
         if (!in_array($packageName, $clLoadPackages)) :
             unset($packagesList[$packageName]);

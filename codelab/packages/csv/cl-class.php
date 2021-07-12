@@ -1,22 +1,12 @@
 <?php
-
 namespace Codelab;
-class csv
+
+class CSV
 {
     public const LENGTH_LIMIT = 10000000;
-
-    /**
-     * Simple parser for CSV files
-     *
-     * @param string $csvFile
-     * @param string $delimiter
-     * @param string $enclosure
-     * @param bool   $hasHeader
-     * @return array
-     */
-    public static function parse(string $csvFile,string $delimiter = ';',string $enclosure = '"',bool $hasHeader = true): array {
+    public static function parse(string $csvFile, string $delimiter = ';', string $enclosure = '"', bool $hasHeader = true): array
+	{
         $result = [];
-
         $headerKeys = [];
         $rowCounter = 0;
         $handle = fopen($csvFile, 'rb');
@@ -27,23 +17,18 @@ class csv
                     $headerKeys = $row;
                 } elseif ($hasHeader) {
                     $assocRow = [];
-
                     foreach ($headerKeys as $colIndex => $colName) {
                         $colName = (string)$colName;
                         $assocRow[$colName] = $row[$colIndex];
                     }
-
                     $result[] = $assocRow;
                 } else {
                     $result[] = $row;
                 }
-
                 $rowCounter++;
             }
-
             fclose($handle);
         }
-
         return $result;
     }
 }

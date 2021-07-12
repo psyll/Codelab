@@ -9,14 +9,14 @@ if (CL_PACKAGES['pages']['config']['init'] == true):
         $pageQuery = array_filter($pageQuery);
         $pageQuery = array_values($pageQuery);
         ksort($pageQuery);
-        DEFINE('pageQuery', $pageQuery);
+        DEFINE('PAGE_QUERY', $pageQuery);
         $pagesParms = array(
             'table' => 'pages',
             'columns' => '*',
         );
         // ### Create catch list
         $pages = CodelabDB::get($pagesParms);
-        DEFINE('pages', $pages);
+        DEFINE('PAGES', $pages);
 
 
         if (CL_PACKAGES['pages']['config']['offline'] == true):
@@ -28,12 +28,12 @@ if (CL_PACKAGES['pages']['config']['init'] == true):
             // ### Create catch list
             $offline = CodelabDB::get($offlineParms, true);
             if (!empty($offline)):
-                DEFINE('page', $offline);
+                DEFINE('PAGE', $offline);
             else:
-                DEFINE('page', ['alias' => 'error', 'id' => '-1']);
+                DEFINE('PAGE', ['alias' => 'error', 'id' => '-1']);
             endif;
         else:
-            if (empty(pageQuery)):
+            if (empty(PAGE_QUERY)):
                 $homepageParms = array(
                     'table' => 'pages',
                     'columns' => '*',
@@ -42,7 +42,7 @@ if (CL_PACKAGES['pages']['config']['init'] == true):
                 // ### Create catch list
                 $homepage = CodelabDB::get($homepageParms, true);
                 if (!empty($homepage)):
-                    DEFINE('page', $homepage);
+                    DEFINE('PAGE', $homepage);
                 endif;
             else:
                 $catchList = array();
@@ -62,13 +62,13 @@ if (CL_PACKAGES['pages']['config']['init'] == true):
                             // ### Check if catch match
                             $valueCatchArray = explode('/', $valueCatch);
                             // Check if same count
-                            if (count(pageQuery) != count($valueCatchArray)):
+                            if (count(PAGE_QUERY) != count($valueCatchArray)):
                                 continue;
                             endif;
                             $checkValid = true;
                             $strength = 0;
-                            for ($i=0; $i < count(pageQuery); $i++):
-                                if (strtolower(pageQuery[$i]) == strtolower($valueCatchArray[$i])):
+                            for ($i=0; $i < count(PAGE_QUERY); $i++):
+                                if (strtolower(PAGE_QUERY[$i]) == strtolower($valueCatchArray[$i])):
                                     $strength = $strength + 2;
                                 elseif ($valueCatchArray[$i] == '*'):
                                     $strength = $strength + 1;
@@ -88,11 +88,11 @@ if (CL_PACKAGES['pages']['config']['init'] == true):
                 }
                 usort($catchList, "catchListOrder");
                 if (isset($catchList[0])):
-                    DEFINE('page', $catchList[0]);
+                    DEFINE('PAGE', $catchList[0]);
                 endif;
             endif;
         endif;
-        if (!defined('page')):
+        if (!defined('PAGE')):
             $erroPageParms = array(
                 'table' => 'pages',
                 'columns' => '*',
@@ -101,9 +101,9 @@ if (CL_PACKAGES['pages']['config']['init'] == true):
             // ### Create catch list
             $erroPage = CodelabDB::get($erroPageParms, true);
             if (!empty($erroPage)):
-                DEFINE('page', $erroPage);
+                DEFINE('PAGE', $erroPage);
             else:
-                DEFINE('page', ['alias' => 'error', 'id' => '-1']);
+                DEFINE('PAGE', ['alias' => 'error', 'id' => '-1']);
             endif;
         endif;
     endif;

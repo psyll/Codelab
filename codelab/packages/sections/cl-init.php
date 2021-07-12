@@ -20,7 +20,7 @@ if (!empty($results)):
             $sectionFileView = $sectionPath . DIRECTORY_SEPARATOR . $view . DIRECTORY_SEPARATOR . 'view.php';
             $pagesInclude = json_decode($valueSecions['pagesInclude'],true);
             $pagesExclude = json_decode($valueSecions['pagesExclude'],true);
-            if (($valueSecions['pagesInclude'] == '*' OR (is_array($pagesInclude) AND in_array(page['id'],$pagesInclude))) AND (!is_array($pagesExclude) OR !in_array(page['id'],$pagesExclude))):
+            if (($valueSecions['pagesInclude'] == '*' OR (is_array($pagesInclude) AND in_array(PAGE['id'],$pagesInclude))) AND (!is_array($pagesExclude) OR !in_array(PAGE['id'],$pagesExclude))):
 
                 if (file_exists($sectionFileView) AND is_file($sectionFileView)):
                     $sectionFileControl = $sectionPath . DIRECTORY_SEPARATOR . $view . DIRECTORY_SEPARATOR . 'control.php';

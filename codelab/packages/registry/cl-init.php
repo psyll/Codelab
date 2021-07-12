@@ -9,10 +9,10 @@
 		foreach ($results as $key => $value):
 			$clRegistryQuery[$value['name']] = $value['value'];
 		endforeach;
-		DEFINE('clRegistry', $clRegistryQuery);
+		DEFINE('REGISTRY', $clRegistryQuery);
 		unset($clRegistryQuery);
 		Codelab::log('registry', 'success', 'Registry loaded as [clRegistry]');
 	else:
-		DEFINE('clRegistry', []);
+		DEFINE('REGISTRY', []);
 		Codelab::log('registry', 'error', 'Database not connected');
 	endif;

@@ -1,17 +1,12 @@
 <?php
-/*
-	CODELAB
-	Homepage: https://psyll.com/products/codelab
-	© Jaroslaw Szulc <jarek@psyll.com>
-	© Psyll.com <info@psyll.com>
-	This file is part of the Codelab package.
-	Distributed under the PPCL license (http://psyll.com/license/ppcl)
-*/
+
 namespace Codelab;
 
 use Codelab;
 use CodelabDB;
-class analysis {
+
+class Analysis
+{
 	public static function create(string $type, $description = null)
 	{
 		$browser = Codelab\spy::browser();
@@ -31,17 +26,17 @@ class analysis {
 			'browserVersion' => $browser['version'],
 			'referrer' => @$_SERVER['HTTP_REFERER']
 		);
-		if (isset($_GET)):
+		if (isset($_GET)) :
 			$insertParam['get'] = json_encode($_GET);
 		endif;
-		if (isset($_POST)):
+		if (isset($_POST)) :
 			$insertParam['post'] = json_encode($_POST);
 		endif;
-		if (isset($_FILES)):
+		if (isset($_FILES)) :
 			$insertParam['files'] = json_encode($_FILES);
 		endif;
-		if (Codelab::packageInstalled('users') AND !isset(Codelab::packageInstalled('users')['errors'])):
-			$insertParam['usersID'] = Codelab\users::id();
+		if (Codelab::packageInstalled('users') and !isset(Codelab::packageInstalled('users')['errors'])) :
+			$insertParam['usersID'] = Codelab\Users::id();
 		endif;
 		CodelabDB::insert('analisys', $insertParam);
 		Codelab::log('analysis', 'success', 'analisys created ['.$type. ']');
