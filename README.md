@@ -13,7 +13,6 @@
 
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/psyll/Codelab)
 
-
 # Introduction
 
 **Codelab** is an application designed to optimize web development processes. It contains a collection of classes and functions supporting the development of websites and web applications on every stage.
@@ -21,6 +20,10 @@
 Build your **Codelab** easily with new functionalities, using ready-made packages and a simple manager.
 
 The system provides simple and quick solutions that will help you design and code a web application faster, safer and more comfortable in a [Codelab Way](https://psyll.com/products/codelab/way).
+
+# Additional tools
+
+- Visual Studio Code:  [https://psyll.com/products/codelab/snippets](https://psyll.com/products/codelab/snippets).
 
 # Installation
 
@@ -34,7 +37,7 @@ The system provides simple and quick solutions that will help you design and cod
 4) Check if everything is ok. Display **Codelab** output.
 
     ```php
-    cl::output();
+    Codelab::output();
     ```
 
 # Packages
@@ -61,21 +64,24 @@ The define can consists following elements - `[packages]`, `[require]` and `[con
 
 ## Examples:
 
-#### Dont load packages
+#### Disable all packages
 
 ```php
+// It will not load any package
 DEFINE('CL_LOAD', ["packages" => false]);
 ```
 
 #### Load selected packages
 
 ```php
+// Load only PACKAGE_NAME1 and PACKAGE_NAME2 packages
 DEFINE('CL_LOAD', ["packages" => ['PACKAGE_NAME1', 'PACKAGE_NAME2']]);
 ```
 
 #### Load packages with all required packages
 
 ```php
+// Load packages and all required
 DEFINE(
     'CL_LOAD',
     [
@@ -93,6 +99,7 @@ DEFINE(
 #### Overwrite package configuration
 
 ```php
+// Overwrite package config
 DEFINE(
     'CL_LOAD',
     [
@@ -107,6 +114,8 @@ DEFINE(
 
 #### Full example
 ```php
+// Load packages PACKAGE_NAME1, PACKAGE_NAME2 and all required
+// Overwrite PACKAGE_NAME2 package config
 DEFINE(
     'CL_LOAD',
     [
@@ -118,7 +127,7 @@ DEFINE(
         // Auto load require
         "require" => true,
         "config" => [
-            'PACKAGE_NAME' => [
+            'PACKAGE_NAME2' => [
                 'CONFIG_NAME' => "CONFIG_VALUE",
             ]
         ]
@@ -142,33 +151,33 @@ DEFINE(
 
 # Built-in classes and functions
 
-## `cl` class
+## `Codelab` class
 
- - `cl::packageConfigRead(string $packageDir)`
- - `cl::packageInstalled(string $packageName)`
- - `cl::requireAjax()`
- - `cl::isAjax()`
- - `cl::requirePost()`
- - `cl::isPost()`
- - `cl::headerStatus(int $statusCode)`;
- - `cl::headers(string $headerName = null)`
- - `cl::log(string $source, string $type, string $message)`
- - `cl::logs()`
- - `cl::output()`
+ - `Codelab::packageConfigRead(string $packageDir)`
+ - `Codelab::packageInstalled(string $packageName)`
+ - `Codelab::requireAjax()`
+ - `Codelab::isAjax()`
+ - `Codelab::requirePost()`
+ - `Codelab::isPost()`
+ - `Codelab::headerStatus(int $statusCode)`;
+ - `Codelab::headers(string $headerName = null)`
+ - `Codelab::log(string $source, string $type, string $message)`
+ - `Codelab::logs()`
+ - `Codelab::output()`
 
 ## `clDB` class
 
- - `clDB::connected()`
- - `clDB::disconnect()`
- - `clDB::escape(string $string)`
- - `clDB::query(string $query)`
- - `clDB::fetch($results)`
- - `clDB::columns($table)`
- - `clDB::get(array $param, $single = false)`
- - `clDB::insert(string $table, array $columns)`
- - `clDB::delete(string $table, $id)`
- - `clDB::insertID()`
- - `clDB::update(string $table, string $where, array $fields)`
+ - `CodelabDB::connected()`
+ - `CodelabDB::disconnect()`
+ - `CodelabDB::escape(string $string)`
+ - `CodelabDB::query(string $query)`
+ - `CodelabDB::fetch($results)`
+ - `CodelabDB::columns($table)`
+ - `CodelabDB::get(array $param, $single = false)`
+ - `CodelabDB::insert(string $table, array $columns)`
+ - `CodelabDB::delete(string $table, $id)`
+ - `CodelabDB::insertID()`
+ - `CodelabDB::update(string $table, string $where, array $fields)`
 
 
 
