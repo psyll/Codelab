@@ -60,6 +60,7 @@
 ## `cl` class
 
  - `cl::packageConfigRead(string $packageDir)`
+ - `cl::packageInstalled(string $packageName)`
  - `cl::requireAjax()`
  - `cl::isAjax()`
  - `cl::requirePost()`

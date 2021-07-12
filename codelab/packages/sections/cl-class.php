@@ -1,5 +1,4 @@
 <?php
-
 	/*
 		CODELAB
 		Homepage: https://psyll.com/products/codelab
@@ -12,25 +11,23 @@ namespace cl;
 use cl;
 class sections {
 	public static function control(){
-
-			foreach (sections as $key_sections => $value_sections):
-				if (isset($value_sections['control'])):
-				// Section found
-					$sectionControl = clPath . DIRECTORY_SEPARATOR . trim(clPackages['sections']['config']['path'], '/') . DIRECTORY_SEPARATOR . $value_sections['view'] . DIRECTORY_SEPARATOR . 'control.php';
-					//echo $sectionView  . '<hr>';
-					if (file_exists($sectionControl) AND is_file($sectionControl)):
-						$thisURL = wa_url . '/' .  trim(clPackages['sections']['config']['url'], '/') . '/' . $value_sections['control'];
-						include($sectionControl);
-						cl::log('sections', 'success', 'Section control loaded [' . $sectionControl  . ']');
-					endif;
+		foreach (sections as $key_sections => $value_sections):
+			if (isset($value_sections['control'])):
+			// Section found
+				$sectionControl = clPath . DIRECTORY_SEPARATOR . trim(clPackages['sections']['config']['path'], '/') . DIRECTORY_SEPARATOR . $value_sections['view'] . DIRECTORY_SEPARATOR . 'control.php';
+				//echo $sectionView  . '<hr>';
+				if (file_exists($sectionControl) AND is_file($sectionControl)):
+					$thisURL = wa_url . '/' .  trim(clPackages['sections']['config']['url'], '/') . '/' . $value_sections['control'];
+					include($sectionControl);
+					cl::log('sections', 'success', 'Section control loaded [' . $sectionControl  . ']');
 				endif;
-		   endforeach;
-
+			endif;
+		endforeach;
 	}
 	public static function view($data){
 		if (is_array($data)):
 			foreach ($data as $key => $sectionRequire):
-			   foreach (sections as $key_sections => $value_sections):
+				foreach (sections as $key_sections => $value_sections):
 					// Section found
 					if ($sectionRequire == $value_sections['view']):
 						$sectionView = clPath . DIRECTORY_SEPARATOR . trim(clPackages['sections']['config']['path'], '/') . DIRECTORY_SEPARATOR . $value_sections['view'] . DIRECTORY_SEPARATOR . 'view.php';
@@ -42,7 +39,7 @@ class sections {
 						endif;
 						break;
 					endif;
-			   endforeach;
+				endforeach;
 			endforeach;
 		else:
 			foreach (sections as $key_sections => $value_sections):
@@ -58,9 +55,7 @@ class sections {
 						cl::log('sections', 'error', 'Section view file not found [' . $sectionView  . ']');
 					endif;
 				endif;
-		   endforeach;
+			endforeach;
 		endif;
-
 	}
-
 }
