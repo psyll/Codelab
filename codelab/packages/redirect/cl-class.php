@@ -1,5 +1,5 @@
 <?php
-namespace cl;
+namespace Codelab;
 	class redirect {
 		// In ##################################################################
 		public static function url(string $url)
@@ -27,7 +27,7 @@ namespace cl;
 		public static function domain()
 		{
 
-			$url = clProtocol . '://' . clDomain;
+			$url = CL_PROTOCOL . '://' . CL_DOMAIN;
 
 		   if (headers_sent()){
 				die('<script type="text/javascript">window.location.href="' . $url . '";</script>');

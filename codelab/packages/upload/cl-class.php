@@ -1,19 +1,19 @@
 <?php
 // TODO: FILE TO RECODE
 
-namespace cl;
-use cl;
+namespace Codelab;
+use Codelab;
 	class upload {
 		public static function file(string $source, string $destination, array $options) {
 			$target_dir = trim($destination, '/');
 			if (@$options['clearFolder'] == true):
-				cl\filesys\dir::clear($destination);
+				Codelab\filesys\dir::clear($destination);
 			endif;
-			cl\filesys\dir::create($destination);
+			Codelab\filesys\dir::create($destination);
 			$error = false;
 			$pi = pathinfo($target_dir. '/' . basename($source["name"]));
 			$fileName = $pi['filename'];
-			$fileName = cl\str::alias($fileName);
+			$fileName = Codelab\str::alias($fileName);
 			if (isset($options['filename'])):
 				$fileName = $options['filename'];
 			endif;
@@ -21,7 +21,7 @@ use cl;
 			$fileFullname = $fileName . '.' . $fileExt;
 			$fileTarget = $target_dir . '/' . $fileFullname;
 			if (@$options['overwrite'] == true AND file_exists($fileTarget)):
-				cl\filesys\file::delete($fileTarget);
+				Codelab\filesys\file::delete($fileTarget);
 			endif;
 			// Check if image file is a actual image or fake image
 			if ($error == false):

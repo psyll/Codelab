@@ -9,13 +9,13 @@
         $ip_allowMYIP = $_SERVER['REMOTE_ADDR'];
     }
 	if ($ip_allowMYIP == false OR $ip_allowMYIP == ''):
-		die(clPackages['ip-allow']['config']['message']);
+		die(CL_PACKAGES['ip-allow']['config']['message']);
 	endif;
-	if (empty(clPackages['ip-allow']['config']['allow'])):
-		die(clPackages['ip-allow']['config']['message']);
+	if (empty(CL_PACKAGES['ip-allow']['config']['allow'])):
+		die(CL_PACKAGES['ip-allow']['config']['message']);
 	else:
-		$allowList = clPackages['ip-allow']['config']['allow'];
+		$allowList = CL_PACKAGES['ip-allow']['config']['allow'];
 		if (!in_array($ip_allowMYIP, $allowList)):
-			die(clPackages['ip-allow']['config']['message']);
+			die(CL_PACKAGES['ip-allow']['config']['message']);
 		endif;
 	endif;

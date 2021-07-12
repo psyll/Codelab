@@ -8,19 +8,19 @@
 		This file is part of the Codelab package.
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
-namespace cl;
-use cl;
-use clDB;
+namespace Codelab;
+use Codelab;
+use CodelabDB;
 
 class page {
 
 	public static function themeView(){
-		$pageView = clPath . DIRECTORY_SEPARATOR . trim(clPackages['pages']['config']['themePath'], '/') . DIRECTORY_SEPARATOR . trim(clPackages['pages']['config']['themeName'], '/') . DIRECTORY_SEPARATOR ."view".DIRECTORY_SEPARATOR .page['themeView'] . DIRECTORY_SEPARATOR .  'view.php';
+		$pageView = CL_PATH . DIRECTORY_SEPARATOR . trim(CL_PACKAGES['pages']['config']['themePath'], '/') . DIRECTORY_SEPARATOR . trim(CL_PACKAGES['pages']['config']['themeName'], '/') . DIRECTORY_SEPARATOR ."view".DIRECTORY_SEPARATOR .page['themeView'] . DIRECTORY_SEPARATOR .  'view.php';
 		if (file_exists($pageView) AND is_file($pageView)):
 			include($pageView);
-			cl::log('page', 'success', 'Page view loaded [' . $pageView  . ']');
+			Codelab::log('page', 'success', 'Page view loaded [' . $pageView  . ']');
 		else:
-			cl::log('page', 'error', 'Page view file not found [' . $pageView  . ']');
+			Codelab::log('page', 'error', 'Page view file not found [' . $pageView  . ']');
 		endif;
 	}
 }
@@ -33,7 +33,7 @@ class pages {
 			'offset' => 0,
 			'order' => 'ordering ASC',
 		);
-		$results = clDB::get($param);
+		$results = CodelabDB::get($param);
 		return $results;
 	}
 }

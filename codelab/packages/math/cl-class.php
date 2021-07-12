@@ -7,7 +7,7 @@
 		This file is part of the Codelab package.
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
-namespace cl;
+namespace Codelab;
 class math {
     // * Get relative percent
 public static function relativePercent(float $normal, float $current): string

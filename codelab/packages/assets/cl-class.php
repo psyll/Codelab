@@ -9,8 +9,8 @@
 	*/
 
 // $assetsStorage
-namespace cl;
-use cl;
+namespace Codelab;
+use Codelab;
 	class assets {
 		public static function add(array $resources, $priority = 1)
 		{
@@ -49,9 +49,9 @@ use cl;
 		{
 			$assetsStorage = [];
 			$filesValidation = false;
-			if (clPackages['assets']['config']['filesValidation'] == true):
+			if (CL_PACKAGES['assets']['config']['filesValidation'] == true):
 				$filesValidation = true;
-				cl::log('assets', 'info', '[filesValidation] config enabled');
+				Codelab::log('assets', 'info', '[filesValidation] config enabled');
 			endif;
 			// set key as url
             foreach (session::get('assetsStorage') as $key => $value):
@@ -68,7 +68,7 @@ use cl;
 					// $retcode >= 400 -> not found, $retcode = 200, found.
 					curl_close($urlCURL);
 					if ($retcode != 200):
-						cl::log('assets', 'error', 'assets file not valid [' . $url  . ']['.$retcode.']');
+						Codelab::log('assets', 'error', 'assets file not valid [' . $url  . ']['.$retcode.']');
 						unset($assetsStorage[$url]);
 						continue;
 					endif;
@@ -80,7 +80,7 @@ use cl;
 				foreach ($assetsStorage as $key => $data):
 				if ($data['type'] == 'style'):
 						echo '<link rel="stylesheet" href="' . $data['url'] . '">' . PHP_EOL;
-						cl::log('assets', 'log', 'assets style loaded [' . $data['url']  . '] with priority ['.$data['priority'] .']');
+						Codelab::log('assets', 'log', 'assets style loaded [' . $data['url']  . '] with priority ['.$data['priority'] .']');
 				endif;
 				endforeach;
 			endif;
@@ -88,7 +88,7 @@ use cl;
 				foreach ($assetsStorage as $key => $data):
 					if ($data['type'] == 'script'):
 						echo '<script src="' . $data['url'] . '"></script>' . PHP_EOL;
-						cl::log('assets', 'log', 'assets script loaded [' . $data['url']  . '] with priority ['.$data['priority'] .']');
+						Codelab::log('assets', 'log', 'assets script loaded [' . $data['url']  . '] with priority ['.$data['priority'] .']');
 					endif;
 				endforeach;
 			endif;

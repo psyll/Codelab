@@ -8,20 +8,20 @@
 		This file is part of the Codelab package.
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
-namespace cl;
+namespace Codelab;
 class session {
     public static function set(string $name, $value = null){
-        $_SESSION[clPackages['session']['config']['sessionName']][$name] = $value;
+        $_SESSION[CL_PACKAGES['session']['config']['sessionName']][$name] = $value;
     }
     public static function add(string $name, $value = null){
-        $_SESSION[clPackages['session']['config']['sessionName']][$name][microtime()] = $value;
+        $_SESSION[CL_PACKAGES['session']['config']['sessionName']][$name][microtime()] = $value;
     }
     public static function get(string $name = null){
         if ($name == null):
-            return $_SESSION[clPackages['session']['config']['sessionName']];
+            return $_SESSION[CL_PACKAGES['session']['config']['sessionName']];
         else:
-            if (isset($_SESSION[clPackages['session']['config']['sessionName']][$name])):
-              return $_SESSION[clPackages['session']['config']['sessionName']][$name];
+            if (isset($_SESSION[CL_PACKAGES['session']['config']['sessionName']][$name])):
+              return $_SESSION[CL_PACKAGES['session']['config']['sessionName']][$name];
             else:
                 return false;
             endif;
@@ -29,9 +29,9 @@ class session {
     }
     public static function delete(string $name = null){
         if ($name == null):
-            $_SESSION[clPackages['session']['config']['sessionName']] = array();
+            $_SESSION[CL_PACKAGES['session']['config']['sessionName']] = array();
         else:
-            unset($_SESSION[clPackages['session']['config']['sessionName']][$name]);
+            unset($_SESSION[CL_PACKAGES['session']['config']['sessionName']][$name]);
         endif;
     }
 }

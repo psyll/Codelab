@@ -8,8 +8,8 @@
 		This file is part of the Codelab package.
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
-namespace cl;
-use clDB;
+namespace Codelab;
+use CodelabDB;
 
 class users {
 
@@ -40,20 +40,20 @@ private static function _loginLogInsert($status, $message = null, $teamID = null
     $insert = array(
         'status' => $status,
         'teamID' => $teamID,
-        'message' => clDB::escape($message),
+        'message' => CodelabDB::escape($message),
         'datetime' => date("Y-m-d H:i:s"),
-        'ip' => clDB::escape(spy::ip()),
-        'os' => clDB::escape(spy::os()),
-        'browser_name' => clDB::escape(spy::browser()['name']),
-        'browser_version' => clDB::escape(spy::browser()['version']),
-        'user_agent' => clDB::escape($_SERVER['HTTP_USER_AGENT'])
+        'ip' => CodelabDB::escape(spy::ip()),
+        'os' => CodelabDB::escape(spy::os()),
+        'browser_name' => CodelabDB::escape(spy::browser()['name']),
+        'browser_version' => CodelabDB::escape(spy::browser()['version']),
+        'user_agent' => CodelabDB::escape($_SERVER['HTTP_USER_AGENT'])
     );
     if ($status == false):
         $insert['status'] = '0';
     elseif ($status == true):
         $insert['status'] = '1';
     endif;
-    clDB::insert('users_auth', $insert);
+    CodelabDB::insert('users_auth', $insert);
 }
 private static function _loginResponse($status, $message = null, $teamID = null, $insertDB = true){
     if ($insertDB == true):
@@ -70,8 +70,8 @@ public static function login(string $email, string $password){
     if (self::logged()):
         return (self::_loginResponse(false, 'already logged', self::id(), false));
     endif;
-    $securityTime = clPackages['users']['config']['login_time'];
-    $securityLimit =  clPackages['users']['config']['login_attempts'];
+    $securityTime = CL_PACKAGES['users']['config']['login_time'];
+    $securityLimit =  CL_PACKAGES['users']['config']['login_attempts'];
     $spyIP = spy::ip();
     $paramLogs = array(
         'table' => 'users_auth',
@@ -80,7 +80,7 @@ public static function login(string $email, string $password){
         'limit' => $securityLimit,
         'order' => "id DESC"
     );
-    $resultsLogs = clDB::get($paramLogs, false);
+    $resultsLogs = CodelabDB::get($paramLogs, false);
 
     if (!empty($resultsLogs) AND count($resultsLogs) == $securityLimit):
         $blockedUntil = end($resultsLogs)['datetime'];
@@ -98,12 +98,12 @@ public static function login(string $email, string $password){
             return (self::_loginResponse(false, 'password required'));
         endif;
     // Check password length max
-        $pass_maxChars = clPackages['users']['config']['password_length_max'];
+        $pass_maxChars = CL_PACKAGES['users']['config']['password_length_max'];
         if (strlen($password) > $pass_maxChars):
             return (self::_loginResponse(false, 'password too long'));
         endif;
     // Check password length min
-        $pass_minChars = clPackages['users']['config']['password_length_min'];
+        $pass_minChars = CL_PACKAGES['users']['config']['password_length_min'];
         if (strlen($password) < $pass_minChars):
             return (self::_loginResponse(false, 'password too short'));
         endif;
@@ -111,10 +111,10 @@ public static function login(string $email, string $password){
         $param = array(
           'table' => 'users',
           'columns' => ['id', 'active', 'email', 'password'],
-          'where' => 'email="' . clDB::escape($email) . '"',
+          'where' => 'email="' . CodelabDB::escape($email) . '"',
           'limit' => 1,
         );
-        $results = clDB::get($param, true);
+        $results = CodelabDB::get($param, true);
         if (empty($results)):
             return (self::_loginResponse(false, 'account does not exist'));
         else:
@@ -137,7 +137,7 @@ public static function login(string $email, string $password){
                 $update = array(
                     'token' => $token
                 );
-                clDB::update('users' , 'id="' . $results['id']. '"', $update);
+                CodelabDB::update('users' , 'id="' . $results['id']. '"', $update);
 
                 return (self::_loginResponse(true, 'logged', $userID));
         endif;
@@ -148,16 +148,16 @@ public static function logout(){
     $insert = array(
         'status' => '-1',
         'teamID' => self::id(),
-        'message' => clDB::escape('Logout'),
+        'message' => CodelabDB::escape('Logout'),
         'datetime' => date("Y-m-d H:i:s"),
-        'ip' => clDB::escape(spy::ip()),
-        'os' => clDB::escape(spy::os()),
-        'browser_name' => clDB::escape(spy::browser()['name']),
-        'browser_version' => clDB::escape(spy::browser()['version']),
-        'user_agent' => clDB::escape($_SERVER['HTTP_USER_AGENT'])
+        'ip' => CodelabDB::escape(spy::ip()),
+        'os' => CodelabDB::escape(spy::os()),
+        'browser_name' => CodelabDB::escape(spy::browser()['name']),
+        'browser_version' => CodelabDB::escape(spy::browser()['version']),
+        'user_agent' => CodelabDB::escape($_SERVER['HTTP_USER_AGENT'])
     );
-    clDB::insert('team_login', $insert);
-    clDB::update('team', 'id = "' . self::id() . '"', array('token' => ''));
+    CodelabDB::insert('team_login', $insert);
+    CodelabDB::update('team', 'id = "' . self::id() . '"', array('token' => ''));
     session::delete('user');
 }
 
@@ -173,10 +173,10 @@ public static function logged(){
     $param = array(
           'table' => 'users',
           'columns' => ["id", "token", "active"],
-          'where' => 'id="' . clDB::escape(@$tokenDecode['id']) . '"',
+          'where' => 'id="' . CodelabDB::escape(@$tokenDecode['id']) . '"',
           'limit' => 1,
     );
-    $results = clDB::get($param, true);
+    $results = CodelabDB::get($param, true);
     if (empty($results)):
         return false;
     endif;
@@ -192,10 +192,10 @@ public static function data($userID = null){
     $param = array(
         'table' => 'users',
         'columns' => "*",
-        'where' => 'id="' . clDB::escape(@$userID) . '"',
+        'where' => 'id="' . CodelabDB::escape(@$userID) . '"',
         'limit' => 1,
   );
-  $results = clDB::get($param, true);
+  $results = CodelabDB::get($param, true);
   $prefereces = json_decode($results['preferences'], true);
   if (!is_array($prefereces)):
     $prefereces = [];
@@ -216,7 +216,7 @@ $paramGroup = array(
    'where' => 'id="' . $results['group'] . '"',
    'limit' => 1,
 );
-$resultsGroup = clDB::get($paramGroup, true);
+$resultsGroup = CodelabDB::get($paramGroup, true);
 $groupAccess = json_decode($resultsGroup['access'], true);
 if (!is_array($groupAccess)):
     $groupAccess = [];
@@ -261,14 +261,14 @@ public static function id(){
     $update = [
         'preferences' => $preferencesEncode
     ];
-    clDB::update('users', 'id = "' . $userID . '"', $update);
+    CodelabDB::update('users', 'id = "' . $userID . '"', $update);
     $user =  session::get('user');
     $user['preferences'] = $preferences;
     session::set('user', $user);
  }
 }
-namespace cl;
-use clDB;
+namespace Codelab;
+use CodelabDB;
 class usersGroups {
 		// ROW ##################################################################
 		public static function list() // return team groups array
@@ -278,7 +278,7 @@ class usersGroups {
 				'table'  => 'users_groups',
 				'columns' => ['name'],
 			);
-			$groups = clDB::get($param);
+			$groups = CodelabDB::get($param);
 			if (empty($groups)):
 				return array();
 			endif;
@@ -292,7 +292,7 @@ class usersGroups {
 				'table'  => 'cl-team_groups',
 				'columns' => ['id'],
 			);
-			$groups = clDB::get($param);
+			$groups = CodelabDB::get($param);
 			if (empty($groups)):
 				return array();
 			endif;

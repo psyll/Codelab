@@ -1,5 +1,5 @@
 <?php
-namespace cl;
+namespace Codelab;
 	class str {
 		public static function  pluralDisplay($number, $plural = 's', $singular = '') {
 		    if ( $number === 1 ) {

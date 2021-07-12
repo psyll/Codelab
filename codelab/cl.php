@@ -1,120 +1,87 @@
 <?php
-/*@docc
-	@name: CODELAB
-	@author: © Jaroslaw Szulc <jarek@psyll.com>
-	@copyrights: © Psyll.com <info@psyll.com>
-	@packages: Codelab
-	@description:
-	Distributed under the PPCL license (http://psyll.com/license/ppcl)
-*/
+/**file
+ * @name        Codelab
+ * @version     1.0
+ * @author      Jarek Szulc <jarek@psyll.com> <https://psyll.com/profile/jarek>
+ * @author      Psyll.com Dev <dev@psyll.com>
+ * @link        Project Homepage http://psyll.com/products/codelab
+ * @link        Project Codumentation http://psyll.com/products/codelab
+ * @license     https://psyll.com/license/ppcl-psyll-public-code-license Psyll Public Code License
+ * @copyright   2021 Psyll.com
+ */
 // ################################################
 // ##### System defines
 // ################################################
 // ##### Load start
-DEFINE("clStart", microtime());
+DEFINE("CL_START", microtime());
 // ##### Set version
-DEFINE("clVersion", "1.0");
+DEFINE("CL_VERSION", "1.0");
 // ##### Set codename
-DEFINE("clCodename", "alpha");
+DEFINE("CL_CODENAME", "alpha");
 // ##### Define codelab path
-DEFINE("clPath", __DIR__);
-DEFINE("clDomain", $_SERVER["HTTP_HOST"]);
-// ##### clProtocol [GLOBAL DEFINE]
-if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] != "off"):
-    DEFINE("clProtocol", "https");
-else:
-    DEFINE("clProtocol", "http");
+DEFINE("CL_PATH", __DIR__);
+DEFINE("CL_DOMAIN", $_SERVER["HTTP_HOST"]);
+// ##### CL_PROTOCOL [GLOBAL DEFINE]
+if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] != "off") :
+    DEFINE("CL_PROTOCOL", "https");
+else :
+    DEFINE("CL_PROTOCOL", "http");
 endif;
-DEFINE("clQuery", $_SERVER['REQUEST_URI']);
-DEFINE('clUrl', clProtocol . "://" . clDomain . clQuery);
+DEFINE("CL_QUERY", $_SERVER['REQUEST_URI']);
+DEFINE('CL_URL', CL_PROTOCOL . "://" . CL_DOMAIN . CL_QUERY);
 // ################################################
 // ##### Load config file
 // ################################################
-$clConfigPath = clPath . DIRECTORY_SEPARATOR;
-$clConfig = [];
-$clConfigSource = false;
-if (
-    file_exists($clConfigPath . "cl-config.dev.json") and
-    is_file($clConfigPath . "cl-config.dev.json")
-):
-    $clConfigSource = "cl-config.dev.json";
-elseif (
-    file_exists($clConfigPath . "cl-config.json") and
-    is_file($clConfigPath . "cl-config.json")
-):
-    $clConfigSource = "cl-config.json";
+$CL_CONFIGPath = CL_PATH . DIRECTORY_SEPARATOR;
+$CL_CONFIG = [];
+$CL_CONFIGSource = false;
+if (file_exists($CL_CONFIGPath . "cl-config.dev.json") and is_file($CL_CONFIGPath . "cl-config.dev.json")) :
+    $CL_CONFIGSource = "cl-config.dev.json";
+elseif (file_exists($CL_CONFIGPath . "cl-config.json") and is_file($CL_CONFIGPath . "cl-config.json")) :
+    $CL_CONFIGSource = "cl-config.json";
 endif;
-if ($clConfigSource != false):
+if ($CL_CONFIGSource != false) :
     // Get "package.json" file and convert to array
-    $clConfigData = json_decode(
-        file_get_contents($clConfigPath . $clConfigSource),
-        true
-    );
+    $CL_CONFIGData = json_decode(file_get_contents($CL_CONFIGPath . $CL_CONFIGSource), true);
     // Check if "package.json" file content is valid json
-    if (is_array($clConfigData)):
-        $clConfig = $clConfigData;
-        cl::log(
-            "cl",
-            "success",
-            "Codelab config file  loaded [" . $clConfigSource . "]"
-        );
-    else:
-        $errorMessage =
-            "Main config file is not valid [" . $clConfigSource . "]";
-        cl::log("cl", "error", $errorMessage);
+    if (is_array($CL_CONFIGData)) :
+            $CL_CONFIG = $CL_CONFIGData;
+            Codelab::log("cl", "success", "Codelab config file  loaded [" . $CL_CONFIGSource . "]");
+    else :
+            $errorMessage = "Main config file is not valid [" . $CL_CONFIGSource . "]";
+            Codelab::log("cl", "error", $errorMessage);
     endif;
 endif;
-DEFINE("clConfig", $clConfig);
+DEFINE("CL_CONFIG", $CL_CONFIG);
 // ################################################
 // ##### Session start
 // ################################################
-if (session_status() === PHP_SESSION_NONE):
+if (session_status() === PHP_SESSION_NONE) :
     session_start();
 endif;
-// ################################################
-// ##### Function
-// ################################################
 $_SESSION["clLog"] = [];
-class cl
+class Codelab
 {
     // In ##################################################################
-    /*
-    echo '<pre>';
-    print_r(cl::packageConfigRead('lang')['languages']);
-    echo '</pre>';
-    */
     public static function packageInstalled(string $packageName)
     {
-        if (isset(clPackages[strtolower($packageName)])):
+        if (isset(CL_PACKAGES[strtolower($packageName)])) :
             return true;
-        else:
+        else :
             return false;
         endif;
     }
     public static function packageConfigRead(string $packageDir)
     {
         // Create packages path
-        $packagePath =
-            clPath .
-            DIRECTORY_SEPARATOR .
-            "packages" .
-            DIRECTORY_SEPARATOR .
-            $packageDir;
+        $packagePath = CL_PATH . DIRECTORY_SEPARATOR . "packages" . DIRECTORY_SEPARATOR . $packageDir;
         $packageConfigSource = false;
-        if (
-            file_exists(
-                $packagePath . DIRECTORY_SEPARATOR . "config.dev.json"
-            ) and
-            is_file($packagePath . DIRECTORY_SEPARATOR . "config.dev.json")
-        ):
+        if (file_exists($packagePath . DIRECTORY_SEPARATOR . "config.dev.json") and is_file($packagePath . DIRECTORY_SEPARATOR . "config.dev.json")) :
             $packageConfigSource = "config.dev.json";
-        elseif (
-            file_exists($packagePath . DIRECTORY_SEPARATOR . "config.json") and
-            is_file($packagePath . DIRECTORY_SEPARATOR . "config.json")
-        ):
+        elseif (file_exists($packagePath . DIRECTORY_SEPARATOR . "config.json") and is_file($packagePath . DIRECTORY_SEPARATOR . "config.json")) :
             $packageConfigSource = "config.json";
         endif;
-        if ($packageConfigSource != false):
+        if ($packageConfigSource != false) :
             // Get "package.json" file and convert to array
             $packageConfig = json_decode(
                 file_get_contents(
@@ -123,10 +90,10 @@ class cl
                 true
             );
             // Check if "package.json" file content is valid json
-            if (is_array($packageConfig)):
+            if (is_array($packageConfig)) :
                 return $packageConfig;
-            else:
-                cl::log(
+            else :
+                Codelab::log(
                     $packageDir,
                     "error",
                     "[" . $packageConfigSource . "] file invalid"
@@ -138,34 +105,29 @@ class cl
     // In ##################################################################
     public static function requireAjax()
     {
-        if (!self::isAjax()):
+        if (!self::isAjax()) :
             die("Codelab Error: Ajax required");
         endif;
     }
     // In ##################################################################
     public static function isAjax()
     {
-        if (
-            empty($_SERVER["HTTP_X_REQUESTED_WITH"]) or
-            strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) != "xmlhttprequest"
-        ):
+        if (empty($_SERVER["HTTP_X_REQUESTED_WITH"]) or strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) != "xmlhttprequest") :
             return false;
         endif;
         return true;
     }
-
     // In ##################################################################
     public static function requirePost()
     {
-        if (!self::isPost()):
+        if (!self::isPost()) :
             die("Codelab Error: POST required");
         endif;
     }
-
     // In ##################################################################
     public static function isPost()
     {
-        if ($_SERVER["REQUEST_METHOD"] == "POST"):
+        if ($_SERVER["REQUEST_METHOD"] == "POST") :
             return true;
         endif;
         return false;
@@ -229,20 +191,20 @@ class cl
         }
         if (11 == 22) {
         }
-        if ($status_codes[$statusCode] !== null):
+        if ($status_codes[$statusCode] !== null) :
             $status_string = $statusCode . " " . $status_codes[$statusCode];
             header(
                 $_SERVER["SERVER_PROTOCOL"] . " " . $status_string,
                 true,
                 $statusCode
             );
-            cl::log(
+            Codelab::log(
                 "cl",
                 "success",
                 "header status set as [" . $status_string . "]"
             );
-        else:
-            cl::log(
+        else :
+            Codelab::log(
                 "cl",
                 "error",
                 "header status not allowed [" . $statusCode . "]"
@@ -252,8 +214,8 @@ class cl
     public static function headers(string $headerName = null)
     {
         $headers = [];
-        if ($headerName == null):
-            foreach (headers_list() as $header):
+        if ($headerName == null) :
+            foreach (headers_list() as $header) :
                 $headerArray = explode(":", $header);
                 $headers[$headerArray[0]] = substr(
                     $header,
@@ -261,10 +223,10 @@ class cl
                 );
             endforeach;
             return $headers;
-        else:
-            foreach (headers_list() as $header):
+        else :
+            foreach (headers_list() as $header) :
                 $headerArray = explode(":", $header);
-                if (strtolower($headerArray[0]) == strtolower($headerName)):
+                if (strtolower($headerArray[0]) == strtolower($headerName)) :
                     return substr($header, strlen($headerArray[0]) + 2);
                 endif;
             endforeach;
@@ -287,15 +249,15 @@ class cl
         $logs = self::logs();
         echo '<div class="clLogs" style="background:#1f2f49;border:1px solid black;padding:4px;color:white;font-family:Courier New,monospace;font-size:14px;line-height:16px;margin:0">';
         echo '<div class="clLogs_header" style="color:white;background:#101826;padding:4px 8px;font-size:22px;line-height:22px;">Codelab output</div>';
-        foreach ($logs as $key => $value):
+        foreach ($logs as $key => $value) :
             echo '<div class="clLogs_log clLogs_log_' .
                 $value["type"] .
                 '" style="';
-            if ($value["type"] == "success"):
+            if ($value["type"] == "success") :
                 echo "background:#24491f;";
-            elseif ($value["type"] == "error"):
+            elseif ($value["type"] == "error") :
                 echo "background:#511c1c;";
-            elseif ($value["type"] == "warning"):
+            elseif ($value["type"] == "warning") :
                 echo "background:#77390c;";
             endif;
             echo 'color:white;display:grid;grid-template-columns:1fr 1fr 3fr;border-bottom:1px solid #1b2942;padding:2px 4px;">';
@@ -321,21 +283,21 @@ class cl
 // ################################################
 // ##### Database
 // ################################################
-global $clDB;
-if (@clConfig["DB"]["connect"] == true):
-    $clDB = @mysqli_connect(
-        @clConfig["DB"]["host"],
-        @clConfig["DB"]["user"],
-        @clConfig["DB"]["pass"],
-        @clConfig["DB"]["name"],
-        @clConfig["DB"]["port"]
+global $CodelabDB;
+if (@CL_CONFIG["DB"]["connect"] == true) :
+    $CodelabDB = @mysqli_connect(
+        @CL_CONFIG["DB"]["host"],
+        @CL_CONFIG["DB"]["user"],
+        @CL_CONFIG["DB"]["pass"],
+        @CL_CONFIG["DB"]["name"],
+        @CL_CONFIG["DB"]["port"]
     );
-    if (!mysqli_connect_errno()):
-        if (isset(clConfig["DB"]["characters"])):
-            $charset = clConfig["DB"]["characters"];
-            if ($charset != "" and $charset != null and $charset != false):
+    if (!mysqli_connect_errno()) :
+        if (isset(CL_CONFIG["DB"]["characters"])) :
+            $charset = CL_CONFIG["DB"]["characters"];
+            if ($charset != "" and $charset != null and $charset != false) :
                 mysqli_query(
-                    $clDB,
+                    $CodelabDB,
                     "SET names = '" .
                         $charset .
                         "', character_set_results = '" .
@@ -350,74 +312,74 @@ if (@clConfig["DB"]["connect"] == true):
                         $charset .
                         "'"
                 );
-                mysqli_set_charset($clDB, "utf8");
+                mysqli_set_charset($CodelabDB, "utf8");
             endif;
         endif;
-        cl::log(
-            "clDB",
+        Codelab::log(
+            "CodelabDB",
             "success",
-            "Database connected [" . clConfig["DB"]["host"] . "]"
+            "Database connected [" . CL_CONFIG["DB"]["host"] . "]"
         );
-    else:
-        cl::log(
-            "clDB",
+    else :
+        Codelab::log(
+            "CodelabDB",
             "error",
-            "Database connection error [" . clConfig["DB"]["host"] . "]"
+            "Database connection error [" . CL_CONFIG["DB"]["host"] . "]"
         );
     endif;
 endif;
-class clDB
+class CodelabDB
 {
     public static function connected()
     {
-        global $clDB;
-        if (isset($clDB) and !empty($clDB)):
+        global $CodelabDB;
+        if (isset($CodelabDB) and !empty($CodelabDB)) :
             return true;
         endif;
         return false;
     }
     public static function disconnect()
     {
-        global $clDB;
-        if (isset($clDB) and !empty($clDB)):
-            mysqli_close($clDB);
-            cl::log("clDB", "warning", "clDB disconnect");
-            unset($clDB);
+        global $CodelabDB;
+        if (isset($CodelabDB) and !empty($CodelabDB)) :
+            mysqli_close($CodelabDB);
+            Codelab::log("CodelabDB", "warning", "CodelabDB disconnect");
+            unset($CodelabDB);
         endif;
     }
     public static function escape(string $string)
     {
-        global $clDB;
-        if (!self::connected()):
+        global $CodelabDB;
+        if (!self::connected()) :
             die("Database no connected");
         endif;
-        if ($string != null and !is_numeric($string) and $string != ""):
-            return mysqli_escape_string($clDB, $string);
+        if ($string != null and !is_numeric($string) and $string != "") :
+            return mysqli_escape_string($CodelabDB, $string);
         endif;
         return $string;
     }
     public static function query(string $query)
     {
-        global $clDB;
-        if (self::connected()):
-            cl::log("clDB", "info", "Query [" . $query . "]");
-            return mysqli_query($clDB, $query);
+        global $CodelabDB;
+        if (self::connected()) :
+            Codelab::log("CodelabDB", "info", "Query [" . $query . "]");
+            return mysqli_query($CodelabDB, $query);
         endif;
     }
     public static function fetch($results)
     {
-        if (self::connected()):
+        if (self::connected()) :
             return mysqli_fetch_array($results);
         endif;
     }
     public static function columns($table)
     {
-        if (self::connected()):
+        if (self::connected()) :
             $result = self::query(
                 "SHOW COLUMNS FROM `" . self::escape($table) . "`"
             );
             $output = [];
-            while ($row = self::fetch($result)):
+            while ($row = self::fetch($result)) :
                 array_push($output, $row["Field"]);
             endwhile;
             return $output;
@@ -425,37 +387,37 @@ class clDB
     }
     public static function get(array $param, $single = false)
     {
-        if (self::connected()):
-            if (!isset($param["table"])):
-                die("clDB::get table not defined");
+        if (self::connected()) :
+            if (!isset($param["table"])) :
+                die("CodelabDB::get table not defined");
             endif;
-            if (!isset($param["limit"])):
+            if (!isset($param["limit"])) :
                 $param["limit"] = 100;
             endif;
-            if (!isset($param["offset"])):
+            if (!isset($param["offset"])) :
                 $param["offset"] = 0;
             endif;
-            if (!isset($param["order"])):
+            if (!isset($param["order"])) :
                 $param["order"] = "id ASC";
             endif;
-            if (!isset($param["columns"]) or $param["columns"] == "*"):
+            if (!isset($param["columns"]) or $param["columns"] == "*") :
                 $param["columns"] = self::columns($param["table"]);
-                //elseif (is_array($param['columns'])):
-                //$columns = $param['columns'];
-                //die('2');
-            elseif (!is_array($param["columns"])):
+            //elseif (is_array($param['columns'])):
+            //$columns = $param['columns'];
+            //die('2');
+            elseif (!is_array($param["columns"])) :
                 $param["columns"] = explode(",", $param["columns"]);
             endif;
             array_push($param["columns"], "id");
             $param["columns"] = array_unique($param["columns"]);
             $param["columns"] = array_filter($param["columns"]);
             $columns = "";
-            foreach ($param["columns"] as $column):
+            foreach ($param["columns"] as $column) :
                 $columns .= "`" . $column . "`,";
             endforeach;
             $columns = rtrim($columns, ",");
             $where = "";
-            if (isset($param["where"]) and $param["where"] != ""):
+            if (isset($param["where"]) and $param["where"] != "") :
                 $where = "WHERE " . $param["where"];
             endif;
             $query =
@@ -479,12 +441,12 @@ class clDB
             $result = self::query($query, false);
             $output = [];
             $i = 0;
-            while ($row = self::fetch($result)):
+            while ($row = self::fetch($result)) :
                 $output[$row["id"]]["clOrder"] = $i;
-                foreach ($param["columns"] as $column):
-                    if ($single == true):
+                foreach ($param["columns"] as $column) :
+                    if ($single == true) :
                         $output[$column] = $row[$column];
-                    else:
+                    else :
                         $output[$row["id"]][$column] = $row[$column];
                     endif;
                 endforeach;
@@ -495,14 +457,14 @@ class clDB
     }
     public static function insert(string $table, array $columns)
     {
-        if (self::connected()):
+        if (self::connected()) :
             $keys = "";
             $values = "";
-            foreach ($columns as $key => $value):
+            foreach ($columns as $key => $value) :
                 $keys .= "`" . $key . "`,";
-                if ($value == null):
+                if ($value == null) :
                     $values .= "null,";
-                else:
+                else :
                     $value = addslashes($value);
                     $values .= "'" . $value . "',";
                 endif;
@@ -519,17 +481,16 @@ class clDB
                 ")";
             //echo $query . '<br>';
             $logMessage = "Insert [" . $query . "]";
-            //	   clLog::create('DB', 'info', $logMessage);
+            // clLog::create('DB', 'info', $logMessage);
             $result = self::query($query, false);
         endif;
     }
     public static function delete(string $table, $id)
     {
         // single id or array ex. array(1,35,65)
-
-        if (self::connected()):
-            if (is_array($id) and !empty($id)):
-                foreach ($id as $key => $value):
+        if (self::connected()) :
+            if (is_array($id) and !empty($id)) :
+                foreach ($id as $key => $value) :
                     $query =
                         "DELETE FROM `" .
                         $table .
@@ -540,8 +501,8 @@ class clDB
                     self::query($query, false);
                 endforeach;
                 return true;
-                // clLog::create('DB', 'info', $logMessage);
-            else:
+            // clLog::create('DB', 'info', $logMessage);
+            else :
                 $query =
                     "DELETE FROM `" .
                     $table .
@@ -555,27 +516,27 @@ class clDB
     }
     public static function insertID()
     {
-        if (self::connected()):
+        if (self::connected()) :
             global $DB;
             return mysqli_insert_id($DB);
         endif;
     }
     public static function ids($table, $where = null)
     {
-        if (self::connected()):
+        if (self::connected()) :
             $param = [
                 "table" => $table,
                 "columns" => ["id"],
             ];
-            if ($where != null):
+            if ($where != null) :
                 $param["where"] = $where;
             endif;
             $results = self::get($param);
-            if (empty($results)):
+            if (empty($results)) :
                 return [];
             endif;
             $output = [];
-            foreach ($results as $key => $value):
+            foreach ($results as $key => $value) :
                 array_push($output, $value["id"]);
             endforeach;
             return $output;
@@ -583,9 +544,9 @@ class clDB
     }
     public static function update(string $table, string $where, array $fields)
     {
-        if (self::connected()):
+        if (self::connected()) :
             $output = "";
-            foreach ($fields as $key => $value):
+            foreach ($fields as $key => $value) :
                 $output .= "`" . $key . "`=";
                 $output .= '"' . self::escape($value) . '",';
             endforeach;
@@ -600,31 +561,23 @@ class clDB
         endif;
     }
 }
-function clPackages_sortItem(
+function CL_PACKAGES_sortItem(
     $pointer,
     &$dependency,
     &$order,
     &$pre_processing,
     &$reportError
 ) {
-    if (in_array($pointer, $pre_processing)):
+    if (in_array($pointer, $pre_processing)) :
         return false;
-    else:
+    else :
         $pre_processing[] = $pointer;
     endif;
-    if (isset($dependency[$pointer])):
-        if (is_array($dependency[$pointer])):
-            foreach ($dependency[$pointer] as $master):
-                if (isset($dependency[$master])):
-                    if (
-                        !clPackages_sortItem(
-                            $master,
-                            $dependency,
-                            $order,
-                            $pre_processing,
-                            $reportError
-                        )
-                    ):
+    if (isset($dependency[$pointer])) :
+        if (is_array($dependency[$pointer])) :
+            foreach ($dependency[$pointer] as $master) :
+                if (isset($dependency[$master])) :
+                    if (!CL_PACKAGES_sortItem($master, $dependency, $order, $pre_processing, $reportError)) :
                         $reportError = [$pointer, $master];
                         return false;
                     endif;
@@ -637,18 +590,10 @@ function clPackages_sortItem(
                     unset($pre_processing[$preProcessingKey]);
                 }
             endforeach;
-        else:
+        else :
             $master = $dependency[$pointer];
-            if (isset($dependency[$master])):
-                if (
-                    !clPackages_sortItem(
-                        $master,
-                        $dependency,
-                        $order,
-                        $pre_processing,
-                        $reportError
-                    )
-                ):
+            if (isset($dependency[$master])) :
+                if (!CL_PACKAGES_sortItem($master, $dependency, $order, $pre_processing, $reportError)) :
                     $reportError = [$pointer, $master];
                     return false;
                 endif;
@@ -671,39 +616,31 @@ function clPackages_sortItem(
     }
     return true;
 }
-function clPackages_sort($data, $dependency, &$reportError = null)
+function CL_PACKAGES_sort($data, $dependency, &$reportError = null)
 {
     $order = [];
     $pre_processing = [];
-    foreach ($data as $item):
-        if (
-            !clPackages_sortItem(
-                $item,
-                $dependency,
-                $order,
-                $pre_processing,
-                $reportError
-            )
-        ) {
+    foreach ($data as $item) :
+        if (!CL_PACKAGES_sortItem($item, $dependency, $order, $pre_processing, $reportError)) :
             return false;
-        }
+        endif;
     endforeach;
     return $order;
 }
 // ################################################
 // ##### Initial logs
 // ################################################
-cl::log("cl", "info", "Codelab init");
-cl::log("cl", "info", "[clStart] defined: " . clStart);
-cl::log("cl", "info", "[clVersion] defined: " . clVersion);
-cl::log("cl", "info", "[clCodename] defined: " . clCodename);
-cl::log("cl", "info", "[clPath] defined: " . clPath);
+Codelab::log("cl", "info", "Codelab init");
+Codelab::log("cl", "info", "[CL_START] defined: " . CL_START);
+Codelab::log("cl", "info", "[CL_VERSION] defined: " . CL_VERSION);
+Codelab::log("cl", "info", "[CL_CODENAME] defined: " . CL_CODENAME);
+Codelab::log("cl", "info", "[CL_PATH] defined: " . CL_PATH);
 // ################################################
 // ##### Packages
 // ################################################
 // Create packages path
-$packagesPath = clPath . DIRECTORY_SEPARATOR . "packages";
-if (!is_dir($packagesPath)):
+$packagesPath = CL_PATH . DIRECTORY_SEPARATOR . "packages";
+if (!is_dir($packagesPath)) :
     mkdir($packagesPath, 0777, true);
 endif;
 // Create all packages dirs list
@@ -717,7 +654,7 @@ $packagesList = [];
 $packageOrder = 1;
 $packagesDependiences = [];
 $packagesItems = [];
-foreach ($packagesDirs as $packageDir):
+foreach ($packagesDirs as $packageDir) :
     $packageErrors = [];
     // Get package folder name
     $packageDirname = basename($packageDir);
@@ -725,75 +662,63 @@ foreach ($packagesDirs as $packageDir):
     $packageFile_JSON = $packageDir . DIRECTORY_SEPARATOR . "cl-package.json";
     // Check if "package.json" exist
     // "package.json" file exists
-    if (file_exists($packageFile_JSON) and is_file($packageFile_JSON)):
+    if (file_exists($packageFile_JSON) and is_file($packageFile_JSON)) :
         // Get "package.json" file and convert to array
         $package_JSON = json_decode(file_get_contents($packageFile_JSON), true);
         // Check if "package.json" file content is valid json
-        if (!is_array($package_JSON)):
+        if (!is_array($package_JSON)) :
             $packageErrorMessage = "cl-package.json file is not valid json";
-            cl::log($packageDirname, "error", $packageErrorMessage);
+            Codelab::log($packageDirname, "error", $packageErrorMessage);
             $packageErrors[] = $packageErrorMessage;
-            // is valid json
-            // Check for required package name
-            // Check for required package version
-        else:
-            if (!isset($package_JSON["name"])):
+        // is valid json
+        // Check for required package name
+        // Check for required package version
+        else :
+            if (!isset($package_JSON["name"])) :
                 $packageErrorMessage = "package name is not valid";
-                cl::log($packageDirname, "error", $packageErrorMessage);
+                Codelab::log($packageDirname, "error", $packageErrorMessage);
                 $packageErrors[] = $packageErrorMessage;
             endif;
-            if (!isset($package_JSON["version"])):
+            if (!isset($package_JSON["version"])) :
                 $packageErrorMessage = "package version is not valid";
-                cl::log($packageDirname, "error", $packageErrorMessage);
+                Codelab::log($packageDirname, "error", $packageErrorMessage);
                 $packageErrors[] = $packageErrorMessage;
             endif;
         endif;
-    else:
+    else :
         $packageErrorMessage = "The packages.json file is missing";
         $packageErrors[$packageDirname] = $packageErrorMessage;
-        cl::log($packageDirname, "error", $packageErrorMessage);
+        Codelab::log($packageDirname, "error", $packageErrorMessage);
     endif;
     // Insert package into packages list
     $packagesList[$packageDirname] = $package_JSON;
     $filesReady = "";
     // Package has no errors
-    if (empty($packageErrors)):
+    if (empty($packageErrors)) :
         // Package.json file valid = enable
         // Set load order if package dont have "reqire"
-        if (
-            !isset($package_JSON["require"]) or empty($package_JSON["require"])
-        ):
+        if (!isset($package_JSON["require"]) or empty($package_JSON["require"])) :
             $packagesDependiences[$packageDirname] = [];
-        else:
-            foreach (
-                $package_JSON["require"]
-                as $requireName => $requireVersion
-            ):
+        else :
+            foreach ($package_JSON["require"] as $requireName => $requireVersion) :
                 $packagesDependiences[$packageDirname][] = $requireName;
             endforeach;
         endif;
         $packagesItems[] = $packageDirname;
-        // Package has errors
-    else:
+    // Package has errors
+    else :
         $packagesList[$packageDirname]["errors"] = $packageErrors;
     endif;
     $packageConfigSource = false;
     $filesReady = "";
-    if (
-        file_exists(
-            $packageDir . DIRECTORY_SEPARATOR . "cl-config.dev.json"
-        ) and is_file($packageDir . DIRECTORY_SEPARATOR . "cl-config.dev.json")
-    ):
+    if (file_exists($packageDir . DIRECTORY_SEPARATOR . "cl-config.dev.json") and is_file($packageDir . DIRECTORY_SEPARATOR . "cl-config.dev.json")) :
         $packageConfigSource = "cl-config.dev.json";
         $filesReady .= "[cl-config.dev.json]";
-    elseif (
-        file_exists($packageDir . DIRECTORY_SEPARATOR . "cl-config.json") and
-        is_file($packageDir . DIRECTORY_SEPARATOR . "cl-config.json")
-    ):
+    elseif (file_exists($packageDir . DIRECTORY_SEPARATOR . "cl-config.json") and is_file($packageDir . DIRECTORY_SEPARATOR . "cl-config.json")) :
         $packageConfigSource = "cl-config.json";
         $filesReady .= "[cl-config.json]";
     endif;
-    if ($packageConfigSource != false):
+    if ($packageConfigSource != false) :
         // Get "package.json" file and convert to array
         $packageConfig = json_decode(
             file_get_contents(
@@ -802,11 +727,11 @@ foreach ($packagesDirs as $packageDir):
             true
         );
         // Check if "package.json" file content is valid json
-        if (is_array($packageConfig)):
-            //cl::log($packageDirname, 'info', '[' . $packageConfigSource. '] file loaded');
+        if (is_array($packageConfig)) :
+            //Codelab::log($packageDirname, 'info', '[' . $packageConfigSource. '] file loaded');
             $packagesList[$packageDirname]["config"] = $packageConfig;
-        else:
-            cl::log(
+        else :
+            Codelab::log(
                 $packageDirname,
                 "error",
                 "[" . $packageConfigSource . "] file invalid"
@@ -818,47 +743,34 @@ foreach ($packagesDirs as $packageDir):
     $packagesList[$packageDirname]["dir"] = $packageDirname;
     $packagesList[$packageDirname]["path"] = $packageDir;
     $packageFile_INIT = $packageDir . DIRECTORY_SEPARATOR . "cl-init.php";
-
-    if (file_exists($packageFile_INIT) and is_file($packageFile_INIT)):
+    if (file_exists($packageFile_INIT) and is_file($packageFile_INIT)) :
         $filesReady .= "[cl-init.php]";
         $packagesList[$packageDirname]["init"] = $packageFile_INIT;
     endif;
     $packageFile_CLASS = $packageDir . DIRECTORY_SEPARATOR . "cl-class.php";
-    if (file_exists($packageFile_CLASS) and is_file($packageFile_CLASS)):
+    if (file_exists($packageFile_CLASS) and is_file($packageFile_CLASS)) :
         $filesReady .= "[cl-class.php]";
         $packagesList[$packageDirname]["class"] = $packageFile_CLASS;
     endif;
-    cl::log($packageDirname, "info", "Package files ready " . $filesReady);
+    Codelab::log($packageDirname, "info", "Package files ready " . $filesReady);
 endforeach;
 unset($packagesDirs);
 // ################################################
 // ##### Check dependiendiences
 // ################################################
 // Check if all dependiendiences exists
-foreach ($packagesList as $packageName => $packageData):
-    if (isset($packageData["require"])):
-        foreach (
-            $packageData["require"]
-            as $dependiencyName => $dependiencyVersion
-        ):
+foreach ($packagesList as $packageName => $packageData) :
+    if (isset($packageData["require"])) :
+        foreach ($packageData["require"] as $dependiencyName => $dependiencyVersion) :
             // Dependency name not exists
-            if (!isset($packagesList[$dependiencyName])):
-                $errorMessage =
-                    'require package "' .
-                    $dependiencyName .
-                    '" does not exists';
-                cl::log($packageName, "error", $errorMessage);
+            if (!isset($packagesList[$dependiencyName])) :
+                $errorMessage = 'require package "' . $dependiencyName .'" does not exists';
+                Codelab::log($packageName, "error", $errorMessage);
                 $packagesList[$packageName]["errors"][] = $errorMessage;
-                // Dependency exists - check version
-            else:
-                if (
-                    isset($packagesList[$dependiencyName]["version"]) and
-                    version_compare(
-                        $dependiencyVersion,
-                        $packagesList[$dependiencyName]["version"],
-                        ">"
-                    )
-                ):
+            // Dependency exists - check version
+            else :
+                $versionCompare = version_compare($dependiencyVersion, $packagesList[$dependiencyName]["version"], ">");
+                if (isset($packagesList[$dependiencyName]["version"]) and $versionCompare) :
                     $errorMessage =
                         "Required package [" .
                         $dependiencyName .
@@ -867,7 +779,7 @@ foreach ($packagesList as $packageName => $packageData):
                         "] does not match installed version [" .
                         $packagesList[$dependiencyName]["version"] .
                         "]";
-                    cl::log($packageName, "error", $errorMessage);
+                    Codelab::log($packageName, "error", $errorMessage);
                     $packagesList[$packageName]["errors"][] = $errorMessage;
                 endif;
             endif;
@@ -875,81 +787,72 @@ foreach ($packagesList as $packageName => $packageData):
     endif;
 endforeach;
 $packagesErrors = [];
-$packagesLoadOrder = clPackages_sort(
+$packagesLoadOrder = CL_PACKAGES_sort(
     $packagesItems,
     $packagesDependiences,
     $packagesErrors
 );
-foreach ($packagesErrors as $packageErrorName):
+foreach ($packagesErrors as $packageErrorName) :
     $errorMessage = "require unsolved";
     $packagesList[$packageErrorName]["errors"][] = $errorMessage;
-    cl::log($packageErrorName, "error", $errorMessage);
+    Codelab::log($packageErrorName, "error", $errorMessage);
 endforeach;
 // ################################################
 // ##### clLoad
 // ################################################
 $clLoad = false;
 $clLoadPackages = false;
-if (defined("clLoad")):
-    cl::log("cl", "info", "[clLoad] initiated");
-    if (!is_array(clLoad)):
-        cl::log("cl", "error", "[clLoad] is not valid array");
-    else:
+if (defined("clLoad")) :
+    Codelab::log("cl", "info", "[clLoad] initiated");
+    if (!is_array(clLoad)) :
+        Codelab::log("cl", "error", "[clLoad] is not valid array");
+    else :
         $clLoad = true;
     endif;
-    if ($clLoad == true and isset(clLoad["packages"])):
+    if ($clLoad == true and isset(clLoad["packages"])) :
         // disable all packages
-        if (clLoad["packages"] == false):
-            cl::log(
+        if (clLoad["packages"] == false) :
+            Codelab::log(
                 "cl",
                 "warning",
                 "[clLoad][packages] is set to [false]. Packages will not be loaded"
             );
             $clLoadPackages = []; // error - package dont exists
-            // Search for clLoad>package require
-        elseif (!is_array(clLoad["packages"])):
-            cl::log("cl", "error", "[clLoad][packages] is not valid array");
-        else:
+        // Search for clLoad>package require
+        elseif (!is_array(clLoad["packages"])) :
+            Codelab::log("cl", "error", "[clLoad][packages] is not valid array");
+        else :
             $clLoadPackages = [];
-            foreach (clLoad["packages"] as $packageName):
-                if (!isset($packagesList[strtolower($packageName)])):
-                    cl::log(
+            foreach (clLoad["packages"] as $packageName) :
+                if (!isset($packagesList[strtolower($packageName)])) :
+                    Codelab::log(
                         "cl",
                         "error",
                         "[clLoad][packages] package not exists [" .
                             $packageName .
                             "]"
                     );
-                else:
+                else :
                     $clLoadPackages[] = strtolower($packageName);
-                    if (
-                        isset(clLoad["require"]) and
-                        clLoad["require"] == true and
-                        isset(
-                            $packagesList[strtolower($packageName)]["require"]
-                        )
-                    ):
-                        foreach (
-                            $packagesList[strtolower($packageName)]["require"]
-                            as $requireName => $requireVersion
-                        ):
+                    if (isset(clLoad["require"]) and clLoad["require"] == true and isset($packagesList[strtolower($packageName)]["require"])) :
+                        foreach ($packagesList[strtolower($packageName)]["require"] as $requireName => $requireVersion) :
                             $clLoadPackages[] = $requireName;
                         endforeach;
                     endif;
                 endif;
             endforeach;
-            if (isset(clLoad["require"]) and clLoad["require"] == true):
-                cl::log(
+            if (isset(clLoad["require"]) and clLoad["require"] == true) :
+                Codelab::log(
                     "cl",
                     "info",
                     "[clLoad][require] set to [true]. All required packages will bo leaded automaticly"
                 );
             endif;
             $clLoadPackagesOutput = "";
-            foreach ($clLoadPackages as $clLoadPackageName):
+            foreach ($clLoadPackages as $clLoadPackageName) :
                 $clLoadPackagesOutput .= "[" . $clLoadPackageName . "]";
             endforeach;
-            cl::log(
+            Codelab::log(
                 "cl",
                 "info",
                 "[clLoad][packages] defined as packages list " .
@@ -957,30 +860,15 @@ if (defined("clLoad")):
             );
         endif;
     endif;
-    if ($clLoad == true and isset(clLoad["config"])):
-        foreach (clLoad["config"] as $packageName => $packageData):
-            if (isset($packagesList[strtolower($packageName)])):
-                foreach (
-                    $packageData
-                    as $packageData_key => $packageData_value
-                ):
-                    $packagesList[strtolower($packageName)]["config"][
-                        $packageData_key
-                    ] = $packageData_value;
-                    cl::log(
-                        "cl",
-                        "info",
-                        "[clLoad][config] overwriten [" .
-                            $packageName .
-                            "][config][" .
-                            $packageData_key .
-                            "][" .
-                            $packageData_value .
-                            "]"
-                    );
+    if ($clLoad == true and isset(clLoad["config"])) :
+        foreach (clLoad["config"] as $packageName => $packageData) :
+            if (isset($packagesList[strtolower($packageName)])) :
+                foreach ($packageData as $packageData_key => $packageData_value) :
+                    $packagesList[strtolower($packageName)]["config"][$packageData_key] = $packageData_value;
+                    Codelab::log("cl", "info", "[clLoad][config] overwriten [" . $packageName . "][config][" . $packageData_key ."][" .$packageData_value ."]");
                 endforeach; // error - package dont exists
-            else:
-                cl::log(
+            else :
+                Codelab::log(
                     "cl",
                     "error",
                     "[clLoad][config] package not exists [" . $packageName . "]"
@@ -989,9 +877,9 @@ if (defined("clLoad")):
         endforeach;
     endif;
 endif;
-if ($clLoad == true and $clLoadPackages != false):
-    foreach ($packagesList as $packageName => $packageData):
-        if (!in_array($packageName, $clLoadPackages)):
+if ($clLoad == true and $clLoadPackages != false) :
+    foreach ($packagesList as $packageName => $packageData) :
+        if (!in_array($packageName, $clLoadPackages)) :
             unset($packagesList[$packageName]);
         endif;
     endforeach;
@@ -999,25 +887,25 @@ endif;
 // Check if any package has error
 $packagesInvalid = "";
 $packagesLoadError = false;
-foreach ($packagesList as $packageName => $packageData):
-    if (isset($packageData["errors"]) and !empty($packageData["errors"])):
+foreach ($packagesList as $packageName => $packageData) :
+    if (isset($packageData["errors"]) and !empty($packageData["errors"])) :
         $packagesLoadError = true;
         $packagesInvalid = $packageName . ", ";
     endif;
 endforeach;
 $packagesInvalid = rtrim($packagesInvalid, ", ");
-if ($packagesLoadError == true):
-    cl::log(
+if ($packagesLoadError == true) :
+    Codelab::log(
         "cl",
         "error",
         "Codelab will not load the data. Packages not valid [" .
             $packagesInvalid .
             "]"
     );
-else:
-    cl::log("cl", "success", "All packages valid");
+else :
+    Codelab::log("cl", "success", "All packages valid");
     $order = 0;
-    foreach ($packagesLoadOrder as $packageName):
+    foreach ($packagesLoadOrder as $packageName) :
         $packagesList[$packageName]["order"] = $order;
         $order++;
     endforeach;
@@ -1026,26 +914,26 @@ else:
         return $a["order"] - $b["order"];
     }
     usort($packagesList, "sortByOrder");
-    foreach ($packagesList as $packageOrder => $packageData):
-        if (isset($packageData["name"])):
+    foreach ($packagesList as $packageOrder => $packageData) :
+        if (isset($packageData["name"])) :
             $packagesList[strtolower($packageData["name"])] = $packageData;
             unset($packagesList[$packageOrder]);
-        else:
+        else :
             unset($packagesList[$packageOrder]);
         endif;
     endforeach;
 endif;
-DEFINE("clPackages", $packagesList);
-cl::log("cl", "info", "[clPackages] defined as list of all packages");
+DEFINE("CL_PACKAGES", $packagesList);
+Codelab::log("cl", "info", "[CL_PACKAGES] defined as list of all packages");
 // No errors found - load packages
-if ($packagesLoadError == false):
-    foreach (clPackages as $packageName => $packageData):
-        if (isset($packageData["init"])):
+if ($packagesLoadError == false) :
+    foreach (CL_PACKAGES as $packageName => $packageData) :
+        if (isset($packageData["init"])) :
             include $packageData["init"];
-            cl::log($packageName, 'info', 'package [init] loaded');
+            Codelab::log($packageName, 'info', 'package [init] loaded');
         endif;
-        if (isset($packageData["class"])):
-            cl::log($packageName, 'info' , 'package [class] loaded');
+        if (isset($packageData["class"])) :
+            Codelab::log($packageName, 'info', 'package [class] loaded');
             include $packageData["class"];
         endif;
     endforeach;
@@ -1080,12 +968,12 @@ unset($packagesLoadError);
 // ################################################
 // ##### End
 // ################################################
-DEFINE("clEnd", microtime());
-cl::log("cl", "info", "[clEnd] defined: " . clEnd);
+DEFINE("CL_END", microtime());
+Codelab::log("cl", "info", "[CL_END] defined: " . CL_END);
 // Count load time
-$time = explode(" ", clStart);
+$time = explode(" ", CL_START);
 $start = $time[1] + $time[0];
-$time = explode(" ", clEnd);
+$time = explode(" ", CL_END);
 $finish = $time[1] + $time[0];
 $total_time = round($finish - $start, 4);
-cl::log("cl", "info", "Codelab load time [" . $total_time . "s]");
+Codelab::log("cl", "info", "Codelab load time [" . $total_time . "s]");

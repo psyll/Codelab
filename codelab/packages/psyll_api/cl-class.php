@@ -8,13 +8,13 @@
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
 
-	namespace cl;
+	namespace Codelab;
 
 	class psyll_api {
 			// In ##################################################################
 			public static function status()
 			{
-				$headers = @get_headers(clPackages['psyll_api']['config']['url']);
+				$headers = @get_headers(CL_PACKAGES['psyll_api']['config']['url']);
 				if(strpos($headers[0],'200') === false):
 					return false;
 				endif;
@@ -30,7 +30,7 @@
 				if ($parameters != null):
 					$query .= "/" . $parameters;
 				endif;
-				$apiURL = trim(clPackages['psyll_api']['config']['url'], '/') . '/' . clPackages['psyll_api']['config']['key'] . $query;
+				$apiURL = trim(CL_PACKAGES['psyll_api']['config']['url'], '/') . '/' . CL_PACKAGES['psyll_api']['config']['key'] . $query;
 				$response = file_get_contents($apiURL);
 				$response = json_decode($response, true);
 				return $response;

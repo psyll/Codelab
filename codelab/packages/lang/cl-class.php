@@ -7,7 +7,7 @@
 		This file is part of the Codelab package.
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
-namespace cl;
+namespace Codelab;
 class lang {
     public static function pageURL($id_or_alias)
     {

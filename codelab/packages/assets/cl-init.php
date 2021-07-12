@@ -1,1 +1,1 @@
-<?php cl\session::set('assetsStorage', []);
+<?php Codelab\session::set('assetsStorage', []);

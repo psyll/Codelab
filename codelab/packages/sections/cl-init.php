@@ -6,14 +6,14 @@ $param = array(
     'order' => 'ordering',
     'sort' => 'asc'
 );
-$results = clDB::get($param);
+$results = CodelabDB::get($param);
 $pageSections = [];
 if (!empty($results)):
 
     foreach ($results as $keySections => $valueSecions):
         $section = trim($valueSecions['view'], '/');
-        $path = trim(clPackages['sections']['config']['path'], DIRECTORY_SEPARATOR);
-        $sectionPath =  clPath . DIRECTORY_SEPARATOR . $path ;
+        $path = trim(CL_PACKAGES['sections']['config']['path'], DIRECTORY_SEPARATOR);
+        $sectionPath =  CL_PATH . DIRECTORY_SEPARATOR . $path ;
 
         $view = trim($valueSecions['view'], DIRECTORY_SEPARATOR);
         if ($view != ''):
@@ -35,7 +35,7 @@ if (!empty($results)):
                         'name' => $valueSecions['name'],
                         'alias' => $valueSecions['alias'],
                         'path' => $sectionPath . DIRECTORY_SEPARATOR .trim($valueSecions['view'], DIRECTORY_SEPARATOR),
-                        'url' => clProtocol . '://' . clDomain . DIRECTORY_SEPARATOR .  trim(clPackages['sections']['config']['url'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . trim($valueSecions['view'], DIRECTORY_SEPARATOR),
+                        'url' => CL_PROTOCOL . '://' . CL_DOMAIN . DIRECTORY_SEPARATOR .  trim(CL_PACKAGES['sections']['config']['url'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . trim($valueSecions['view'], DIRECTORY_SEPARATOR),
                         'pages' => array(
                             'include' => $valueSecions['pagesInclude'],
                             'exclude' => $valueSecions['pagesExclude'],
@@ -46,14 +46,14 @@ if (!empty($results)):
                     );
 
                 else:
-                    cl::log('sections', 'error', 'Section load error [' . $sectionFileView . ']');
+                    Codelab::log('sections', 'error', 'Section load error [' . $sectionFileView . ']');
                 endif;
             endif;
         else:
-            cl::log('sections', 'error', 'Section has no view selected [' . $results[$keySections]['id'] . '][' . $results[$keySections]['name'] . ']');
+            Codelab::log('sections', 'error', 'Section has no view selected [' . $results[$keySections]['id'] . '][' . $results[$keySections]['name'] . ']');
         endif;
     endforeach;
 else:
-    cl::log('sections', 'info', 'No sections to load');
+    Codelab::log('sections', 'info', 'No sections to load');
 endif;
 define('sections', $pageSections);

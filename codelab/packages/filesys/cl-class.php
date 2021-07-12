@@ -1,6 +1,6 @@
 <?php
 
-namespace cl\filesys;
+namespace Codelab\filesys;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;

@@ -9,6 +9,6 @@
 if (session_status() === PHP_SESSION_NONE):
     session_start();
 endif;
-if (!isset($_SESSION[clPackages['session']['config']['sessionName']])):
-    $_SESSION[clPackages['session']['config']['sessionName']] = array();
+if (!isset($_SESSION[CL_PACKAGES['session']['config']['sessionName']])):
+    $_SESSION[CL_PACKAGES['session']['config']['sessionName']] = array();
 endif;

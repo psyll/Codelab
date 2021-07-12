@@ -1,10 +1,10 @@
 <?php
 
 
-$packageConfig = clPackages['lang']['config'];
+$packageConfig = CL_PACKAGES['lang']['config'];
 
 if ($packageConfig['init'] == true):
-    cl::log('lang', 'success', 'LOAD');
+    Codelab::log('lang', 'success', 'LOAD');
 
     // Check if language code valid
 
@@ -12,7 +12,7 @@ if ($packageConfig['init'] == true):
         if (isset($packageConfig['errorRedirect']) AND $packageConfig['errorRedirect'] != ''):
             header('Location: ' . $packageConfig['errorRedirect']);
         else:
-            cl::log('lang', 'error', 'Language load error');
+            Codelab::log('lang', 'error', 'Language load error');
         endif;
     endif;
     DEFINE('lang', strtolower(pageQuery[0]));

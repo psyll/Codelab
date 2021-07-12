@@ -7,7 +7,7 @@
 		This file is part of the Codelab package.
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
-	namespace cl;
+	namespace Codelab;
 	class registry {
 		// In ##################################################################
 		public static function read(string $name, string $default = null)

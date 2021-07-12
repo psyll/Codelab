@@ -7,11 +7,11 @@
 		This file is part of the Codelab package.
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
-namespace cl;
+namespace Codelab;
 class fileLOG {
   public static function create(string $source, string $message)
   {
-      $logsDirPath = clPath . DIRECTORY_SEPARATOR . trim(clPackages['filelog']['config']['path'], '/');
+      $logsDirPath = CL_PATH . DIRECTORY_SEPARATOR . trim(CL_PACKAGES['filelog']['config']['path'], '/');
       if (!file_exists($logsDirPath)) {
         mkdir($logsDirPath, 0777, true);
       }

@@ -8,7 +8,7 @@
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
 
-	namespace cl;
+	namespace Codelab;
 	class datetime {
 
 

@@ -7,7 +7,7 @@
 		This file is part of the Codelab package.
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
-namespace cl;
+namespace Codelab;
 class image {
 public static function checkGD(bool $throwException = true): bool
     {

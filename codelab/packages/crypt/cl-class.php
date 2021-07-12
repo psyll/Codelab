@@ -8,7 +8,7 @@
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
 
-	namespace cl;
+	namespace Codelab;
 	class crypt {
 
 
@@ -16,9 +16,9 @@
 		public static function in(string $string, array $param = null)
 		{
 			$config = [
-				'key' => clPackages['crypt']['config']['key'],
-				'iv' => clPackages['crypt']['config']['iv'],
-				'method' => clPackages['crypt']['config']['method']
+				'key' => CL_PACKAGES['crypt']['config']['key'],
+				'iv' => CL_PACKAGES['crypt']['config']['iv'],
+				'method' => CL_PACKAGES['crypt']['config']['method']
 			];
 			if (isset($param['key'])):
 				$config['key'] = $param['key'];
@@ -39,9 +39,9 @@
 		public static function out(string $hash, array $param = null)
 		{
 			$config = [
-				'key' => clPackages['crypt']['config']['key'],
-				'iv' => clPackages['crypt']['config']['iv'],
-				'method' => clPackages['crypt']['config']['method']
+				'key' => CL_PACKAGES['crypt']['config']['key'],
+				'iv' => CL_PACKAGES['crypt']['config']['iv'],
+				'method' => CL_PACKAGES['crypt']['config']['method']
 			];
 			if (isset($param['key'])):
 				$config['key'] = $param['key'];

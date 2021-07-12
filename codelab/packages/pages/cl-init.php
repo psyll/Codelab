@@ -1,6 +1,6 @@
 <?php
 
-if (clPackages['pages']['config']['init'] == true):
+if (CL_PACKAGES['pages']['config']['init'] == true):
 
 
         $pageQuery = strtok($_SERVER['REQUEST_URI'], '?');
@@ -15,18 +15,18 @@ if (clPackages['pages']['config']['init'] == true):
             'columns' => '*',
         );
         // ### Create catch list
-        $pages = clDB::get($pagesParms);
+        $pages = CodelabDB::get($pagesParms);
         DEFINE('pages', $pages);
 
 
-        if (clPackages['pages']['config']['offline'] == true):
+        if (CL_PACKAGES['pages']['config']['offline'] == true):
             $offlineParms = array(
                 'table' => 'pages',
                 'columns' => '*',
                 'where' => 'catch = "offline"'
             );
             // ### Create catch list
-            $offline = clDB::get($offlineParms, true);
+            $offline = CodelabDB::get($offlineParms, true);
             if (!empty($offline)):
                 DEFINE('page', $offline);
             else:
@@ -40,7 +40,7 @@ if (clPackages['pages']['config']['init'] == true):
                     'where' => 'catch = "index"'
                 );
                 // ### Create catch list
-                $homepage = clDB::get($homepageParms, true);
+                $homepage = CodelabDB::get($homepageParms, true);
                 if (!empty($homepage)):
                     DEFINE('page', $homepage);
                 endif;
@@ -54,7 +54,7 @@ if (clPackages['pages']['config']['init'] == true):
                     if ($catch == 'index' OR $catch == 'error' OR $catch == 'offline'):
                         unset($pages[$key]);
                     elseif (!is_array($catch)):
-                        cl::log('pages', 'error', ' [' .$pagesData['id'] . '] catch invalid  [' . $pagesData['catch'] . ']') ;
+                        Codelab::log('pages', 'error', ' [' .$pagesData['id'] . '] catch invalid  [' . $pagesData['catch'] . ']') ;
                         unset($pages[$key]);
                     else :
                         foreach ($catch as $keyCatch => $valueCatch):
@@ -99,7 +99,7 @@ if (clPackages['pages']['config']['init'] == true):
                 'where' => 'catch = "error"'
             );
             // ### Create catch list
-            $erroPage = clDB::get($erroPageParms, true);
+            $erroPage = CodelabDB::get($erroPageParms, true);
             if (!empty($erroPage)):
                 DEFINE('page', $erroPage);
             else:
