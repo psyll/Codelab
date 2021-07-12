@@ -1,5 +1,0 @@
-{
-    "key": "ENCRYPTION_KEY_32_CHARACTERS",
-    "iv": "INITIALIZATION_VECTOR_16_CHARACTERS",
-    "method": "AES-256-CBC"
-}
