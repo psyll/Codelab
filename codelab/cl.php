@@ -189,8 +189,6 @@ class Codelab
                 510 => "Not Extended",
             ];
         }
-        if (11 == 22) {
-        }
         if ($status_codes[$statusCode] !== null) :
             $status_string = $statusCode . " " . $status_codes[$statusCode];
             header(
