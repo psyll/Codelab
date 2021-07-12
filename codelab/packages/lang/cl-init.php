@@ -3,7 +3,7 @@
 
 $packageConfig = clPackages['lang']['config'];
 
-if ($packageConfig['enabled'] == true):
+if ($packageConfig['init'] == true):
     cl::log('lang', 'success', 'LOAD');
 
     // Check if language code valid
@@ -12,7 +12,7 @@ if ($packageConfig['enabled'] == true):
         if (isset($packageConfig['errorRedirect']) AND $packageConfig['errorRedirect'] != ''):
             header('Location: ' . $packageConfig['errorRedirect']);
         else:
-             cl::log('lang', 'error', 'Language load error');
+            cl::log('lang', 'error', 'Language load error');
         endif;
     endif;
     DEFINE('lang', strtolower(pageQuery[0]));

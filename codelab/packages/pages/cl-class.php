@@ -28,10 +28,10 @@ class pages {
 
 	public static function list(){
 		$param = array(
-		   'table' => 'pages',
-		   'columns' => "*", // OR active,email // OR * = blank
-		   'offset' => 0,
-		   'order' => 'ordering ASC',
+			'table' => 'pages',
+		   	'columns' => "*", // OR active,email // OR * = blank
+			'offset' => 0,
+			'order' => 'ordering ASC',
 		);
 		$results = clDB::get($param);
 		return $results;

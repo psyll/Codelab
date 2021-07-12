@@ -1,0 +1,18 @@
+{
+    "name": "analysis",
+    "version": "1.0",
+    "author": {
+        "jarek": {
+            "name": "Jarek Szulc",
+            "email": "jarek@psyll.com",
+            "url": "https://psyll.com/profile/jarek"
+        }
+    },
+    "require": {
+        "spy": "1.0"
+    },
+    "coop": {
+        "users": "1.0"
+    },
+    "copyright": "© 2021 Psyll.com All Rights Reserved"
+}

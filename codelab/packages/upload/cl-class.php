@@ -1,7 +1,6 @@
 <?php
 // TODO: FILE TO RECODE
 
-
 namespace cl;
 use cl;
 	class upload {

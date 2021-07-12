@@ -57,6 +57,7 @@ class spy {
                             'Opera' => array('Opera', 'Version/([0-9\.]*)')
                             );
         $browser_details = array();
+        $browser_details['agent'] = $user_agent;
         foreach ($browsers as $browser => $browser_info){
             if (preg_match('@'.$browser.'@i', $user_agent)){
                 $browser_details['name'] = $browser_info[0];
@@ -97,7 +98,7 @@ class spy {
                             '/android/i'            =>  'Android',
                             '/blackberry/i'         =>  'BlackBerry',
                             '/webos/i'              =>  'Mobile'
-                         );
+    );
         foreach ($os_array as $regex => $value) {
             if (preg_match($regex, $_SERVER['HTTP_USER_AGENT'])) {
                 $os = $value;

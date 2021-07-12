@@ -9,8 +9,8 @@
 		Distributed under the PPCL license (http://psyll.com/license/ppcl)
 	*/
 namespace cl;
-use cl;
 use clDB;
+
 class users {
 
 
@@ -160,7 +160,9 @@ public static function logout(){
     clDB::update('team', 'id = "' . self::id() . '"', array('token' => ''));
     session::delete('user');
 }
+
 public static function logged(){
+
     if (!isset(session::get('user')['token'])):
         return false;
     endif;
@@ -238,7 +240,7 @@ public static function id(){
         return false;
     }
  }
- public static function preference(string $name, string $value, $userID = null){
+ public static function preference(string $name, $userID = null){
     if ($userID == null):
         $userID = self::id();
     endif;
@@ -265,7 +267,8 @@ public static function id(){
     session::set('user', $user);
  }
 }
-
+namespace cl;
+use clDB;
 class usersGroups {
 		// ROW ##################################################################
 		public static function list() // return team groups array
