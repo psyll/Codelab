@@ -21,10 +21,6 @@ Build your **Codelab** easily with new functionalities, using ready-made package
 
 The system provides simple and quick solutions that will help you design and code a web application faster, safer and more comfortable in a [Codelab Way](https://psyll.com/products/codelab/way).
 
-# Additional tools
-
-- Visual Studio Code:  [https://psyll.com/products/codelab/snippets](https://psyll.com/products/codelab/snippets).
-
 # Installation
 
 1) Download the latest Codelab release from the [official website](https://psyll.com/products/codelab)
@@ -210,3 +206,7 @@ DEFINE(
 | `Upload` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/upload)||Upload files to the server |
 | `Users` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/users)|crypt, spy, session|A user and users group system that allows to log in and manage user accounts|
 | `Valid` |1.0|[view](https://github.com/psyll/Codelab/blob/main/codelab/packages/valid)||Cata and form validation |
+
+# Additional tools
+
+- Visual Studio Code Snippets:  [https://psyll.com/products/codelab/snippets](https://psyll.com/products/codelab/snippets).
