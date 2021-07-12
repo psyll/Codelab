@@ -1,0 +1,10 @@
+{
+    "name": "registry",
+    "version": "1.1",
+    "author": {
+        "name": "Jaroslaw Szulc",
+        "email": "jarek@psyll.com",
+        "url": "https://psyll.com/profile/jarek"
+    },
+    "copyright": "© 2021 Psyll.com All Rights Reserved"
+}

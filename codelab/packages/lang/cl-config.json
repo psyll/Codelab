@@ -1,0 +1,6 @@
+{
+    "init": true,
+    "default": "pl",
+    "languages": ["pl", "us"],
+    "errorRedirect": "/sub/pl"
+}
