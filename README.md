@@ -1,7 +1,7 @@
 # Welcome to **Codelab**
 
 
-![Codelab Logo](https://raw.githubusercontent.com/psyll/Codelab/main/docs/assets/logo.png)
+![Codelab Logo](docs/assets/logo.png)
 [![License](https://img.shields.io/github/license/psyll/Codelab)](https://img.shields.io/github/license/psyll/Codelab)
 ![Languages count](https://img.shields.io/github/languages/count/psyll/Codelab)
 ![Top Language](https://img.shields.io/github/languages/top/psyll/Codelab)
