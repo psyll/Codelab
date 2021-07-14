@@ -11,7 +11,6 @@
 ![Last commit](https://img.shields.io/github/last-commit/psyll/Codelab?color=47ABFF&style=flat)
 ![Open issues](https://img.shields.io/github/issues-raw/psyll/Codelab?color=47ABFF&style=flat)
 ![Discussions](https://img.shields.io/github/discussions/psyll/Codelab?color=47ABFF&style=flat)
-
 ![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)
 ![CodeFactor](https://www.codefactor.io/repository/github/psyll/codelab/badge?s=ae31d6f3226bdf7bbf736f7337658a3f3d6a7fbd)
 
