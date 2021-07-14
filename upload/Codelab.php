@@ -35,7 +35,7 @@ error_reporting(E_ALL);
     endforeach;
     // # Import class files
     foreach ($importCore['class'] as $import) :
-        $importPath = CL_PATH . '/'  . $configFolder .  '/' . $import . '.php';
+        $importPath = CL_PATH . '/class/' . $import . '.php';
         if (!file_exists($importPath) or !is_file($importPath)) :
             die('[Codelab error] class file is missing: ' . $importPath);
         endif;

@@ -51,10 +51,29 @@ class DB
         }
         return $this->connection;
     }
-    public function query(string $query)
+    public function escape(string $query)
     {
-        return mysqli_query($this->connection, $query);
+        return mysqli_real_escape_string($this->connection, $query);
     }
+    public function query(string $query, $fetch = false)
+    {
+        $query = mysqli_query($this->connection, $query);
+        if ($fetch == true){
+            return $this->fetch($query);
+        } else {
+            return $query;
+        }
+    }
+    public function fetch($rescue)
+    {
+        $data = [];
+        while ($row = mysqli_fetch_assoc($rescue)) {
+            $data[] = $row;
+        }
+        return  $data;
+    }
+
+
     public function get(string $table, array $parameters = [])
     {
         // # Select
@@ -80,6 +99,7 @@ class DB
             $offset = ' OFFSET ' . $parameters['offset'];
         endif;
         $query = "SELECT " . $parameters['select'] ." FROM `" . $table ."`" . @$where. @$order. @$limit. @$offset;
+
         $query = $this->query($query);
         // Single row
         if (isset($parameters['limit']) and $parameters['limit'] == 1) :
