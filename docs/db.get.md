@@ -18,7 +18,11 @@ Function structure:
 
 For example, we will work with simple database table names `users`:
 
-![alt text](assets/screen-db-structure.png "Title")
+| id | username | email            | birtchDate |
+|----|----------|------------------|------------|
+|1   |jarek     | jarek@domain.com |1986        |
+|2   |adam      | adam@domain.com  |1986        |
+|3   |mark      | mark@domain.com  |1985        |
 
 ## Examples:
 
