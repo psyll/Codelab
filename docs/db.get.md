@@ -18,7 +18,7 @@ Function structure:
 
 For example, we will work with simple database table names `users`:
 
-![alt text](screen-db-structure.png "Title")
+![alt text](assets/screen-db-structure.png "Title")
 
 ## Examples:
 
