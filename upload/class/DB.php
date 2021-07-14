@@ -41,7 +41,8 @@ class DB
     public function connect()
     {
         if (!is_resource($this->connection) || empty($this->connection)) {
-            if ($connection = mysqli_connect($this->connectionData['host'], $this->connectionData['user'], $this->connectionData['pass'], $this->connectionData['db'], $this->connectionData['port'])) {
+            $connection = mysqli_connect($this->connectionData['host'], $this->connectionData['user'], $this->connectionData['pass'], $this->connectionData['db'], $this->connectionData['port']);
+            if ($connection) {
                 mysqli_set_charset($connection, $this->connectionData['encode']);
                 $this->connection = $connection;
             } else {
