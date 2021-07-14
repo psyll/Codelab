@@ -30,7 +30,13 @@ class DB
         if ($encode == null) {
             $encode = CL_DB['encode'];
         }
-        $this->connectionData = array('host' => $host, 'user' => $user, 'pass' => $pass, 'db' => $db, 'port' => $port , 'encode' => $encode);
+        $this->connectionData = array(
+            'host' => $host,
+            'user' => $user,
+            'pass' => $pass,
+            'db' => $db,
+            'port' => $port ,
+            'encode' => $encode);
     }
     public function __destruct()
     {
@@ -41,7 +47,13 @@ class DB
     public function connect()
     {
         if (!is_resource($this->connection) || empty($this->connection)) {
-            $connection = mysqli_connect($this->connectionData['host'], $this->connectionData['user'], $this->connectionData['pass'], $this->connectionData['db'], $this->connectionData['port']);
+            $connection = mysqli_connect(
+                $this->connectionData['host'],
+                $this->connectionData['user'],
+                $this->connectionData['pass'],
+                $this->connectionData['db'],
+                $this->connectionData['port']
+            );
             if ($connection) {
                 mysqli_set_charset($connection, $this->connectionData['encode']);
                 $this->connection = $connection;
