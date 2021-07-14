@@ -21,9 +21,13 @@ error_reporting(E_ALL);
             'Error',
         ],
     ];
+    // # Check if dev version avaible
+    if (file_exists(CL_PATH) . '/config.dev') :
+        $configFolder = 'config.dev';
+    endif;
     // # Import config files
     foreach ($importCore['config'] as $import) :
-        $importPath = CL_PATH . '/config/' . $import . '.php';
+        $importPath = CL_PATH . '/' . $configFolder . '/' . $import . '.php';
         if (!file_exists($importPath) or !is_file($importPath)) :
             die('[Codelab error] config file is missing: ' . $importPath);
         endif;
@@ -31,7 +35,7 @@ error_reporting(E_ALL);
     endforeach;
     // # Import class files
     foreach ($importCore['class'] as $import) :
-        $importPath = CL_PATH . '/class/' . $import . '.php';
+        $importPath = CL_PATH . '/'  . $configFolder .  '/' . $import . '.php';
         if (!file_exists($importPath) or !is_file($importPath)) :
             die('[Codelab error] class file is missing: ' . $importPath);
         endif;

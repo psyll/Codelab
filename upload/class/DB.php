@@ -53,7 +53,6 @@ class DB
     }
     public function query(string $query)
     {
-        echo $query;
         return mysqli_query($this->connection, $query);
     }
     public function get(string $table, array $parameters = [])
