@@ -58,7 +58,7 @@ class DB
     public function query(string $query, $fetch = false)
     {
         $query = mysqli_query($this->connection, $query);
-        if ($fetch == true){
+        if ($fetch == true) {
             return $this->fetch($query);
         } else {
             return $query;
