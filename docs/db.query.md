@@ -1,5 +1,3 @@
-[BACK TO DOCS](README.md)
-
 # Database > Query (query)
 
 ```php

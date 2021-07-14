@@ -1,5 +1,3 @@
-[BACK TO DOCS](README.md)
-
 # Database > Connection
 
 Global database connection settings are retrieved from the `/config/DB.php` configuration file.

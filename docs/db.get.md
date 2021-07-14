@@ -1,5 +1,3 @@
-[BACK TO DOCS](README.md)
-
 # Database > Retrieving data (get)
 
 The `get` function is used to retrieve data from the database.
