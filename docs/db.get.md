@@ -1,4 +1,4 @@
-# Database > Retrieving data (`get`)
+# Database > Retrieving data (get)
 
 The `get` function is used to retrieve data from the database.
 

@@ -2,4 +2,4 @@
 
 - Database
   - [Connection](db.connection.md)
-  - [`get` - Retrieving data](db.get.md)
+  - [Retrieving data (get)](db.get.md)
