@@ -1,4 +1,5 @@
+phpcs.xml
+!www/.dccache
 .test/**
 .vscode/**
 upload/config.dev/**
-phpcs.xml
