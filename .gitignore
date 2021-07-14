@@ -1,3 +1,4 @@
 .test/**
 .vscode/**
 upload/config.dev/**
+phpcs.xml
