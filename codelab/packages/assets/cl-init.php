@@ -1,1 +1,0 @@
-<?php Codelab\Session::set('assetsStorage', []);
