@@ -11,8 +11,7 @@ $dataFetch = $db->fetch($data);
 ```
 
 > NOTE! You can also use fetch results automatically when calling query by setting the second parameter to `true`
->
-> ```php
-> $data = $db->query('SELECT * FROM users', true); // auto fetch
-> ```
->
+
+```php
+$data = $db->query('SELECT * FROM users', true); // auto fetch
+```
