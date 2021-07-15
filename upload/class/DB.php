@@ -10,8 +10,14 @@ class DB
         'limit'     => 1000,
     ];
 
-    public function __construct($host = null, $user = null, $pass = null, $db = null, $port = null, $encode = null)
-    {
+    public function __construct(
+        string $host = null,
+        string $user = null,
+        string $pass = null,
+        string $db = null,
+        int $port = null,
+        string $encode = null
+    ) {
         if ($host == null) {
             $host = CL_DB['host'];
         }
@@ -67,8 +73,10 @@ class DB
     {
         return mysqli_real_escape_string($this->connection, $query);
     }
-    public function query(string $query, $fetch = false)
-    {
+    public function query(
+        string $query,
+        ? bool $fetch = false
+    ) {
         $query = mysqli_query($this->connection, $query);
         if ($fetch == true) {
             return $this->fetch($query);
@@ -86,35 +94,40 @@ class DB
     }
 
 
-    public function get(string $table, array $parameters = [])
-    {
+    public function get(
+        string $table,
+        ? string $select = null,
+        ? string $where = null,
+        ? string $order = null,
+        ? int $limit = null,
+        ? int $offset = null
+    ) {
         // # Select
-        if (!isset($parameters['select']) or $parameters['select'] == '') :
-            $parameters['select'] = $this->default['select'];
-        endif;
+        if (!isset($select) or $select  == '') {
+            $select  = $this->default['select'];
+        }
         // # Where
-        if (isset($parameters['where']) and  $parameters['where'] != '') :
-            $where = ' WHERE ' . $parameters['where'];
-        endif;
+        if (isset($where) and $where  != '') {
+            $where = ' WHERE ' . $where;
+        }
         // # Order
-        if (isset($parameters['order']) and $parameters['order']  != '') :
-            $order = ' ORDER BY ' . $parameters['order'];
-        endif;
+        if (isset($order) and $order  != '') {
+            $order = ' ORDER BY ' . $order;
+        }
         // # Limit
-        if (isset($parameters['limit']) and $parameters['limit'] != '') :
-            $limit = ' LIMIT ' . $parameters['limit'];
-        else :
-            $limit = ' LIMIT ' . $this->default['limit'];
-        endif;
+        if (isset($limit) and $limit  != '') {
+            $limitOutput = ' LIMIT ' . $limit;
+        } else {
+            $limitOutput = ' LIMIT ' . $this->default['limit'];
+        }
         // # Offset
-        if (isset($parameters['offset']) and $parameters['offset'] != '') :
-            $offset = ' OFFSET ' . $parameters['offset'];
-        endif;
-        $query = "SELECT " . $parameters['select'] ." FROM `" . $table ."`" . @$where. @$order. @$limit. @$offset;
-
+        if (isset($offset) and $offset  != '') {
+            $offset = ' OFFSET ' . $offset;
+        }
+        $query = "SELECT " . $select  ." FROM `" . $table ."`" . $where. $order. $limitOutput. $offset;
         $query = $this->query($query);
         // Single row
-        if (isset($parameters['limit']) and $parameters['limit'] == 1) :
+        if (isset($limit) and $$limit == 1) :
             return  mysqli_fetch_assoc($query);
         // Multiple rows
         else :
