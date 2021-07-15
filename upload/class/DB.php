@@ -4,12 +4,10 @@ namespace Codelab;
 class DB
 {
     private $connection = false;
-
     private $default = [
         'select'    => '*',
         'limit'     => 1000,
     ];
-
     public function __construct(
         string $host = null,
         string $user = null,
@@ -69,9 +67,9 @@ class DB
         }
         return $this->connection;
     }
-    public function escape(string $query)
+    public function escape(string $string): string
     {
-        return mysqli_real_escape_string($this->connection, $query);
+        return mysqli_real_escape_string($this->connection, $string);
     }
     public function query(
         string $query,
@@ -92,8 +90,6 @@ class DB
         }
         return $data;
     }
-
-
     public function get(
         string $table,
         ? string $select = null,
