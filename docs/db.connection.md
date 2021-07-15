@@ -39,7 +39,7 @@ You can also set the connection data while creating the database object:
 or using a shorter version:
 
 ```php
-    $db = new Codelab\DB("HOSTNAME", "USERNAME", "PASSWORD", "DATABASE", "PORT"=3306, "CHARACTERS_ENCODE"=UTF-8);
+    $db = new Codelab\DB("HOSTNAME", "USERNAME", "PASSWORD", "DATABASE", "PORT", "CHARACTERS_ENCODE");
     $db->connect();
 ```
 
