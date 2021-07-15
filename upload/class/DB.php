@@ -84,13 +84,13 @@ class DB
             return $query;
         }
     }
-    public function fetch($rescue)
+    public function fetch($result)
     {
         $data = [];
-        while ($row = mysqli_fetch_assoc($rescue)) {
+        while ($row = mysqli_fetch_assoc($result)) {
             $data[] = $row;
         }
-        return  $data;
+        return $data;
     }
 
 
@@ -127,7 +127,7 @@ class DB
         $query = "SELECT " . $select  ." FROM `" . $table ."`" . $where. $order. $limitOutput. $offset;
         $query = $this->query($query);
         // Single row
-        if (isset($limit) and $$limit == 1) :
+        if (isset($limit) and $limit == 1) :
             return  mysqli_fetch_assoc($query);
         // Multiple rows
         else :

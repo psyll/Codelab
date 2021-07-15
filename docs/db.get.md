@@ -2,18 +2,24 @@
 
 The `get` function is used to retrieve data from the database.
 
-Function structure:
+## Function
 
 `get(string $table, array $parameters = [])`
 
- It has two main variabled to define the data we want to get:
+## Parameters
 
- - `table` (required) - Selected table name
- - `select` (optional) - Retrieving only selected columns, separated by comma.  Empty will be replaced by `*`
- - `where` (optional) - Where sql query
- - `limit` (optional) - Limit of retrieved results. Default `1000`
- - `offset` (optional) - Offset of retrieved results. Default `0`
- - `order` -(optional)  Choosing how to sort the results
+ - `table` - Selected table name
+ - `select` - *optional* - Retrieving only selected columns, separated by comma.  Default `*`
+ - `where` - *optional* - Where sql query
+ - `limit` - *optional* - Limit of retrieved results. Default `1000`
+ - `offset` - *optional* - Offset of retrieved results. Default `0`
+ - `order` - *optional* - Choosing how to sort the results
+
+## Return
+
+Returns fetched mysql data
+
+## Examples
 
 For example, we will work with simple database table names `users`:
 
@@ -23,10 +29,7 @@ For example, we will work with simple database table names `users`:
 |2   |adam      | adam@domain.com  |1986        |
 |3   |mark      | mark@domain.com  |1985        |
 
-## Examples:
-
 ### Get all the data from a table:
-
 
 ```php
 $data = $db->get(table: 'users');
@@ -58,7 +61,7 @@ Array
 */
 ```
 
-or just
+or using a simpler version
 
 ```php
 $data = $db->get('users');
@@ -67,13 +70,14 @@ $data = $db->get('users');
 ### Get selected rows:
 
 ```php
-$data = $db->get('users', [
-    'select' => 'username,birthYear',
-    'where' => 'birthYear="1986"',
-    'limit' => 10,
-    'offset' => 0,
-    'order' => 'id DESC',
-]);
+$data = $db->get(
+    table: 'users',
+    select: 'username,birthYear',
+    where: 'birthYear="1986"',
+    limit: 10,
+    offset: 0,
+    order: 'id DESC',
+);
 /* Example return :
 Array
 (
@@ -94,10 +98,11 @@ Array
 ### Get single row:
 
 ```php
-$data = $db->get('users', [
-    'where' => 'id="1"',
-    'limit' => 1,
-    'order' => 'id DESC',
+$data = $db->get(
+    table: 'users',
+    where: 'id="1"',
+    limit: 1,
+    order: 'id DESC'
 ]);
 /* Example return :
 Array
