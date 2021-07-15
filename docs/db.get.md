@@ -9,12 +9,11 @@ Function structure:
  It has two main variabled to define the data we want to get:
 
  - `table` (required) - Selected table name
- - `parameters` (optional) - Parameters in array that narrow the results
-     - `select` - Retrieving only selected columns, separated by comma.  Empty will be replaced by `*`
-     - `where` - Where sql query
-     - `limit` - Limit of retrieved results. Default `1000`
-     - `offset` - Offset of retrieved results. Default `0`
-     - `order` - Choosing how to sort the results
+ - `select` (optional) - Retrieving only selected columns, separated by comma.  Empty will be replaced by `*`
+ - `where` (optional) - Where sql query
+ - `limit` (optional) - Limit of retrieved results. Default `1000`
+ - `offset` (optional) - Offset of retrieved results. Default `0`
+ - `order` -(optional)  Choosing how to sort the results
 
 For example, we will work with simple database table names `users`:
 
@@ -30,7 +29,7 @@ For example, we will work with simple database table names `users`:
 
 
 ```php
-$data = $db->get('users');
+$data = $db->get(table: 'users');
 /* Example return :
 Array
 (
@@ -57,6 +56,12 @@ Array
         )
 )
 */
+```
+
+or just
+
+```php
+$data = $db->get('users');
 ```
 
 ### Get selected rows:
