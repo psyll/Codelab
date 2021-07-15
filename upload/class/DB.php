@@ -96,11 +96,11 @@ class DB
     }
     public function get(
         string $table,
-        ? string $select = null,
-        ? string $where = null,
-        ? string $order = null,
-        ? int $limit = null,
-        ? int $offset = null
+        ?string $select = null,
+        ?string $where = null,
+        ?string $order = null,
+        ?int $limit = null,
+        ?int $offset = null
     ) {
         // # Select
         if (!isset($select) or $select  == '') {
@@ -140,9 +140,9 @@ class DB
     }
     public function udpate(
         string $table,
-        ?string $where,
-        array ...$rows,
+        array $columns,
+        ?string $where = null,
     ) {
-        return 'sad';
+        print_r($columns);
     }
 }

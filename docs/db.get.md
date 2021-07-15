@@ -4,7 +4,7 @@ The `get` function is used to retrieve data from the database.
 
 ## Function
 
-`get(string $table, array $parameters = [])`
+`get(string $table,?string $select = null,?string $where = null,?string $order = null,?int $limit = null,?int $offset = null)`
 
 ## Parameters
 
