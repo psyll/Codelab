@@ -62,7 +62,11 @@ class DB
                 mysqli_set_charset($connection, $this->connectionData['encode']);
                 $this->connection = $connection;
             } else {
-                die('[Codelab error] Could not connect to MySQL database');
+                $error = new Error();
+                $error->runtime(
+                    message: 'Could not connect to MySQL database',
+                    description: 'Check your database connection details'
+                );
             }
         }
         return $this->connection;
@@ -133,5 +137,12 @@ class DB
             }
             return  $data;
         endif;
+    }
+    public function udpate(
+        string $table,
+        ?string $where,
+        array ...$rows,
+    ) {
+        return 'sad';
     }
 }

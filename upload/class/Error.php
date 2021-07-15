@@ -5,8 +5,11 @@ class Error
 {
     public function runtime(string $message, string $description = null)
     {
-        $theme = new Theme();
-        $theme->get('errorRuntime', ['message' => $message, 'description' => $description]);
-        die();
+        ?>
+            <div style="background:red;color:white;">
+                <div><?php echo $message; ?></div>
+                <div><?php echo $description; ?></div>
+            </div>
+        <?php
     }
 }

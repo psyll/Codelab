@@ -17,8 +17,9 @@ error_reporting(E_ALL);
             'Path',
         ],
         'class' => [
-            'DB',
             'Error',
+            'DB',
+
         ],
     ];
     // # Check if dev version avaible
