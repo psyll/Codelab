@@ -1,8 +1,9 @@
 # Database > Fetch (fetch)
 
-```php
-$db->fetch($data);
-```
+Function structure:
+
+`fetch($rescue)`
+
 Example:
 
 ```php

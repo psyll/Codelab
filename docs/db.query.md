@@ -1,5 +1,9 @@
 # Database > Query (query)
 
+Function structure:
+
+`query(string $query, $fetch = false)`
+
 ```php
 $db->query('SELECT * FROM users');
 ```

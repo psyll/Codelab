@@ -39,3 +39,16 @@ $db1->connect();
 $db2 = new Codelab\DB('HOSTNAME2','USERNAME2','PASSWORD2','DATABASE2');
 $db2->connect();
 ```
+
+Connexct with named arguments (PHP 8.0)
+
+```php
+    $db = new Codelab\DB(
+        host: "slavlab.atthost24.pl",
+        user: "17006_codelab",
+        pass: "Ib2KP3s0I!q$1",
+        db: "17006_codelab",
+        port: "3306",
+        encode: "UTF-8"
+    );
+    ```
