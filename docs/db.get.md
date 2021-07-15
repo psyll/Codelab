@@ -18,7 +18,7 @@ Function structure:
 
 For example, we will work with simple database table names `users`:
 
-| id | username | email            | birtchDate |
+| id | username | email            | birthYear  |
 |----|----------|------------------|------------|
 |1   |jarek     | jarek@domain.com |1986        |
 |2   |adam      | adam@domain.com  |1986        |
