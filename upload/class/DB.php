@@ -51,7 +51,7 @@ class DB
     public function connect()
     {
         if (!is_resource($this->connection) || empty($this->connection)) {
-            $connection = mysqli_connect(
+            $connection = @mysqli_connect(
                 $this->connectionData['host'],
                 $this->connectionData['user'],
                 $this->connectionData['pass'],
