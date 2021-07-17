@@ -1,5 +1,15 @@
+Options -MultiViews
+RewriteEngine On
+
 ErrorDocument 401 /error.php
 ErrorDocument 402 /error.php
 ErrorDocument 403 /error.php
 ErrorDocument 404 /error.php
 ErrorDocument 500 /error.php
+
+RewriteBase /Projects/Codelab/upload/public/
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^(.+)$ index.php?route=$1 [QSA,L]

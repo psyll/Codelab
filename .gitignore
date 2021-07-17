@@ -2,4 +2,4 @@ phpcs.xml
 !www/.dccache
 .test/**
 .vscode/**
-upload/config.dev/**
+upload/app/config.dev/**
