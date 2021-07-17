@@ -12,9 +12,6 @@ function Autoload($className)
 
 		$autoloadsArray = CL_AUTOLOAD;
 		$autloadPathes = array_change_key_case($autoloadsArray);
-		echo '<hr>' . $namespace . '<pre>';
-		print_r($autloadPathes);
-		echo '</pre>';
 		if (isset($autloadPathes[strtolower($namespace)])) :
 			include_once(CL_PATH_APP . DS . trim($autloadPathes[strtolower($namespace)], DS) . DS . $class . '.php');
 		endif;

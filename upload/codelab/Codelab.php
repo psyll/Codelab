@@ -15,8 +15,9 @@
     // LOAD CODELAB CORE
     // ##############################################
     $importCore = [
-        'path',
-        'autoload'
+        'Path',
+        'Autoload',
+        'Route'
     ];
     foreach ($importCore as $import) :
         $importPath = CL_PATH . DS . 'core' . DS  . $import . '.php';
